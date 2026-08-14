@@ -18,6 +18,8 @@ cp -r claude-skill-by-seop/skills/two-track-report ~/.claude/skills/
 | 스킬 | 용도 |
 |---|---|
 | [two-track-report](skills/two-track-report/SKILL.md) | 기술 작업 결과를 두 갈래로 전달 — 사용자에게는 비개발자 눈높이 보고, 기술 상세는 협업 에이전트(코덱스 등)가 읽을 파일로. 검토 결과 보고·에이전트 간 인수인계에 사용 |
+| [plain-report](skills/plain-report/SKILL.md) | 기술용어는 유지하되 각 핵심 뒤에 "즉, ~입니다" 의역을 붙이는 보고 형식. 진척 보고·결과 요약에 사용 |
+| [reader-doubt-check](skills/reader-doubt-check/SKILL.md) | 문장을 내놓기 전 독자 의문 7종("이게 무슨 말이야?"·"그거 진짜야?" 등)으로 자기검토. 발표자료·보고서·설명문 작성 시 사용 |
 
 ## two-track-report 요약
 
