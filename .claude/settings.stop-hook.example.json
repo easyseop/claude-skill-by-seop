@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/skills/claude-skill-author/scripts/stop_gate.py\"",
+            "timeout": 30,
+            "statusMessage": "스킬 작성 완료 게이트를 검사하는 중"
+          }
+        ]
+      }
+    ]
+  }
+}

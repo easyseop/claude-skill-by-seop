@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "target_skill": "__TARGET__",
+  "artifact_type": "skill",
+  "operation": "__OPERATION__",
+  "purpose": "",
+  "user_outcome": "",
+  "primary_stage": "",
+  "secondary_stages": [],
+  "invocation": {
+    "command": "/__TARGET__",
+    "policy": "",
+    "description_strategy": "",
+    "examples": []
+  },
+  "inputs": {
+    "arguments": [],
+    "design_documents": [],
+    "trusted_sources": [],
+    "untrusted_sources": []
+  },
+  "scope": {
+    "include": [],
+    "exclude": [],
+    "conditional": []
+  },
+  "side_effect_level": "",
+  "permissions": {
+    "allow": [],
+    "deny": [],
+    "approval_required": [],
+    "technical_controls": []
+  },
+  "execution": {
+    "context": "",
+    "agent": "",
+    "background": null,
+    "state_length": "",
+    "working_directory": ""
+  },
+  "outputs": {
+    "runtime_files": [],
+    "evidence_files": [],
+    "final_report_sections": []
+  },
+  "validation": {
+    "structural": [],
+    "scenario": [],
+    "trigger_should": [],
+    "trigger_should_not": [],
+    "completion_assertions": []
+  },
+  "failure_handling": {
+    "retryable": [],
+    "non_retryable": [],
+    "rollback": [],
+    "stop_conditions": [],
+    "partial_success": ""
+  },
+  "completion_conditions": [],
+  "open_questions": [],
+  "status": "DRAFT"
+}
