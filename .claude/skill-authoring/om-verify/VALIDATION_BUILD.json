@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "target": "om-verify",
+  "phase": "build",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "counts": {
+    "source_rules": 89,
+    "classified_rules": 89,
+    "missing_rules": 0,
+    "unknown_rules": 0,
+    "duplicate_rules": 0,
+    "design_requirements": 18,
+    "resolved_design_requirements": 18
+  },
+  "audit_verdict": null,
+  "validated_at": "2026-08-25T03:56:36.060431+00:00"
+}

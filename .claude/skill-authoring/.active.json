@@ -1,0 +1,10 @@
+{
+  "target": "om-plan",
+  "mode": "full",
+  "phase": "AUDIT",
+  "status": "PASS",
+  "project_root": "/Users/seop/claude-skill-by-seop",
+  "evidence_dir": "/Users/seop/claude-skill-by-seop/.claude/skill-authoring/om-plan",
+  "skill_dir": "/Users/seop/claude-skill-by-seop/.claude/skills/om-plan",
+  "updated_at": "2026-08-25T04:05:01.023097+00:00"
+}

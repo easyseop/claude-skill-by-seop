@@ -1,0 +1,10 @@
+{
+  "target": "om-plan",
+  "status": "PASS",
+  "validated_at": "2026-08-25T04:05:01.022360+00:00",
+  "validation_files": [
+    "VALIDATION_SPEC.json",
+    "VALIDATION_BUILD.json",
+    "VALIDATION_AUDIT.json"
+  ]
+}
