@@ -1,26 +1,108 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.3",
   "target_skill": "__TARGET__",
+  "primary_design_document": "",
   "source_documents": [],
+  "source_request_documents": [],
+  "decision_documents": [],
+  "requirement_intake_document": "",
   "requirements": {
-    "purpose": {"status": "UNRESOLVED", "value": "", "sources": []},
-    "user_outcome": {"status": "UNRESOLVED", "value": "", "sources": []},
-    "use_when": {"status": "UNRESOLVED", "items": [], "sources": []},
-    "do_not_use_when": {"status": "UNRESOLVED", "items": [], "sources": []},
-    "invocation_examples": {"status": "UNRESOLVED", "items": [], "sources": []},
-    "inputs_and_defaults": {"status": "UNRESOLVED", "items": [], "sources": []},
-    "trusted_and_untrusted_sources": {"status": "UNRESOLVED", "items": [], "sources": []},
-    "scope_include": {"status": "UNRESOLVED", "items": [], "sources": []},
-    "scope_exclude": {"status": "UNRESOLVED", "items": [], "sources": []},
-    "scope_conditional": {"status": "UNRESOLVED", "items": [], "sources": []},
-    "permissions_allow": {"status": "UNRESOLVED", "items": [], "sources": []},
-    "permissions_deny": {"status": "UNRESOLVED", "items": [], "sources": []},
-    "approval_required": {"status": "UNRESOLVED", "items": [], "sources": []},
-    "workflow": {"status": "UNRESOLVED", "items": [], "sources": []},
-    "outputs": {"status": "UNRESOLVED", "items": [], "sources": []},
-    "validation": {"status": "UNRESOLVED", "items": [], "sources": []},
-    "failure_handling": {"status": "UNRESOLVED", "items": [], "sources": []},
-    "completion_conditions": {"status": "UNRESOLVED", "items": [], "sources": []}
+    "purpose": {
+      "status": "UNRESOLVED",
+      "value": "",
+      "sources": []
+    },
+    "user_outcome": {
+      "status": "UNRESOLVED",
+      "value": "",
+      "sources": []
+    },
+    "use_when": {
+      "status": "UNRESOLVED",
+      "items": [],
+      "sources": []
+    },
+    "do_not_use_when": {
+      "status": "UNRESOLVED",
+      "items": [],
+      "sources": []
+    },
+    "invocation_examples": {
+      "status": "UNRESOLVED",
+      "items": [],
+      "sources": []
+    },
+    "inputs_and_defaults": {
+      "status": "UNRESOLVED",
+      "items": [],
+      "sources": []
+    },
+    "trusted_and_untrusted_sources": {
+      "status": "UNRESOLVED",
+      "items": [],
+      "sources": []
+    },
+    "scope_include": {
+      "status": "UNRESOLVED",
+      "items": [],
+      "sources": []
+    },
+    "scope_exclude": {
+      "status": "UNRESOLVED",
+      "items": [],
+      "sources": []
+    },
+    "scope_conditional": {
+      "status": "UNRESOLVED",
+      "items": [],
+      "sources": []
+    },
+    "permissions_allow": {
+      "status": "UNRESOLVED",
+      "items": [],
+      "sources": []
+    },
+    "permissions_deny": {
+      "status": "UNRESOLVED",
+      "items": [],
+      "sources": []
+    },
+    "approval_required": {
+      "status": "UNRESOLVED",
+      "items": [],
+      "sources": []
+    },
+    "workflow": {
+      "status": "UNRESOLVED",
+      "items": [],
+      "sources": []
+    },
+    "outputs": {
+      "status": "UNRESOLVED",
+      "items": [],
+      "sources": []
+    },
+    "validation": {
+      "status": "UNRESOLVED",
+      "items": [],
+      "sources": []
+    },
+    "failure_handling": {
+      "status": "UNRESOLVED",
+      "items": [],
+      "sources": []
+    },
+    "completion_conditions": {
+      "status": "UNRESOLVED",
+      "items": [],
+      "sources": []
+    }
+  },
+  "decision_register": {
+    "user_decisions": [],
+    "repository_research": [],
+    "safe_defaults": [],
+    "non_blocking_uncertainties": []
   },
   "open_questions": [],
   "status": "DRAFT"

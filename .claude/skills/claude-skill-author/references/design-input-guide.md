@@ -1,54 +1,62 @@
-# 설계 입력 해석 가이드
+# 설계 입력 가이드
 
-`--design`으로 전달된 문서는 자유 형식이어도 되지만, 스킬 작성 전에 아래 의미 항목을 모두 해결해야 한다. 단순히 문서 제목이 존재하는지만 확인하지 않고 실제 문장과 저장소 사실을 근거로 `DESIGN_REQUIREMENTS.yaml`에 구조화한다.
+## 추적 사슬
 
-## 필수 의미 항목
+```text
+SOURCE_REQUEST.md
+→ SOURCE_DECISIONS.md
+→ REQUIREMENT_INTAKE.yaml
+→ DESIGN.md
+→ DESIGN_REQUIREMENTS.yaml
+→ DESIGN_AUDIT_REPORT.md + DESIGN_AUDIT_ATTESTATION.yaml
+→ COMMAND_SPEC.yaml
+→ SKILL.md / optional Agent.md
+```
 
-1. 목적
-2. 사용자 관점의 최종 결과
-3. 사용 시점
-4. 비사용 시점
-5. 호출 예
-6. 입력·기본값·입력 오류 처리
-7. 신뢰 가능한 출처와 외부 데이터 경계
-8. 포함 범위
-9. 제외 범위
-10. 조건부 범위
-11. 허용 행동
-12. 금지 행동
-13. 승인 필요 행동
-14. 단계별 절차
-15. 출력 파일·보고 형식
-16. 검증 기준과 시나리오
-17. 실패·재시도·중단·복구
-18. 완료 조건
+## DESIGN.md
 
-## 근거 기록
+`DESIGN_INPUT.template.md`의 표준 20개 섹션을 정확히 한 번씩 순서대로 작성한다. 빈 섹션을 두지 않는다.
 
-각 항목은 다음을 가진다.
+- 해당 사항 없음: `없음 — <구체적인 이유>`
+- 확인 불가: `미확인 — <필요한 출처 또는 행동>`
+- 사용자 결정 필요: `미결정 — <질문과 영향>`
 
-- `status`: `RESOLVED` 또는 `UNRESOLVED`
-- `value` 또는 `items`: 확정한 요구사항
-- `sources`: 근거가 된 설계서 경로·제목, 저장소 파일, 현재 호출문
+각 절차 단계에는 가능한 경우 입력·행동·산출물·검증·실패 처리를 둔다.
 
-현재 호출문에서 보충한 내용은 `current invocation: <요약>`처럼 출처를 남긴다. 저장소에서 확인한 사실은 정확한 경로를 남긴다.
+## REQUIREMENT_INTAKE.yaml
 
-## 누락 처리
+각 요구사항 예:
 
-- 설계서에 없지만 현재 호출문이나 저장소에서 확정할 수 있으면 해당 근거로 해결한다.
-- 해당 사항이 실제로 없으면 빈 배열로 두지 않고 `없음 — <이유>`를 항목에 기록한다.
-- 목적, 범위, 권한, 절차, 검증, 실패 처리 또는 완료 조건을 확정할 수 없으면 추측하지 않는다.
-- 미해결 항목은 `open_questions`에 기록하고 `status: DRAFT`를 유지한다.
-- 모든 필수 의미 항목이 해결되고 근거가 연결된 경우에만 `status: APPROVED`로 바꾼다.
+```json
+{
+  "id": "REQ-001",
+  "type": "USER_EXPLICIT",
+  "text": "코드 리뷰 중 파일을 수정하지 않는다.",
+  "status": "RESOLVED",
+  "blocking": true,
+  "sources": [
+    {"path": ".claude/skill-authoring/review/SOURCE_REQUEST.md", "anchor": "코드 리뷰 중 파일을 수정하지"}
+  ],
+  "design_links": ["## 11. 금지 행동"]
+}
+```
 
-## 설계서 템플릿
+승인 조건:
 
-새 설계서를 만들 때는 `${CLAUDE_SKILL_DIR}/assets/DESIGN_INPUT.template.md`를 기준으로 작성한다. 템플릿의 목차를 그대로 써도 되고, 기존 설계서가 다른 구조라면 의미 항목만 대응시키면 된다.
+- `USER_EXPLICIT` 요구사항 1개 이상
+- 고유 `REQ-###` ID
+- 모든 차단 요구와 질문 `RESOLVED`
+- 모든 요구사항에 실제 근거
+- 해결 요구사항마다 DESIGN 반영 위치
+- 전체 상태 `APPROVED`
 
-## 명세로의 변환
+## DESIGN_REQUIREMENTS.yaml
 
-`COMMAND_SPEC.yaml`은 승인된 `DESIGN_REQUIREMENTS.yaml`을 대상 스킬의 실행 계약으로 변환한 결과다. 다음을 지킨다.
+18개 필수 의미 항목을 `RESOLVED`로 채우고 각 항목에 원문·결정·설계서·저장소 근거를 기록한다. DESIGN.md의 20개 섹션과 18개 의미 항목은 목적이 다르다.
 
-- 설계 입력과 명세가 충돌하면 임의로 한쪽을 선택하지 않는다.
-- 명세의 목적·범위·권한·절차·검증·실패·완료 조건은 설계 요구사항에 추적 가능해야 한다.
-- 설계서보다 구체화한 내용은 저장소 사실 또는 적용 규칙 ID를 근거로 남긴다.
+- 20개 섹션: 사람이 읽는 설계 구조
+- 18개 의미 항목: 검사기가 확인하는 실행 계약 입력
+
+## 설계 감사와 digest
+
+설계 감사자는 파일을 수정하지 않는다. PASS 보고서를 받은 뒤 `seal_attestation.py --kind design`으로 현재 원문·결정·intake·설계서·설계 요구사항 digest를 묶는다. 이후 입력이 바뀌면 기존 PASS는 재사용할 수 없다.

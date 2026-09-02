@@ -1,146 +1,89 @@
-# Claude 스킬 작성 오케스트레이션 절차
+# Claude Skill Author v1.3 작성 워크플로
 
-이 문서는 `claude-skill-author`가 수행하는 상세 절차다. 런타임 스킬에 복사하지 않는다.
-
-## 1. 두 종류의 단계를 분리한다
-
-### 작성 프로세스 단계
-
-메타 스킬 자체는 다음 순서로 진행한다.
+## 상태 전이
 
 ```text
-X 오케스트레이션
-→ P 명세
-→ G 규칙·권한 설계
-→ I/D 런타임 파일 작성
-→ V 독립 감사
+자연어 입력
+→ SOURCE_REQUEST 잠금
+→ SOURCE_DECISIONS 누적
+→ REQUIREMENT_INTAKE
+→ DESIGN 20섹션
+→ DESIGN_REQUIREMENTS 18항목
+→ 독립 설계 감사 + attestation
+→ design PASS
+→ 규칙 전수 판정·COMMAND_SPEC
+→ spec PASS
+→ SKILL.md + optional Agent.md
+→ build PASS
+→ 독립 최종 감사 + attestation
+→ audit PASS
+→ FINAL_STATUS PASS
 ```
 
-### 대상 스킬 단계
-
-새로 만들어지는 스킬의 주단계와 보조단계는 별도로 판정한다. 예를 들어 계획 스킬은 `P`가 주단계이고 `R`, `V`가 보조단계일 수 있다.
-
-두 단계 체계를 섞지 않는다.
-
-## 2. 산출물 분리
+허용 전이:
 
 ```text
-.claude/skills/<target>/
-├── SKILL.md
-├── references/   # 필요한 경우
-├── scripts/      # 필요한 경우
-├── assets/       # 필요한 경우
-└── evals/        # 필요한 경우
+design PASS → spec
+spec PASS → build
+build PASS → audit
+audit PASS → FINAL PASS
+```
 
+원문·결정·설계·명세·런타임 파일이 바뀌면 해당 단계와 뒤 단계 fingerprint가 stale이므로 다시 검증한다.
+
+## 증거 디렉터리
+
+```text
 .claude/skill-authoring/<target>/
+├── SOURCE_REQUEST.md
+├── SOURCE_DECISIONS.md
+├── REQUIREMENT_INTAKE.yaml
 ├── DESIGN_REQUIREMENTS.yaml
+├── DESIGN_AUDIT_REPORT.md
+├── DESIGN_AUDIT_ATTESTATION.yaml
 ├── RULE_MANIFEST.yaml
-├── COMMAND_SPEC.yaml
 ├── RULE_COVERAGE.yaml
+├── COMMAND_SPEC.yaml
 ├── SPEC_REVIEW.md
 ├── AUTHORING_REVIEW.md
 ├── AUDIT_REPORT.md
+├── AUDIT_ATTESTATION.yaml
+├── AUTHORING_STATE.yaml
+├── VALIDATION_DESIGN.json
 ├── VALIDATION_SPEC.json
 ├── VALIDATION_BUILD.json
 ├── VALIDATION_AUDIT.json
 └── FINAL_STATUS.json
 ```
 
-런타임 폴더에는 실행에 필요한 내용만 둔다. 작성 근거와 감사 증거는 별도 폴더에 둔다.
+## 작성자와 감사자 분리
 
+- B 메인 세션: 원문 캡처, 저장소 조사, 단계 조율, spec/build 수행
+- `skill-design-author`: intake와 DESIGN 작성
+- `skill-design-auditor`: 원문·결정 ↔ intake ↔ DESIGN 감사
+- `skill-author-auditor`: 설계·명세·규칙 ↔ SKILL/Agent 최종 감사
+- 검사 스크립트: 필드·digest·fingerprint·상태 전이를 결정적으로 검증
 
-## 3. 설계 입력 게이트
+## 재개
 
-`--design` 문서는 자유 형식이어도 되지만, 작성자는 먼저 `DESIGN_REQUIREMENTS.yaml`에 다음을 구조화한다.
+- 최초 원문은 수정하지 않는다.
+- 후속 결정은 `SOURCE_DECISIONS.md`에 추가한다.
+- 기존 증거를 이어갈 때 `init_authoring.py --resume`을 사용한다.
+- 입력 digest가 바뀌면 뒤 단계 PASS가 stale 처리된다.
+- stale 단계부터 새 감사·검증을 수행한다.
 
-- 목적과 사용자 결과
-- 사용·비사용 조건과 호출 예
-- 입력·기본값·출처 경계
-- 포함·제외·조건부 범위
-- 허용·금지·승인 행동
-- 단계별 절차와 출력
-- 검증·시나리오
-- 실패·재시도·중단·복구
-- 완료 조건
+## 감사 seal
 
-각 항목에는 구체적인 값과 근거 출처가 있어야 한다. 설계서에 없으면 현재 호출문이나 저장소 사실로 보충할 수 있지만, 근거 없이 추측하지 않는다. 실제 해당 사항이 없으면 `없음 — <이유>`로 해결한다. 미해결 필수 항목이 있으면 `status: DRAFT`를 유지하고 명세 게이트를 통과시키지 않는다.
+설계 감사 PASS 후:
 
-새 설계서가 필요한 경우 `assets/DESIGN_INPUT.template.md`를 사용한다.
+```bash
+python3 ${CLAUDE_SKILL_DIR}/scripts/seal_attestation.py \
+  --project-root "${CLAUDE_PROJECT_DIR}" --target "<target>" --kind design
+```
 
-## 4. 규칙 전수 판정
+최종 감사 PASS 후:
 
-`RULE_MANIFEST.yaml`에는 원문에서 자동 추출한 다음 항목이 들어 있다.
-
-- `rules`: `C-*`, `P-*`, `D-*`, `E-*`, `V-*`, `S-*`, `M-*`, `CC-*`
-- `anti_patterns`: `A-*`, `A-CC-*`
-- `stage_modules`: `R`, `P`, `I`, `V`, `F`, `O`, `D`, `G`, `X`
-
-규칙 판정 상태:
-
-- `APPLY`: 의미를 유지해 반영한다.
-- `TRANSFORM`: 대상 스킬의 구체적 행동으로 변환한다.
-- `EXCLUDE`: 현재 단계·위험·입출력에는 적용되지 않는다.
-- `EXTERNAL`: Markdown이 아니라 기술적 통제로 구현한다.
-
-판정표에서 규칙 ID가 빠지거나 중복되면 실패다.
-
-## 5. 명세 게이트
-
-`COMMAND_SPEC.yaml`은 승인된 `DESIGN_REQUIREMENTS.yaml`을 실행 계약으로 변환해 런타임 스킬 작성 전에 동결하는 문서다.
-
-반드시 확정할 항목:
-
-- 대상 스킬의 사용자 관점 결과
-- 주단계와 보조단계
-- 신규·개정 구분
-- 호출 주체와 자동 발동 정책
-- 입력·인수·기본값·오류 처리
-- 포함·제외 범위
-- 부작용 등급
-- 허용·금지·승인 행동
-- inline·fork 실행 컨텍스트
-- 산출물과 저장 위치
-- 단계별 검증
-- 실패·재시도·중단·복구
-- 완료 조건
-- 평가 시나리오
-
-명세가 바뀌면 `RULE_COVERAGE.yaml`을 함께 갱신하고 spec 검증을 다시 실행한다.
-
-## 6. 런타임 작성
-
-작성 순서:
-
-1. 기존 대상과 프로젝트 규칙을 읽는다.
-2. `COMMAND_SPEC.yaml`을 기준으로 파일 구조를 정한다.
-3. `SKILL.md`를 작성한다.
-4. 반복·결정적 검사는 스크립트로 분리한다.
-5. 긴 도메인 지식과 변형별 지침은 references로 분리한다.
-6. 출력 형식은 실제 템플릿으로 제공한다.
-7. `APPLY`·`TRANSFORM` 규칙의 반영 위치를 기록한다.
-8. 모든 의미 문장을 역방향으로 근거에 연결한다.
-9. 기계 검증을 통과한다.
-
-## 7. 독립 감사
-
-감사자는 다음을 원문에서 다시 확인한다.
-
-- 규칙 ID 수와 판정 수가 일치하는가
-- 각 적용 규칙이 실제 의미로 반영됐는가
-- 제외 이유가 타당한가
-- 외부 통제가 실제 존재하는가
-- 모든 최종 문장에 근거가 있는가
-- frontmatter와 본문이 모순되지 않는가
-- 인수, 권한, 실패, 완료, 출력 계약이 연결되는가
-- 정상·경계·오류·인젝션·부분 실패 시나리오가 처리되는가
-
-작성자의 설명을 사실로 간주하지 않고 실제 파일로 검증한다.
-
-## 8. 완료 상태
-
-- `PASS`: 필수 규칙·검증·감사가 모두 통과했다.
-- `CONDITIONAL`: 런타임 스킬은 유효하지만 필수 외부 통제가 미구현이다.
-- `FAIL`: 규칙 누락, 구조 오류, 의미 누락, 검증 실패가 있다.
-- `BLOCKED`: 권한·환경·설계서 부재로 진행할 수 없다.
-
-`PASS` 이외 상태를 완료로 보고하지 않는다.
+```bash
+python3 ${CLAUDE_SKILL_DIR}/scripts/seal_attestation.py \
+  --project-root "${CLAUDE_PROJECT_DIR}" --target "<target>" --kind final
+```

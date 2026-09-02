@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.3",
+  "target_skill": "__TARGET__",
+  "mode": "full",
+  "source_request_lock": {
+    "path": "",
+    "sha256": "",
+    "locked_at": ""
+  },
+  "phases": {
+    "design": {"status": "PENDING", "fingerprint": "", "validated_at": "", "validation_file": "VALIDATION_DESIGN.json"},
+    "spec": {"status": "PENDING", "fingerprint": "", "validated_at": "", "validation_file": "VALIDATION_SPEC.json"},
+    "build": {"status": "PENDING", "fingerprint": "", "validated_at": "", "validation_file": "VALIDATION_BUILD.json"},
+    "audit": {"status": "PENDING", "fingerprint": "", "validated_at": "", "validation_file": "VALIDATION_AUDIT.json"}
+  },
+  "updated_at": ""
+}

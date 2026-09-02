@@ -1,13 +1,22 @@
 # __TARGET__ 작성 검토
 
-## 설계 요구사항 추적
+## 원문 요구사항·설계 추적
 
-| 설계 요구사항 | 근거 출처 | COMMAND_SPEC 반영 위치 | 최종 파일 반영 위치 | 판정 |
+| 원문 요구사항 | DESIGN 반영 위치 | COMMAND_SPEC 반영 위치 | 최종 파일 반영 위치 | 판정 |
 |---|---|---|---|---|
 
 ## 최종 프로필
 
 ## 규칙 집계
+
+## Agent.md 필요성 판정
+
+- 사용자 정책: `auto | required | forbidden`
+- 최종 판정: `required | not-required`
+- 판단 기준:
+- 통합 방식: `none | skill-context-fork | agent-preloads-skill | standalone-agent`
+- 생성 경로:
+- 유지 이유:
 
 ## APPLY·TRANSFORM 반영 위치
 

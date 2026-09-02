@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.3",
+  "target_skill": "__TARGET__",
+  "audit_kind": "final",
+  "auditor_role": "skill-author-auditor",
+  "verdict": "DRAFT",
+  "inputs": [],
+  "report": {
+    "path": "",
+    "sha256": ""
+  },
+  "attested_at": ""
+}

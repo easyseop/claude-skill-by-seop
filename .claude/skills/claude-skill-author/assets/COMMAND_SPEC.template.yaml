@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.3",
   "target_skill": "__TARGET__",
   "artifact_type": "skill",
   "operation": "__OPERATION__",
@@ -17,7 +17,10 @@
     "arguments": [],
     "design_documents": [],
     "trusted_sources": [],
-    "untrusted_sources": []
+    "untrusted_sources": [],
+    "source_request_documents": [],
+    "decision_documents": [],
+    "requirement_intake_document": ""
   },
   "scope": {
     "include": [],
@@ -59,5 +62,22 @@
   },
   "completion_conditions": [],
   "open_questions": [],
-  "status": "DRAFT"
+  "status": "DRAFT",
+  "agent_requirement": {
+    "mode": "auto",
+    "decision": "",
+    "rationale": "",
+    "criteria": {
+      "independent_repeated_role": false,
+      "separate_tools_or_permissions": false,
+      "separate_context": false,
+      "persistent_memory": false,
+      "collaboration_or_handoff": false
+    },
+    "name": "",
+    "path": "",
+    "integration": "none",
+    "tools": [],
+    "permission_mode": "default"
+  }
 }

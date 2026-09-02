@@ -1,31 +1,62 @@
-# 작성 증거 스키마
+# 작성 증거 스키마 v1.3
 
-모든 `.yaml` 파일은 Python 표준 라이브러리만으로 검증할 수 있도록 **JSON 호환 YAML**, 즉 유효한 JSON 문법으로 저장한다. JSON은 YAML 1.2의 부분집합이다.
+모든 `.yaml` 파일은 Python 표준 라이브러리로 검증할 수 있도록 JSON 호환 YAML, 즉 유효한 JSON 문법으로 저장한다.
 
+## SOURCE_REQUEST.md
 
-## DESIGN_REQUIREMENTS.yaml
+최초 사용자 자연어의 불변 원형이다. 생성 후 수정하지 않는다. `AUTHORING_STATE.yaml.source_request_lock`에 경로·SHA-256·잠금 시각을 기록한다.
 
-설계서·현재 호출문·저장소 사실에서 추출한 요구사항을 구조화한다. `COMMAND_SPEC.yaml`보다 먼저 승인한다.
+## SOURCE_DECISIONS.md
+
+최초 요청 이후의 사용자 답변·변경 결정을 시간순으로 추가한다. 기존 기록을 덮어쓰지 않는다. 변경 시 design 이후 단계는 stale 처리한다.
+
+## REQUIREMENT_INTAKE.yaml
 
 ```json
 {
-  "schema_version": "1.0",
+  "schema_version": "1.3",
   "target_skill": "example",
-  "source_documents": [
-    {"path": "docs/example.md", "sha256": "..."}
-  ],
-  "requirements": {
-    "purpose": {
+  "source_request_documents": [{"path": ".../SOURCE_REQUEST.md", "sha256": "...", "type": "source_request"}],
+  "decision_documents": [{"path": ".../SOURCE_DECISIONS.md", "sha256": "...", "type": "source_decision"}],
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "type": "USER_EXPLICIT",
+      "text": "파일을 수정하지 않는다.",
       "status": "RESOLVED",
-      "value": "구현 전 검증 가능한 계획을 작성한다.",
-      "sources": ["docs/example.md#목적"]
-    },
-    "use_when": {
-      "status": "RESOLVED",
-      "items": ["다중 파일 변경 계획 요청"],
-      "sources": ["docs/example.md#사용-시점"]
+      "blocking": true,
+      "sources": [{"path": ".claude/skill-authoring/example/SOURCE_REQUEST.md", "anchor": "파일을 수정하지"}],
+      "design_links": ["## 11. 금지 행동"]
     }
-  },
+  ],
+  "open_questions": [],
+  "summary": {},
+  "status": "APPROVED"
+}
+```
+
+가능한 `type`:
+
+- `USER_EXPLICIT`
+- `USER_DECISION`
+- `REPOSITORY_FACT`
+- `SAFE_DEFAULT`
+- `PROPOSAL`
+- `NON_BLOCKING_UNCERTAINTY`
+
+## DESIGN_REQUIREMENTS.yaml
+
+```json
+{
+  "schema_version": "1.3",
+  "target_skill": "example",
+  "primary_design_document": "docs/skill-designs/example/DESIGN.md",
+  "source_documents": [{"path": "...", "sha256": "...", "type": "design"}],
+  "source_request_documents": [{"path": "...", "sha256": "...", "type": "source_request"}],
+  "decision_documents": [{"path": "...", "sha256": "...", "type": "source_decision"}],
+  "requirement_intake_document": ".claude/skill-authoring/example/REQUIREMENT_INTAKE.yaml",
+  "requirements": {},
+  "decision_register": {},
   "open_questions": [],
   "status": "APPROVED"
 }
@@ -33,118 +64,63 @@
 
 필수 의미 항목은 `purpose`, `user_outcome`, `use_when`, `do_not_use_when`, `invocation_examples`, `inputs_and_defaults`, `trusted_and_untrusted_sources`, `scope_include`, `scope_exclude`, `scope_conditional`, `permissions_allow`, `permissions_deny`, `approval_required`, `workflow`, `outputs`, `validation`, `failure_handling`, `completion_conditions`다.
 
-각 항목은 다음 조건을 만족해야 한다.
+## DESIGN_AUDIT_ATTESTATION.yaml
 
-- `status: RESOLVED`
-- 비어 있지 않은 `value` 또는 `items`
-- 하나 이상의 `sources`
-- 해당 사항이 없으면 `없음 — <이유>`를 명시
-
-모든 필수 항목이 해결된 경우에만 최상위 `status`를 `APPROVED`로 둔다.
-
-## RULE_MANIFEST.yaml
-
-원문에서 자동 생성한다. 직접 수정하지 않는다.
-
-핵심 필드:
+독립 설계 감사 PASS를 정확한 입력 digest에 묶는다.
 
 ```json
 {
-  "schema_version": "1.0",
-  "source_documents": [],
-  "counts": {
-    "rules": 0,
-    "anti_patterns": 0,
-    "stage_modules": 0
-  },
-  "rules": [],
-  "anti_patterns": [],
-  "stage_modules": {}
-}
-```
-
-각 규칙은 `id`, `title`, `category`, `source_file`, `start_line`, `end_line`, `text`를 가진다.
-
-## RULE_COVERAGE.yaml
-
-```json
-{
+  "schema_version": "1.3",
   "target_skill": "example",
-  "rules": {
-    "C-01": {
-      "status": "UNCLASSIFIED",
-      "rationale": "",
-      "planned_locations": [],
-      "targets": [],
-      "external_controls": []
-    }
-  },
-  "anti_patterns": {
-    "A-01": {
-      "status": "UNCHECKED",
-      "evidence": ""
-    }
-  },
-  "stage_modules": {
-    "primary": "",
-    "secondary": [],
-    "applied": {}
-  }
+  "audit_kind": "design",
+  "auditor_role": "skill-design-auditor",
+  "verdict": "PASS",
+  "inputs": [{"path": "...", "sha256": "...", "role": "source-request", "kind": "file"}],
+  "input_fingerprint": "...",
+  "report": {"path": ".../DESIGN_AUDIT_REPORT.md", "sha256": "...", "role": "audit-report", "kind": "file"},
+  "attested_at": "..."
 }
 ```
 
-최종 `targets` 형식:
+## RULE_MANIFEST.yaml / RULE_COVERAGE.yaml
 
-```json
-{
-  "file": "SKILL.md",
-  "contains": "검증이 통과한 경우에만 완료로 판정한다."
-}
-```
-
-외부 통제 형식:
-
-```json
-{
-  "type": "hook",
-  "path": ".claude/settings.json",
-  "state": "implemented",
-  "required_for_pass": true,
-  "description": "배포 명령 전 승인 토큰을 검사한다."
-}
-```
+원문 규칙에서 manifest를 자동 생성한다. Coverage는 각 규칙을 `APPLY`, `TRANSFORM`, `EXCLUDE`, `EXTERNAL` 중 하나로 판정한다.
 
 ## COMMAND_SPEC.yaml
 
 필수 최상위 필드:
 
-- `target_skill`
-- `artifact_type`
-- `operation`
-- `purpose`
-- `user_outcome`
-- `primary_stage`
-- `secondary_stages`
-- `invocation`
-- `inputs`
-- `scope`
-- `side_effect_level`
-- `permissions`
-- `execution`
-- `outputs`
-- `validation`
-- `failure_handling`
-- `completion_conditions`
-- `status`
+- `target_skill`, `artifact_type`, `operation`, `purpose`, `user_outcome`
+- `primary_stage`, `secondary_stages`
+- `invocation`, `inputs`, `scope`, `side_effect_level`, `permissions`
+- `execution`, `outputs`, `validation`, `failure_handling`
+- `completion_conditions`, `agent_requirement`, `status`
 
-`status`는 명세 검토 후 `APPROVED`로 바꾼다.
+`inputs`에는 승인된 design, source request, decision, requirement intake 경로가 모두 포함돼야 한다.
 
-## 감사 판정
+## AUTHORING_STATE.yaml
 
-`AUDIT_REPORT.md`에는 다음 줄이 정확히 하나 있어야 한다.
-
-```text
-- 판정: PASS
+```json
+{
+  "schema_version": "1.3",
+  "target_skill": "example",
+  "mode": "full",
+  "source_request_lock": {"path": "...", "sha256": "...", "locked_at": "..."},
+  "phases": {
+    "design": {"status": "PASS", "fingerprint": "..."},
+    "spec": {"status": "PASS", "fingerprint": "..."},
+    "build": {"status": "PASS", "fingerprint": "..."},
+    "audit": {"status": "PASS", "fingerprint": "..."}
+  }
+}
 ```
 
-가능한 값은 `PASS`, `CONDITIONAL`, `FAIL`이다.
+상위 입력이 바뀌면 뒤 단계는 `STALE`이 되며 이전 PASS를 재사용할 수 없다.
+
+## AUDIT_ATTESTATION.yaml
+
+최종 감사 PASS를 명세·규칙·런타임 파일·build 검증 digest에 묶는다. `AUDIT_REPORT.md`만 수정하거나 옛 PASS 보고서를 복사하면 audit 검증이 실패해야 한다.
+
+## FINAL_STATUS.json
+
+모든 단계가 현재 fingerprint로 PASS일 때만 생성한다. 네 단계 fingerprint와 validation 파일 목록을 포함한다.
