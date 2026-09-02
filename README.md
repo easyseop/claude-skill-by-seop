@@ -20,3 +20,5 @@ cp -r claude-skill-by-seop/skills/<스킬명> ~/.claude/skills/   # 개인용
 | [reader-doubt-check](skills/reader-doubt-check/SKILL.md) | 문장을 내놓기 전 독자 의문 7종으로 자기검토 | [SKILL](skills/reader-doubt-check/SKILL.md) |
 
 > **claude-skill-author**는 다른 셋과 성격이 다르다 — 복사만으로 쓰는 경량 스킬이 아니라, 저장소에 설치해 "AI 행동을 통제하는 스킬"을 만들어 내는 제작 도구다. 설치·환경·사용법·알려진 한계는 [전용 README](.claude/skills/claude-skill-author/README.md)를 볼 것.
+>
+> ⚠️ **오해 주의**: 이 도구는 `SKILL.md`(마크다운)를 만들어 줄 뿐, 규칙을 실제로 막는 **런타임 검사기는 만들지 않는다.** 진짜 하드 차단이 필요하면 검사기를 별도로 개발한 뒤 SKILL.md로 엮어야 한다 — [자세히](.claude/skills/claude-skill-author/README.md#️-무엇을-만들어-주고-무엇은-안-만드는가-오해-방지--필독).
