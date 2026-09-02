@@ -7,6 +7,18 @@
 **이럴 때 쓴다**: 코드 리뷰가 파일을 못 고치게, 모든 지적에 파일·줄 근거를 강제, 테스트 못 돌렸으면 통과 표시 금지 — 같은 **규칙·게이트가 핵심인 스킬**.
 **이럴 땐 안 쓴다**: 번역·요약·정리 같은 단순 작업 스킬. 원문 잠금·설계 감사 같은 무거운 공정이 오히려 부담이다.
 
+## 왜 만들었나 (배경·목적)
+
+출발점은 *"LLM 스킬·하네스용 Markdown을 쓸 때 반복적으로 지켜야 하는 공통 규칙은 무엇인가?"* 라는 조사였다. 여러 AI 코딩 생태계의 공식 작성 지침과 연구를 비교해 **제품 독립 규칙 체계**로 합성했다:
+
+- **비교 대상**: Agent Skills · Claude Code · OpenAI Codex · Cursor · GitHub Copilot 외 7개 생태계(OpenHands·Cline·Roo Code·LangGraph·AutoGen·CrewAI·MCP)
+- **근거**: 공식 규격·제품 문서 **23개** + 연구 논문 **8편**(ReAct · Reflexion · Self-Refine · The Instruction Hierarchy 외) = 중복 제거 **37개 고유 URL**
+- **규칙 체계**: 공통 67개(`C/P/D/E/V/S/M-*`) + Claude Code 전용 22개(`CC-*`) = **총 89개 규칙**을 전수 판정. 규칙은 SKILL.md에 통째로 복사하지 않고, 대상 스킬마다 `APPLY/TRANSFORM/EXCLUDE/EXTERNAL`로 판정해 필요한 것만 실행 문장·스크립트·권한·훅으로 변환한다.
+
+조사가 도달한 핵심 결론이 이 하네스의 설계 철학이다 — **"Markdown 규칙은 보안 경계가 아니다. 실제 금지는 permissions·hook·CI·샌드박스 같은 기술적 통제와 결합해야 한다."** (아래 "무엇을 만들어 주고 무엇은 안 만드는가"가 이 결론의 직접적 귀결)
+
+> 전체 배경·근거 목록(31개 번호형 항목·URL 포함)은 [BACKGROUND_AND_REFERENCES_KO.md](../../../claude-skill-author-share-kit/BACKGROUND_AND_REFERENCES_KO.md), 종합 사용 가이드는 [README_KO.md](../../../claude-skill-author-share-kit/README_KO.md).
+
 ## 환경 요구사항
 
 - **Python 3.11 이상** (스크립트가 `datetime.UTC` 등 3.11+ 기능 사용 — 3.9에서 즉시 실패)
@@ -99,4 +111,6 @@
 ## 참고 문서
 
 - 스킬 명세 본문: [SKILL.md](SKILL.md)
+- **팀 공유 번들** (설치 패키지 + 종합 가이드 + 배경): [claude-skill-author-share-kit/](../../../claude-skill-author-share-kit/) — 종합 사용 가이드 `README_KO.md`, 배경·근거 `BACKGROUND_AND_REFERENCES_KO.md`, 호출 템플릿 `prompts/`, 설치 zip `packages/`
 - 제작 과정 실물 재구성: [AS-IS](../../../docs/agent-authoring/AS_IS_실행재구성.md) · [TO-BE 설계](../../../docs/agent-authoring/TO_BE_자연어요구사항_스킬생성_보강설계.md)
+- 독립 적대 검토: [v1.3 결과](../../../docs/agent-authoring/v1.3_적대검토_결과.md) · 개선 요청 [v1.4](../../../docs/agent-authoring/v1.4_개발요청_코덱스.md)
