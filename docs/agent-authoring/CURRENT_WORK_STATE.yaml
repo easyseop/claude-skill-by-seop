@@ -4,8 +4,8 @@ repository: easyseop/claude-skill-by-seop
 branch: codex/knowledge-rag-builder-k0-k6
 workstream: knowledge-rag-builder
 milestone: K0-K6-local-mvp
-status: READY_FOR_CODEX
-updated_at: "2026-11-20T00:00:00+09:00"
+status: IN_PROGRESS
+updated_at: "2026-11-20T03:28:11.322Z"
 
 source_of_truth:
   work_order: docs/agent-authoring/CODEX_KNOWLEDGE_RAG_BUILDER_K0_K6_WORK_ORDER.md
