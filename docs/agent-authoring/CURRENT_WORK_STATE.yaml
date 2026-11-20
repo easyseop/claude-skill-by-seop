@@ -1,0 +1,86 @@
+schema_version: "1.0"
+project: agent-system-author
+repository: easyseop/claude-skill-by-seop
+branch: codex/knowledge-rag-builder-k0-k6
+workstream: knowledge-rag-builder
+milestone: K0-K6-local-mvp
+status: READY_FOR_CODEX
+updated_at: "2026-11-20T00:00:00+09:00"
+
+source_of_truth:
+  work_order: docs/agent-authoring/CODEX_KNOWLEDGE_RAG_BUILDER_K0_K6_WORK_ORDER.md
+  collaboration_protocol: docs/agent-authoring/CODEX_COLLABORATION_PROTOCOL.md
+  state_file: docs/agent-authoring/CURRENT_WORK_STATE.yaml
+  handoff_log: docs/agent-authoring/HANDOFF_LOG.md
+
+completed_upstream:
+  - component: claude-skill-author
+    status: completed
+  - component: capability-artifact-planner
+    status: implemented_and_reported
+  - component: gate-generator
+    status: implemented_m0_m3_local
+  - component: execution-artifact-generator
+    status: implemented_e0_e4_local
+  - component: knowledge-rag-builder-research
+    status: conditionally_approved
+
+current_task:
+  objective: >-
+    Implement Knowledge & RAG Builder K0-K6 as a contract-bound local candidate,
+    preserving Planner, Gate, and Execution boundaries.
+  scope:
+    - K0 research closure and input binding
+    - K1 minimality compiler
+    - K2 source governance
+    - K3 limited local ingestion
+    - K4 local lexical and structured retrieval
+    - K5 security and freshness contracts
+    - K6 citation, eval, mutation, and procedural audit candidate
+  prohibited:
+    - production RAG or index deployment
+    - production IAM, tenant ACL, RLS, or DLS changes
+    - production secrets or credentials
+    - external vector DB, embedding API, or reranker installation
+    - production database or API writes
+    - modifying .claude/settings.json
+    - claiming an independent audit identity that did not run
+    - direct changes to main
+    - force push or history rewrite
+    - automatic merge
+
+required_results:
+  prompt_coverage_unresolved: 0
+  know_rules: "84/84"
+  knowledge_invariants: "100/100"
+  knowledge_evals: "64/64"
+  knowledge_mutations: "26/26 killed"
+  planner_knowledge_golden: "22/22"
+  critical_mutants_survived: 0
+  unsupported_runtime_false_claims: 0
+  operational_permission: false
+
+expected_paths:
+  skill: .claude/skills/knowledge-rag-builder/
+  auditor: .claude/agents/knowledge-rag-auditor.md
+  evidence: docs/agent-authoring/evidence/knowledge-rag-builder/
+  report: docs/agent-authoring/KNOWLEDGE_RAG_BUILDER_MVP_구현결과.md
+
+codex_next_action: >-
+  Read AGENTS.md, CODEX_COLLABORATION_PROTOCOL.md, CURRENT_WORK_STATE.yaml,
+  and CODEX_KNOWLEDGE_RAG_BUILDER_K0_K6_WORK_ORDER.md; set status to IN_PROGRESS;
+  execute K0 first; do not continue if K0 preflight fails.
+
+review_policy:
+  review_owner: current_chatgpt_orchestrator_session
+  merge_requires_user_approval: true
+  local_verified_is_not_production_approval: true
+
+blocker: null
+last_review: null
+next_stage_after_verified_local:
+  - review Agent & Workflow Assembler research
+  - author Assembler MVP work order
+  - implement Assembler
+  - implement independent evaluation
+  - integrate top-level agent-system-author
