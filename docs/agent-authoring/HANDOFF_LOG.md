@@ -54,3 +54,10 @@
   - Codex 세션이 `CURRENT_WORK_STATE.yaml`을 `IN_PROGRESS`로 갱신
   - K0 preflight부터 수행
   - 완료 시 `READY_FOR_REVIEW`로 변경하고 결과 보고서·evidence manifest 제출
+
+## 2026-11-20 12:28:49 KST — Codex 구현 세션
+
+- 상태: IN_PROGRESS
+- 기준 commit: 0e3cc10780ced0c2db8cdc6ea01d9a40ca3d3119
+- 범위: K0 선행 입력 검증 후 K1~K6 로컬 후보 구현 및 검증.
+- 예상 경로: .claude/skills/knowledge-rag-builder/, .claude/agents/, docs/agent-authoring/ 및 하위 evidence.
