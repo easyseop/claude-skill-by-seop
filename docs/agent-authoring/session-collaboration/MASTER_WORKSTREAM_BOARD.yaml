@@ -1,6 +1,6 @@
 schema_version: "1.0"
 project: agent-system-author
-updated_at: "2026-11-20T13:10:00+09:00"
+updated_at: "2026-11-20T13:50:00+09:00"
 
 capacity:
   orchestrator_sessions: 1
@@ -16,12 +16,25 @@ policies:
   start_downstream_before_dependency_verified: false
   research_can_run_parallel_with_unrelated_implementation: true
 
+active_assignment_policy:
+  implementation_session:
+    current: upstream-recovery
+    forbidden_concurrent:
+      - knowledge-rag-builder-k0-k6
+      - assembler-implementation
+  research_session:
+    current: assembler-research
+    forbidden_concurrent:
+      - external-discovery-research
+      - independent-evaluation-research
+
 lanes:
   implementation:
     - id: upstream-recovery
       priority: 1
-      status: READY_FOR_SETUP
+      status: READY_FOR_SESSION
       branch: recovery/upstream-builders
+      pull_request: 4
       owner_role: implementation_session
       objective: >-
         Restore or regenerate the approved Capability Planner, Gate Generator,
@@ -31,6 +44,7 @@ lanes:
         - knowledge-rag-builder-k0-k6
       allowed_parallel_with:
         - assembler-research
+      start_prompt: docs/agent-authoring/workstreams/upstream-recovery/SESSION_START_PROMPT.md
 
     - id: knowledge-rag-builder-k0-k6
       priority: 2
@@ -43,6 +57,9 @@ lanes:
         - upstream-recovery: VERIFIED_LOCAL
       blocks:
         - assembler-implementation
+      resume_policy: >-
+        Do not resume until upstream-recovery is reviewed and current source/evidence
+        are merged or otherwise digest-bound into this workstream.
 
     - id: assembler-implementation
       priority: 3
@@ -78,8 +95,9 @@ lanes:
   research:
     - id: assembler-research
       priority: 1
-      status: READY_FOR_SETUP
+      status: READY_FOR_SESSION
       branch: research/agent-workflow-assembler
+      pull_request: 2
       owner_role: research_session
       objective: Research Agent & Workflow Assembler rules and contracts.
       dependencies: []
@@ -87,7 +105,7 @@ lanes:
         - assembler-implementation
       allowed_parallel_with:
         - upstream-recovery
-        - knowledge-rag-builder-k0-k6
+      start_prompt: docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md
 
     - id: external-discovery-research
       priority: 2
@@ -124,9 +142,12 @@ review_sequence:
 
 next_actions:
   orchestrator:
-    - Create upstream-recovery workstream branch and inputs.
-    - Create assembler-research workstream branch and inputs.
+    - Monitor PR #4 and PR #2 for state changes and boundary violations.
+    - Review upstream-recovery before unblocking Knowledge/RAG Builder.
+    - Review Assembler research independently from implementation work.
   implementation_session:
-    - Do not continue Knowledge/RAG until upstream-recovery is verified.
+    - Switch to recovery/upstream-builders and read its SESSION_START_PROMPT.md.
+    - Do not modify or resume Knowledge/RAG PR #1 while recovery is active.
   research_session:
-    - Start assembler-research when its branch is ready.
+    - Use research/agent-workflow-assembler and read its SESSION_START_PROMPT.md.
+    - Do not modify implementation or evidence paths.
