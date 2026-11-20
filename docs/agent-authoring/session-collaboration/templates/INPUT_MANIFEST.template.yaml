@@ -1,0 +1,17 @@
+schema_version: "1.0"
+workstream_id: "<id>"
+generated_at: "<ISO-8601>"
+
+inputs:
+  - id: "INPUT-001"
+    path: "<repository-path>"
+    sha256: "<sha256>"
+    role: source_of_truth
+    mutable: false
+    required: true
+    description: "<why this input is required>"
+
+validation:
+  status: PENDING
+  missing: []
+  digest_mismatch: []
