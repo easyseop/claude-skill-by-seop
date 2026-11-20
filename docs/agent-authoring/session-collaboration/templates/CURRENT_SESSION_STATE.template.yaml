@@ -1,0 +1,26 @@
+schema_version: "1.0"
+workstream_id: "<id>"
+session_type: "<research|implementation|review>"
+branch: "<branch>"
+status: READY_FOR_SESSION
+updated_at: "<ISO-8601>"
+
+source_of_truth:
+  start_prompt: "<path>"
+  work_order: "<path>"
+  ownership: "<path>"
+  input_manifest: "<path>"
+  output_manifest: "<path>"
+  handoff_log: "<path>"
+
+current_task:
+  objective: "<objective>"
+  scope: []
+  prohibited: []
+
+required_results: {}
+
+blocker: null
+
+last_review: null
+next_action: "Read the start prompt and begin preflight."

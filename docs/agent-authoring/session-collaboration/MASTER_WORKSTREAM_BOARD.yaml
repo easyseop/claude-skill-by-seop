@@ -1,0 +1,159 @@
+schema_version: "1.0"
+project: agent-system-author
+updated_at: "2026-11-20T15:56:57+09:00"
+
+capacity:
+  orchestrator_sessions: 1
+  research_sessions: 1
+  implementation_sessions: 1
+  review_sessions: 1
+
+policies:
+  auto_merge: false
+  main_direct_write: false
+  one_active_workstream_per_session: true
+  cross_workstream_write: false
+  start_downstream_before_dependency_verified: false
+  research_can_run_parallel_with_unrelated_implementation: true
+
+active_assignment_policy:
+  implementation_session:
+    current: upstream-recovery
+    forbidden_concurrent:
+      - knowledge-rag-builder-k0-k6
+      - assembler-implementation
+  research_session:
+    current: assembler-research
+    forbidden_concurrent:
+      - external-discovery-research
+      - independent-evaluation-research
+
+lanes:
+  implementation:
+    - id: upstream-recovery
+      priority: 1
+      status: BLOCKED_FOR_DECISION
+      branch: recovery/upstream-builders
+      pull_request: 4
+      owner_role: implementation_session
+      reported_blocker: >-
+        Implementation session reports local checkout on main with 5 out-of-scope
+        untracked changes; isolated clone could not proceed due to github.com DNS failure.
+        No Planner source or test evidence was generated. Continue only from a clean,
+        isolated checkout of recovery/upstream-builders after preflight.
+      objective: >-
+        Restore or regenerate the approved Capability Planner, Gate Generator,
+        and Execution Artifact Generator source and structured evidence.
+      dependencies: []
+      blocks:
+        - knowledge-rag-builder-k0-k6
+      allowed_parallel_with:
+        - assembler-research
+      start_prompt: docs/agent-authoring/workstreams/upstream-recovery/SESSION_START_PROMPT.md
+
+    - id: knowledge-rag-builder-k0-k6
+      priority: 2
+      status: BLOCKED_FOR_SOURCE
+      branch: codex/knowledge-rag-builder-k0-k6
+      pull_request: 1
+      owner_role: implementation_session
+      objective: Implement Knowledge & RAG Builder K0-K6 local candidate.
+      dependencies:
+        - upstream-recovery: VERIFIED_LOCAL
+      blocks:
+        - assembler-implementation
+      resume_policy: >-
+        Do not resume until upstream-recovery is reviewed and current source/evidence
+        are merged or otherwise digest-bound into this workstream.
+
+    - id: assembler-implementation
+      priority: 3
+      status: QUEUED
+      branch: implementation/agent-workflow-assembler
+      owner_role: implementation_session
+      dependencies:
+        - knowledge-rag-builder-k0-k6: VERIFIED_LOCAL
+        - assembler-research: VERIFIED_RESEARCH
+      blocks:
+        - independent-evaluation-implementation
+
+    - id: independent-evaluation-implementation
+      priority: 4
+      status: QUEUED
+      branch: implementation/independent-evaluation
+      owner_role: implementation_session
+      dependencies:
+        - assembler-implementation: VERIFIED_LOCAL
+        - independent-evaluation-research: VERIFIED_RESEARCH
+      blocks:
+        - top-level-integration
+
+    - id: top-level-integration
+      priority: 5
+      status: QUEUED
+      branch: implementation/agent-system-author-integration
+      owner_role: implementation_session
+      dependencies:
+        - independent-evaluation-implementation: VERIFIED_LOCAL
+        - external-discovery-research: VERIFIED_RESEARCH
+
+  research:
+    - id: assembler-research
+      priority: 1
+      status: READY_FOR_SESSION
+      branch: research/agent-workflow-assembler
+      pull_request: 2
+      owner_role: research_session
+      objective: Research Agent & Workflow Assembler rules and contracts.
+      dependencies: []
+      blocks:
+        - assembler-implementation
+      allowed_parallel_with:
+        - upstream-recovery
+      start_prompt: docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md
+
+    - id: external-discovery-research
+      priority: 2
+      status: QUEUED
+      branch: research/external-capability-discovery
+      owner_role: research_session
+      objective: >-
+        Research discovery and critical evaluation of reusable Skills,
+        plugins, MCP servers, scripts, and packages.
+      dependencies:
+        - assembler-research: READY_FOR_REVIEW_OR_VERIFIED
+      blocks:
+        - top-level-integration
+
+    - id: independent-evaluation-research
+      priority: 3
+      status: QUEUED
+      branch: research/independent-evaluation
+      owner_role: research_session
+      dependencies:
+        - assembler-research: VERIFIED_RESEARCH
+      blocks:
+        - independent-evaluation-implementation
+
+review_sequence:
+  - upstream-recovery
+  - knowledge-rag-builder-k0-k6
+  - assembler-research
+  - external-discovery-research
+  - assembler-implementation
+  - independent-evaluation-research
+  - independent-evaluation-implementation
+  - top-level-integration
+
+next_actions:
+  orchestrator:
+    - Monitor PR #4 and PR #2 for state changes and boundary violations.
+    - Review upstream-recovery before unblocking Knowledge/RAG Builder.
+    - Review Assembler research independently from implementation work.
+  implementation_session:
+    - Resolve isolated checkout/DNS blocker first; preserve existing untracked changes untouched.
+    - Switch to recovery/upstream-builders and read its SESSION_START_PROMPT.md.
+    - Do not modify or resume Knowledge/RAG PR #1 while recovery is active.
+  research_session:
+    - Use research/agent-workflow-assembler and read its SESSION_START_PROMPT.md.
+    - Do not modify implementation or evidence paths.

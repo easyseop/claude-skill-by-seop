@@ -1,0 +1,14 @@
+schema_version: "1.0"
+workstream_id: "<id>"
+generated_at: "<ISO-8601>"
+
+outputs: []
+
+checks:
+  boundary_check: PENDING
+  required_outputs_present: PENDING
+  digests_current: PENDING
+  tests_current: PENDING
+
+limitations: []
+review_status: NOT_READY
