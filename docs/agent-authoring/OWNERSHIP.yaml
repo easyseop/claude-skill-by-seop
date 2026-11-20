@@ -1,0 +1,44 @@
+schema_version: "1.0"
+workstream_id: knowledge-rag-builder-k0-k6
+branch: codex/knowledge-rag-builder-k0-k6
+owner_role: implementation_session
+
+writable_paths:
+  - .claude/skills/knowledge-rag-builder/**
+  - .claude/agents/knowledge-rag-auditor.md
+  - docs/agent-authoring/evidence/knowledge-rag-builder/**
+  - docs/agent-authoring/KNOWLEDGE_RAG_BUILDER_MVP_구현결과.md
+  - docs/agent-authoring/CURRENT_WORK_STATE.yaml
+  - docs/agent-authoring/HANDOFF_LOG.md
+  - docs/agent-authoring/OUTPUT_MANIFEST.yaml
+
+read_only_paths:
+  - docs/agent-authoring/CODEX_SESSION_START_PROMPT.md
+  - docs/agent-authoring/CODEX_KNOWLEDGE_RAG_BUILDER_K0_K6_WORK_ORDER.md
+  - docs/agent-authoring/CODEX_COLLABORATION_PROTOCOL.md
+  - docs/agent-authoring/OWNERSHIP.yaml
+  - .claude/skills/capability-artifact-planner/**
+  - .claude/skills/gate-generator/**
+  - .claude/skills/execution-artifact-generator/**
+  - docs/agent-authoring/evidence/capability-planner/**
+  - docs/agent-authoring/evidence/gate-generator/**
+  - docs/agent-authoring/evidence/execution-artifact-generator/**
+
+forbidden_paths:
+  - .claude/settings.json
+  - .github/**
+  - docs/agent-authoring/session-collaboration/**
+  - docs/agent-authoring/workstreams/agent-workflow-assembler-research/**
+  - docs/agent-authoring/research-results/**
+  - docs/agent-authoring/evidence/capability-planner/**
+  - docs/agent-authoring/evidence/gate-generator/**
+  - docs/agent-authoring/evidence/execution-artifact-generator/**
+
+policy:
+  default: deny
+  upstream_inputs_mutable: false
+  unexpected_change: BLOCKED_FOR_DECISION
+  main_direct_write: false
+  branch_switch: forbidden
+  force_push: false
+  auto_merge: false
