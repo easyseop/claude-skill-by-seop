@@ -1,0 +1,24 @@
+schema_version: "1.0"
+workstream_id: assembler-research
+generated_at: null
+
+outputs:
+  - path: docs/agent-authoring/research-results/05_AGENT_WORKFLOW_ASSEMBLER_심층조사.md
+    sha256: null
+    kind: research_report
+    status: pending
+
+checks:
+  branch_matches_ownership: PENDING
+  boundary_check: PENDING
+  required_sections_present: PENDING
+  asm_id_continuity: PENDING
+  ainv_id_continuity: PENDING
+  aeval_id_continuity: PENDING
+  amut_id_continuity: PENDING
+  planner_golden_22: PENDING
+  source_traceability: PENDING
+  implementation_files_unchanged: PENDING
+
+limitations: []
+review_status: NOT_READY

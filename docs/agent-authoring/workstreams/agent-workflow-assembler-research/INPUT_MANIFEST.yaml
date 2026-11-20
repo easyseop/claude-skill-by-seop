@@ -1,0 +1,58 @@
+schema_version: "1.0"
+workstream_id: assembler-research
+generated_at: "2026-11-20T13:25:00+09:00"
+
+inputs:
+  - id: INPUT-START
+    path: docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md
+    digest_algorithm: git_blob_sha1
+    digest: 89936d77eb72ae89e91713dc7a9a2ff70cc48209
+    role: source_of_truth
+    mutable: false
+    required: true
+
+  - id: INPUT-WORK-ORDER
+    path: docs/agent-authoring/workstreams/agent-workflow-assembler-research/WORK_ORDER.md
+    digest_algorithm: git_blob_sha1
+    digest: c8f4ec136ee16f90f79bf401356c731f01537045
+    role: source_of_truth
+    mutable: false
+    required: true
+
+  - id: INPUT-OWNERSHIP
+    path: docs/agent-authoring/workstreams/agent-workflow-assembler-research/OWNERSHIP.yaml
+    digest_algorithm: git_blob_sha1
+    digest: f63466f29ac044927d125ce2d7e5cfcb4c15df2f
+    role: source_of_truth
+    mutable: false
+    required: true
+
+  - id: INPUT-UPSTREAM-SUMMARY
+    path: docs/agent-authoring/workstreams/agent-workflow-assembler-research/inputs/UPSTREAM_CONTRACT_SUMMARY.md
+    digest_algorithm: git_blob_sha1
+    digest: b01803cfa471aeff4a2faf9dbbd986ddad4d57c3
+    role: required_context
+    mutable: false
+    required: true
+
+external_research:
+  allowed: true
+  source_priority:
+    - official_specification
+    - official_product_documentation
+    - official_repository_or_issue
+    - original_research_paper
+    - trusted_technical_document
+  requirements:
+    - record_access_date
+    - record_version_or_commit_when_unstable
+    - distinguish_current_feature_from_research_and_proposal
+
+validation:
+  status: READY
+  missing: []
+  digest_mismatch: []
+  note: >-
+    Git blob SHA is used for repository input binding. The research session may
+    also compute SHA-256 locally and record it in OUTPUT_MANIFEST without
+    modifying source inputs.
