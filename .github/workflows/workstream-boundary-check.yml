@@ -1,0 +1,34 @@
+name: Workstream Boundary Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  boundary-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pull request
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check workstream ownership
+        env:
+          WORKSTREAM_BRANCH: ${{ github.head_ref }}
+          WORKSTREAM_BASE: ${{ github.base_ref }}
+        run: |
+          python3 docs/agent-authoring/session-collaboration/check_workstream_boundaries.py \
+            --branch "$WORKSTREAM_BRANCH" \
+            --base "$WORKSTREAM_BASE" \
+            --json-output workstream-boundary-result.json
+
+      - name: Upload boundary result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: workstream-boundary-result
+          path: workstream-boundary-result.json
