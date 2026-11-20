@@ -1,0 +1,48 @@
+schema_version: "1.0"
+workstream_id: assembler-research
+session_type: research
+repository: easyseop/claude-skill-by-seop
+branch: research/agent-workflow-assembler
+status: READY_FOR_SESSION
+updated_at: "2026-11-20T13:20:00+09:00"
+
+source_of_truth:
+  start_prompt: docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md
+  work_order: docs/agent-authoring/workstreams/agent-workflow-assembler-research/WORK_ORDER.md
+  ownership: docs/agent-authoring/workstreams/agent-workflow-assembler-research/OWNERSHIP.yaml
+  input_manifest: docs/agent-authoring/workstreams/agent-workflow-assembler-research/INPUT_MANIFEST.yaml
+  output_manifest: docs/agent-authoring/workstreams/agent-workflow-assembler-research/OUTPUT_MANIFEST.yaml
+  handoff_log: docs/agent-authoring/workstreams/agent-workflow-assembler-research/HANDOFF_LOG.md
+
+current_task:
+  objective: >-
+    Research the Agent & Workflow Assembler that binds approved Planner,
+    Gate, Execution, Knowledge, Skill, Agent, and Workflow components without
+    inventing new capabilities.
+  scope:
+    - assembler responsibility boundaries
+    - control-mode-specific assembly
+    - typed component binding
+    - context engineering
+    - handoff, permission, approval, state, and recovery
+    - packaging, install, upgrade, rollback
+    - eval, mutation, ablation, and release boundaries
+  prohibited:
+    - implementation changes
+    - editing .claude or .github
+    - modifying other workstreams
+    - claiming unavailable runtime as implemented
+    - production release
+
+required_results:
+  required_sections: 25
+  asm_rules: "ASM-01~ASM-N, continuous"
+  assembly_invariants: "AINV-001~AINV-N, continuous"
+  assembly_evals: "AEVAL-001~AEVAL-N, continuous"
+  assembly_mutations: "AMUT-001~AMUT-N, continuous"
+  planner_assembly_golden: "22/22"
+  source_traceability: required
+
+blocker: null
+last_review: null
+next_action: Read SESSION_START_PROMPT.md and run research preflight.
