@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "default_policy": "deny",
   "global_forbidden": [
     ".git/**",
@@ -22,36 +22,58 @@
         ".github/workflows/workstream-boundary-check.yml"
       ],
       "read_only_paths": [],
+      "prepared_path_blobs": {},
       "forbidden_paths": []
     },
     {
       "branch_pattern": "research/agent-workflow-assembler",
       "owner_role": "research_session",
       "writable_paths": [
-        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/**",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/CURRENT_SESSION_STATE.yaml",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/HANDOFF_LOG.md",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/OUTPUT_MANIFEST.yaml",
         "docs/agent-authoring/research-results/05_AGENT_WORKFLOW_ASSEMBLER_심층조사.md"
       ],
       "read_only_paths": [
         ".claude/**",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/WORK_ORDER.md",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/OWNERSHIP.yaml",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/INPUT_MANIFEST.yaml",
         "docs/agent-authoring/workstreams/agent-workflow-assembler-research/inputs/**"
       ],
+      "prepared_path_blobs": {
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md": "89936d77eb72ae89e91713dc7a9a2ff70cc48209",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/WORK_ORDER.md": "c8f4ec136ee16f90f79bf401356c731f01537045",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/OWNERSHIP.yaml": "f63466f29ac044927d125ce2d7e5cfcb4c15df2f",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/INPUT_MANIFEST.yaml": "d11a2385ddbc84c281f2bdbbec3b49cb7ba0fe9c",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/inputs/UPSTREAM_CONTRACT_SUMMARY.md": "b01803cfa471aeff4a2faf9dbbd986ddad4d57c3"
+      },
       "forbidden_paths": [
         ".claude/settings.json",
         ".github/**",
-        "docs/agent-authoring/evidence/**"
+        "docs/agent-authoring/evidence/**",
+        "docs/agent-authoring/workstreams/upstream-recovery/**"
       ]
     },
     {
       "branch_pattern": "research/external-capability-discovery",
       "owner_role": "research_session",
       "writable_paths": [
-        "docs/agent-authoring/workstreams/external-capability-discovery-research/**",
+        "docs/agent-authoring/workstreams/external-capability-discovery-research/CURRENT_SESSION_STATE.yaml",
+        "docs/agent-authoring/workstreams/external-capability-discovery-research/HANDOFF_LOG.md",
+        "docs/agent-authoring/workstreams/external-capability-discovery-research/OUTPUT_MANIFEST.yaml",
         "docs/agent-authoring/research-results/06_EXTERNAL_CAPABILITY_DISCOVERY_REUSE_ADVISOR_심층조사.md"
       ],
       "read_only_paths": [
         ".claude/**",
+        "docs/agent-authoring/workstreams/external-capability-discovery-research/SESSION_START_PROMPT.md",
+        "docs/agent-authoring/workstreams/external-capability-discovery-research/WORK_ORDER.md",
+        "docs/agent-authoring/workstreams/external-capability-discovery-research/OWNERSHIP.yaml",
+        "docs/agent-authoring/workstreams/external-capability-discovery-research/INPUT_MANIFEST.yaml",
         "docs/agent-authoring/workstreams/external-capability-discovery-research/inputs/**"
       ],
+      "prepared_path_blobs": {},
       "forbidden_paths": [
         ".claude/settings.json",
         ".github/**",
@@ -74,15 +96,40 @@
         "docs/agent-authoring/CAPABILITY_ARTIFACT_PLANNER_구현결과.md",
         "docs/agent-authoring/GATE_GENERATOR_MVP_구현결과.md",
         "docs/agent-authoring/EXECUTION_ARTIFACT_GENERATOR_MVP_구현결과.md",
-        "docs/agent-authoring/workstreams/upstream-recovery/**"
+        "docs/agent-authoring/workstreams/upstream-recovery/CURRENT_SESSION_STATE.yaml",
+        "docs/agent-authoring/workstreams/upstream-recovery/HANDOFF_LOG.md",
+        "docs/agent-authoring/workstreams/upstream-recovery/OUTPUT_MANIFEST.yaml"
       ],
       "read_only_paths": [
-        "docs/agent-authoring/workstreams/upstream-recovery/inputs/**"
+        "docs/agent-authoring/workstreams/upstream-recovery/SESSION_START_PROMPT.md",
+        "docs/agent-authoring/workstreams/upstream-recovery/WORK_ORDER.md",
+        "docs/agent-authoring/workstreams/upstream-recovery/OWNERSHIP.yaml",
+        "docs/agent-authoring/workstreams/upstream-recovery/INPUT_MANIFEST.yaml",
+        "docs/agent-authoring/workstreams/upstream-recovery/inputs/**",
+        "docs/agent-authoring/session-collaboration/**",
+        ".claude/skills/claude-skill-author/**"
       ],
+      "prepared_path_blobs": {
+        "docs/agent-authoring/workstreams/upstream-recovery/SESSION_START_PROMPT.md": "938f4d7d47c96ccb14831899dfd5576feff7e9a9",
+        "docs/agent-authoring/workstreams/upstream-recovery/WORK_ORDER.md": "a28f28b7e1df04fb55b2cf321232b17999f0af04",
+        "docs/agent-authoring/workstreams/upstream-recovery/OWNERSHIP.yaml": "32cd3931a9760fdf26f64c8e2af4c4fbfa87847a",
+        "docs/agent-authoring/workstreams/upstream-recovery/INPUT_MANIFEST.yaml": "fe8cfaa7cd829695125f98352ab2aea220e7fd33",
+        "docs/agent-authoring/workstreams/upstream-recovery/inputs/CAP_RULES_01_18.json": "7b0a9a16c3113e6f1f062649b2d3fe315c70533a",
+        "docs/agent-authoring/workstreams/upstream-recovery/inputs/CAP_RULES_19_36.json": "2853fe027432d446f62a176f535d72d879b18b80",
+        "docs/agent-authoring/workstreams/upstream-recovery/inputs/PLANNER_EVALS_01_22.json": "8f057b4d8acbe2c250de2d821db2bf582bc3d87d",
+        "docs/agent-authoring/workstreams/upstream-recovery/inputs/GATE_RULES_01_40.json": "2141fd120c00f10d7b99699ed0585e6cc585d455",
+        "docs/agent-authoring/workstreams/upstream-recovery/inputs/GATE_RULES_41_80.json": "711a9ba13b54f160cc09d2f1d0974f513f6abc6b",
+        "docs/agent-authoring/workstreams/upstream-recovery/inputs/GATE_INVARIANTS_001_085.json": "13f430684426081af9284e79664481f24a78eb3b",
+        "docs/agent-authoring/workstreams/upstream-recovery/inputs/GATE_EVALS_001_048.json": "865499f0de266e41e56b9c3e572808170b0e5876",
+        "docs/agent-authoring/workstreams/upstream-recovery/inputs/EXECUTION_GENERATOR_CATALOG.json": "2c8ff95618af51695a20fcfdef6b9b7f1e0f7fcd"
+      },
       "forbidden_paths": [
         ".claude/settings.json",
         ".github/**",
-        "docs/agent-authoring/evidence/knowledge-rag-builder/**"
+        ".claude/skills/knowledge-rag-builder/**",
+        "docs/agent-authoring/evidence/knowledge-rag-builder/**",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/**",
+        "docs/agent-authoring/research-results/**"
       ]
     },
     {
@@ -106,11 +153,21 @@
         "docs/agent-authoring/evidence/execution-artifact-generator/**",
         "docs/agent-authoring/CODEX_KNOWLEDGE_RAG_BUILDER_K0_K6_WORK_ORDER.md",
         "docs/agent-authoring/CODEX_COLLABORATION_PROTOCOL.md",
-        "docs/agent-authoring/CODEX_SESSION_START_PROMPT.md"
+        "docs/agent-authoring/CODEX_SESSION_START_PROMPT.md",
+        "docs/agent-authoring/OWNERSHIP.yaml"
       ],
+      "prepared_path_blobs": {
+        "docs/agent-authoring/CODEX_KNOWLEDGE_RAG_BUILDER_K0_K6_WORK_ORDER.md": "ecfbef54ad880d4700270a43ee9af4a089eeec91",
+        "docs/agent-authoring/CODEX_COLLABORATION_PROTOCOL.md": "50a4edba51eff99d3e8628e695a998414f6ebfc6",
+        "docs/agent-authoring/CODEX_SESSION_START_PROMPT.md": "a8e35ece536cc9e7e47bec9aee8502bc24683ea1",
+        "docs/agent-authoring/OWNERSHIP.yaml": "3824f831e7a1c3f3686a05f3c91dc1574b185a62"
+      },
       "forbidden_paths": [
         ".claude/settings.json",
-        ".github/**"
+        ".github/**",
+        "docs/agent-authoring/session-collaboration/**",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/**",
+        "docs/agent-authoring/research-results/**"
       ]
     }
   ]
