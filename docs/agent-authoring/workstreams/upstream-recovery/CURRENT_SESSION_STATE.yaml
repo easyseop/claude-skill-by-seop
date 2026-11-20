@@ -1,0 +1,59 @@
+schema_version: "1.0"
+workstream_id: upstream-recovery
+session_type: implementation
+repository: easyseop/claude-skill-by-seop
+branch: recovery/upstream-builders
+status: READY_FOR_SESSION
+phase: PRECHECK
+updated_at: "2026-11-20T13:40:00+09:00"
+
+source_of_truth:
+  start_prompt: docs/agent-authoring/workstreams/upstream-recovery/SESSION_START_PROMPT.md
+  work_order: docs/agent-authoring/workstreams/upstream-recovery/WORK_ORDER.md
+  ownership: docs/agent-authoring/workstreams/upstream-recovery/OWNERSHIP.yaml
+  input_manifest: docs/agent-authoring/workstreams/upstream-recovery/INPUT_MANIFEST.yaml
+  output_manifest: docs/agent-authoring/workstreams/upstream-recovery/OUTPUT_MANIFEST.yaml
+  handoff_log: docs/agent-authoring/workstreams/upstream-recovery/HANDOFF_LOG.md
+
+current_task:
+  objective: >-
+    Regenerate and verify the missing Capability Planner, Gate Generator, and
+    Execution Artifact Generator source and evidence in strict sequence.
+  sequence:
+    - capability-artifact-planner
+    - gate-generator-m0-m3
+    - execution-artifact-generator-e0-e4
+  prohibited:
+    - modifying Knowledge/RAG Builder files
+    - modifying Assembler research files
+    - modifying .claude/settings.json or .github
+    - production enforcement or external writes
+    - claiming independent audit identity when none ran
+    - direct changes to main
+    - branch switching
+    - force push or automatic merge
+
+required_results:
+  planner:
+    cap_rules: "36/36"
+    evals: "22/22"
+    paraphrase_variants: "44/44"
+    mutations: "15/15 detected"
+  gate:
+    gate_rules: "80/80"
+    invariants: "85/85"
+    planner_golden: "22/22"
+    evals: "48/48"
+    mutations: "20/20 killed"
+    hook_smoke: "19/19"
+  execution:
+    exec_rules: "30/30"
+    invariants: "45/45"
+    evals: "26/26"
+    mutations: "10/10 killed"
+    planner_golden: "22/22"
+    builder_negative_tests: ">=16"
+
+blocker: null
+last_review: null
+next_action: Read SESSION_START_PROMPT.md and validate INPUT_MANIFEST.yaml.
