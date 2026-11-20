@@ -1,0 +1,61 @@
+schema_version: "1.0"
+workstream_id: upstream-recovery
+generated_at: null
+
+outputs:
+  - path: .claude/skills/capability-artifact-planner/
+    kind: source_package
+    status: pending
+  - path: .claude/agents/capability-plan-auditor.md
+    kind: auditor_definition
+    status: pending
+  - path: docs/agent-authoring/evidence/capability-planner/
+    kind: evidence_package
+    status: pending
+  - path: docs/agent-authoring/CAPABILITY_ARTIFACT_PLANNER_구현결과.md
+    kind: implementation_report
+    status: pending
+
+  - path: .claude/skills/gate-generator/
+    kind: source_package
+    status: pending
+  - path: .claude/agents/gate-auditor.md
+    kind: auditor_definition
+    status: pending
+  - path: docs/agent-authoring/evidence/gate-generator/
+    kind: evidence_package
+    status: pending
+  - path: docs/agent-authoring/GATE_GENERATOR_MVP_구현결과.md
+    kind: implementation_report
+    status: pending
+
+  - path: .claude/skills/execution-artifact-generator/
+    kind: source_package
+    status: pending
+  - path: .claude/agents/execution-artifact-auditor.md
+    kind: auditor_definition
+    status: pending
+  - path: docs/agent-authoring/evidence/execution-artifact-generator/
+    kind: evidence_package
+    status: pending
+  - path: docs/agent-authoring/EXECUTION_ARTIFACT_GENERATOR_MVP_구현결과.md
+    kind: implementation_report
+    status: pending
+
+checks:
+  ownership_boundary: PENDING
+  input_manifest_current: PENDING
+  planner_complete: PENDING
+  gate_complete: PENDING
+  execution_complete: PENDING
+  critical_mutants_survived: PENDING
+  traceability_closed: PENDING
+  unexpected_changes: PENDING
+  independent_identity: UNVERIFIED
+
+limitations:
+  - Production enforcement is outside this workstream.
+  - Actual independent audit identity may remain UNVERIFIED.
+  - Knowledge/RAG and Assembler workstreams are immutable here.
+
+review_status: NOT_READY
