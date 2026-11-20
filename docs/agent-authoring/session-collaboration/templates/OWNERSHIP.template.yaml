@@ -1,0 +1,23 @@
+schema_version: "1.0"
+workstream_id: "<id>"
+branch: "<branch>"
+owner_role: "<orchestrator|research_session|implementation_session|review_session>"
+
+writable_paths: []
+read_only_paths: []
+forbidden_paths:
+  - ".git/**"
+  - "**/.env"
+  - "**/.env.*"
+
+shared_files:
+  orchestrator_only:
+    - "docs/agent-authoring/session-collaboration/MASTER_WORKSTREAM_BOARD.yaml"
+    - "docs/agent-authoring/session-collaboration/WORKSTREAM_BOUNDARIES.json"
+
+policy:
+  default: deny
+  unexpected_change: BLOCKED_FOR_DECISION
+  main_direct_write: false
+  force_push: false
+  auto_merge: false
