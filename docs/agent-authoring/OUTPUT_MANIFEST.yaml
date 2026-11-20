@@ -1,0 +1,33 @@
+schema_version: "1.0"
+workstream_id: knowledge-rag-builder-k0-k6
+generated_at: null
+
+outputs:
+  - path: .claude/skills/knowledge-rag-builder/
+    kind: source_package
+    status: pending
+  - path: .claude/agents/knowledge-rag-auditor.md
+    kind: auditor_definition
+    status: pending
+  - path: docs/agent-authoring/evidence/knowledge-rag-builder/
+    kind: evidence_package
+    status: pending
+  - path: docs/agent-authoring/KNOWLEDGE_RAG_BUILDER_MVP_구현결과.md
+    kind: implementation_report
+    status: pending
+
+checks:
+  ownership_boundary: PENDING
+  upstream_inputs_current: BLOCKED_FOR_SOURCE
+  prompt_coverage: PENDING
+  know_84: PENDING
+  kinv_100: PENDING
+  keval_64: PENDING
+  kmut_26: PENDING
+  planner_golden_22: PENDING
+  traceability_closed: PENDING
+  independent_identity: UNVERIFIED
+
+limitations:
+  - Current workstream is blocked until Planner, Gate, and Execution source/evidence are restored.
+review_status: NOT_READY
