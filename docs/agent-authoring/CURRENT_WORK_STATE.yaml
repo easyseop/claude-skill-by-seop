@@ -4,8 +4,8 @@ repository: easyseop/claude-skill-by-seop
 branch: codex/knowledge-rag-builder-k0-k6
 workstream: knowledge-rag-builder
 milestone: K0-K6-local-mvp
-status: IN_PROGRESS
-updated_at: "2026-11-20T03:28:11.322Z"
+status: BLOCKED_FOR_DECISION
+updated_at: "2026-11-20T03:31:07.611Z"
 
 source_of_truth:
   work_order: docs/agent-authoring/CODEX_KNOWLEDGE_RAG_BUILDER_K0_K6_WORK_ORDER.md
@@ -67,16 +67,19 @@ expected_paths:
   report: docs/agent-authoring/KNOWLEDGE_RAG_BUILDER_MVP_구현결과.md
 
 codex_next_action: >-
-  Read AGENTS.md, CODEX_COLLABORATION_PROTOCOL.md, CURRENT_WORK_STATE.yaml,
-  and CODEX_KNOWLEDGE_RAG_BUILDER_K0_K6_WORK_ORDER.md; set status to IN_PROGRESS;
-  execute K0 first; do not continue if K0 preflight fails.
+  Bind approved upstream artifacts and structured evidence to this branch, then rerun K0.
 
 review_policy:
   review_owner: current_chatgpt_orchestrator_session
   merge_requires_user_approval: true
   local_verified_is_not_production_approval: true
 
-blocker: null
+blocker:
+  code: UPSTREAM_MISSING
+  stage: K0
+  baseline_commit: 0e3cc10780ced0c2db8cdc6ea01d9a40ca3d3119
+  missing: [capability-artifact-planner, gate-generator, execution-artifact-generator]
+  decision_needed: Identify approved upstream revision and evidence for import.
 last_review: null
 next_stage_after_verified_local:
   - review Agent & Workflow Assembler research
