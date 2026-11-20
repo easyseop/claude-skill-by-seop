@@ -1,0 +1,103 @@
+schema_version: "1.0"
+workstream_id: upstream-recovery
+generated_at: "2026-11-20T13:45:00+09:00"
+
+digest_policy:
+  repository_binding: git_blob_sha1
+  runtime_evidence: sha256_required
+
+inputs:
+  - id: INPUT-START
+    path: docs/agent-authoring/workstreams/upstream-recovery/SESSION_START_PROMPT.md
+    digest: 938f4d7d47c96ccb14831899dfd5576feff7e9a9
+    role: source_of_truth
+    mutable: false
+    required: true
+
+  - id: INPUT-WORK-ORDER
+    path: docs/agent-authoring/workstreams/upstream-recovery/WORK_ORDER.md
+    digest: a28f28b7e1df04fb55b2cf321232b17999f0af04
+    role: source_of_truth
+    mutable: false
+    required: true
+
+  - id: INPUT-OWNERSHIP
+    path: docs/agent-authoring/workstreams/upstream-recovery/OWNERSHIP.yaml
+    digest: 32cd3931a9760fdf26f64c8e2af4c4fbfa87847a
+    role: source_of_truth
+    mutable: false
+    required: true
+
+  - id: INPUT-CAP-01-18
+    path: docs/agent-authoring/workstreams/upstream-recovery/inputs/CAP_RULES_01_18.json
+    digest: 7b0a9a16c3113e6f1f062649b2d3fe315c70533a
+    role: required_context
+    mutable: false
+    required: true
+
+  - id: INPUT-CAP-19-36
+    path: docs/agent-authoring/workstreams/upstream-recovery/inputs/CAP_RULES_19_36.json
+    digest: 2853fe027432d446f62a176f535d72d879b18b80
+    role: required_context
+    mutable: false
+    required: true
+
+  - id: INPUT-PLANNER-EVALS
+    path: docs/agent-authoring/workstreams/upstream-recovery/inputs/PLANNER_EVALS_01_22.json
+    digest: 8f057b4d8acbe2c250de2d821db2bf582bc3d87d
+    role: required_context
+    mutable: false
+    required: true
+
+  - id: INPUT-GATE-01-40
+    path: docs/agent-authoring/workstreams/upstream-recovery/inputs/GATE_RULES_01_40.json
+    digest: 2141fd120c00f10d7b99699ed0585e6cc585d455
+    role: required_context
+    mutable: false
+    required: true
+
+  - id: INPUT-GATE-41-80
+    path: docs/agent-authoring/workstreams/upstream-recovery/inputs/GATE_RULES_41_80.json
+    digest: 711a9ba13b54f160cc09d2f1d0974f513f6abc6b
+    role: required_context
+    mutable: false
+    required: true
+
+  - id: INPUT-GATE-INVARIANTS
+    path: docs/agent-authoring/workstreams/upstream-recovery/inputs/GATE_INVARIANTS_001_085.json
+    digest: 13f430684426081af9284e79664481f24a78eb3b
+    role: required_context
+    mutable: false
+    required: true
+
+  - id: INPUT-GATE-EVALS
+    path: docs/agent-authoring/workstreams/upstream-recovery/inputs/GATE_EVALS_001_048.json
+    digest: 865499f0de266e41e56b9c3e572808170b0e5876
+    role: required_context
+    mutable: false
+    required: true
+
+  - id: INPUT-EXECUTION-CATALOG
+    path: docs/agent-authoring/workstreams/upstream-recovery/inputs/EXECUTION_GENERATOR_CATALOG.json
+    digest: 2c8ff95618af51695a20fcfdef6b9b7f1e0f7fcd
+    role: required_context
+    mutable: false
+    required: true
+
+validation:
+  status: READY
+  missing: []
+  digest_mismatch: []
+  expected_catalog_counts:
+    cap_rules: 36
+    planner_evals: 22
+    gate_rules: 80
+    gate_invariants: 85
+    gate_evals: 48
+    exec_rules: 30
+    exec_invariants: 45
+    exec_evals: 26
+    exec_mutations: 10
+  note: >-
+    Git blob SHA-1 binds repository inputs. The implementation session must
+    recompute SHA-256 for all current source, test, and evidence artifacts.
