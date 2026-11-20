@@ -1,6 +1,6 @@
 schema_version: "1.0"
 project: agent-system-author
-updated_at: "2026-11-20T13:50:00+09:00"
+updated_at: "2026-11-20T15:56:57+09:00"
 
 capacity:
   orchestrator_sessions: 1
@@ -32,10 +32,15 @@ lanes:
   implementation:
     - id: upstream-recovery
       priority: 1
-      status: READY_FOR_SESSION
+      status: BLOCKED_FOR_DECISION
       branch: recovery/upstream-builders
       pull_request: 4
       owner_role: implementation_session
+      reported_blocker: >-
+        Implementation session reports local checkout on main with 5 out-of-scope
+        untracked changes; isolated clone could not proceed due to github.com DNS failure.
+        No Planner source or test evidence was generated. Continue only from a clean,
+        isolated checkout of recovery/upstream-builders after preflight.
       objective: >-
         Restore or regenerate the approved Capability Planner, Gate Generator,
         and Execution Artifact Generator source and structured evidence.
@@ -146,6 +151,7 @@ next_actions:
     - Review upstream-recovery before unblocking Knowledge/RAG Builder.
     - Review Assembler research independently from implementation work.
   implementation_session:
+    - Resolve isolated checkout/DNS blocker first; preserve existing untracked changes untouched.
     - Switch to recovery/upstream-builders and read its SESSION_START_PROMPT.md.
     - Do not modify or resume Knowledge/RAG PR #1 while recovery is active.
   research_session:
