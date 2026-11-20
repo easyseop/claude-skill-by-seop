@@ -1,0 +1,58 @@
+schema_version: "1.0"
+workstream_id: upstream-recovery
+branch: recovery/upstream-builders
+owner_role: implementation_session
+
+writable_paths:
+  - .claude/skills/capability-artifact-planner/**
+  - .claude/skills/gate-generator/**
+  - .claude/skills/execution-artifact-generator/**
+  - .claude/agents/capability-plan-auditor.md
+  - .claude/agents/gate-auditor.md
+  - .claude/agents/execution-artifact-auditor.md
+  - docs/agent-authoring/evidence/capability-planner/**
+  - docs/agent-authoring/evidence/gate-generator/**
+  - docs/agent-authoring/evidence/execution-artifact-generator/**
+  - docs/agent-authoring/CAPABILITY_ARTIFACT_PLANNER_구현결과.md
+  - docs/agent-authoring/GATE_GENERATOR_MVP_구현결과.md
+  - docs/agent-authoring/EXECUTION_ARTIFACT_GENERATOR_MVP_구현결과.md
+  - docs/agent-authoring/workstreams/upstream-recovery/CURRENT_SESSION_STATE.yaml
+  - docs/agent-authoring/workstreams/upstream-recovery/HANDOFF_LOG.md
+  - docs/agent-authoring/workstreams/upstream-recovery/OUTPUT_MANIFEST.yaml
+
+read_only_paths:
+  - docs/agent-authoring/workstreams/upstream-recovery/SESSION_START_PROMPT.md
+  - docs/agent-authoring/workstreams/upstream-recovery/WORK_ORDER.md
+  - docs/agent-authoring/workstreams/upstream-recovery/OWNERSHIP.yaml
+  - docs/agent-authoring/workstreams/upstream-recovery/INPUT_MANIFEST.yaml
+  - docs/agent-authoring/workstreams/upstream-recovery/inputs/**
+  - docs/agent-authoring/session-collaboration/**
+  - .claude/skills/claude-skill-author/**
+  - .claude/agents/skill-author-auditor.md
+
+forbidden_paths:
+  - .claude/settings.json
+  - .github/**
+  - .claude/skills/knowledge-rag-builder/**
+  - .claude/agents/knowledge-rag-auditor.md
+  - docs/agent-authoring/evidence/knowledge-rag-builder/**
+  - docs/agent-authoring/workstreams/agent-workflow-assembler-research/**
+  - docs/agent-authoring/research-results/**
+  - docs/agent-authoring/CURRENT_WORK_STATE.yaml
+  - docs/agent-authoring/HANDOFF_LOG.md
+
+shared_files:
+  orchestrator_only:
+    - docs/agent-authoring/session-collaboration/MASTER_WORKSTREAM_BOARD.yaml
+    - docs/agent-authoring/session-collaboration/WORKSTREAM_BOUNDARIES.json
+
+policy:
+  default: deny
+  sequence: planner_then_gate_then_execution
+  upstream_inputs_mutable: false
+  knowledge_workstream_mutable: false
+  unexpected_change: BLOCKED_FOR_DECISION
+  main_direct_write: false
+  branch_switch: forbidden
+  force_push: false
+  auto_merge: false
