@@ -69,3 +69,24 @@
 - 검증: Git Trees recursive=1, truncated=false, 항목 128개. Knowledge Builder 구현 미존재(A). Planner, Gate, Execution의 SKILL.md 각각 404. 구현과 구조화 증거의 현재 digest 대조 불가.
 - K1~K6 및 합격 테스트 미실행.
 - 다음 행동: 총괄 세션에서 승인한 선행 구현 및 증거의 commit 또는 패키지를 지정·반영한 뒤 K0 재실행.
+
+## 2026-11-20 12:40 KST — 총괄·검토 세션
+
+- 상태: `BLOCKED_FOR_DECISION` 확인
+- 기준 commit: `549ffd3a7b3e61fc060cf629e89e478417f4de40`
+- 수행 내용:
+  - PR #1, `CURRENT_WORK_STATE.yaml`, `HANDOFF_LOG.md`를 실제로 재확인
+  - 연결된 GitHub 저장소 전체 코드 검색에서 `capability-artifact-planner`, `gate-generator`, `execution-artifact-generator` 실제 구현을 찾지 못함
+  - 현재 대화에 남아 있는 패키지도 조사·지시·구현결과 보고서 중심이며, 세 모듈의 전체 source/evidence package는 포함하지 않음을 확인
+- 검증 결과:
+  - Codex의 `UPSTREAM_MISSING` 판정은 타당함
+  - 결과 보고서만으로 digest-bound K0 PASS를 발행하면 안 됨
+- 결정:
+  - Codex는 K1~K6을 계속 진행하지 말고 현재 blocker를 유지한다.
+  - 세 선행 모듈을 보고서에서 임의 재구성하거나 거짓 evidence를 만들지 않는다.
+  - 총괄 세션은 실제 선행 구현 source/evidence가 있는 위치를 찾거나 별도 복구 작업으로 재생성한다.
+  - Agent & Workflow Assembler 심층조사는 별도 조사 세션에서 병렬 진행 가능하다.
+- 다음 행동:
+  - 사용자가 조사 세션에 Assembler 조사 인수인계 프롬프트와 입력자료를 전달한다.
+  - 선행 구현 bundle 또는 승인된 재생성 전략이 확정되면 총괄 세션이 이 로그와 `CURRENT_WORK_STATE.yaml`에 결정을 기록한다.
+  - Codex 세션은 해당 변경을 pull한 뒤 K0를 재실행한다.
