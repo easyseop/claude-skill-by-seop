@@ -61,3 +61,11 @@
 - 기준 commit: 0e3cc10780ced0c2db8cdc6ea01d9a40ca3d3119
 - 범위: K0 선행 입력 검증 후 K1~K6 로컬 후보 구현 및 검증.
 - 예상 경로: .claude/skills/knowledge-rag-builder/, .claude/agents/, docs/agent-authoring/ 및 하위 evidence.
+
+## 2026-11-20 12:31:14 KST — Codex 구현 세션
+
+- 상태: BLOCKED_FOR_DECISION / K0 / UPSTREAM_MISSING
+- 기준 commit: 0e3cc10780ced0c2db8cdc6ea01d9a40ca3d3119
+- 검증: Git Trees recursive=1, truncated=false, 항목 128개. Knowledge Builder 구현 미존재(A). Planner, Gate, Execution의 SKILL.md 각각 404. 구현과 구조화 증거의 현재 digest 대조 불가.
+- K1~K6 및 합격 테스트 미실행.
+- 다음 행동: 총괄 세션에서 승인한 선행 구현 및 증거의 commit 또는 패키지를 지정·반영한 뒤 K0 재실행.
