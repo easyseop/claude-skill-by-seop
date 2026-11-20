@@ -1,0 +1,132 @@
+schema_version: "1.0"
+project: agent-system-author
+updated_at: "2026-11-20T13:10:00+09:00"
+
+capacity:
+  orchestrator_sessions: 1
+  research_sessions: 1
+  implementation_sessions: 1
+  review_sessions: 1
+
+policies:
+  auto_merge: false
+  main_direct_write: false
+  one_active_workstream_per_session: true
+  cross_workstream_write: false
+  start_downstream_before_dependency_verified: false
+  research_can_run_parallel_with_unrelated_implementation: true
+
+lanes:
+  implementation:
+    - id: upstream-recovery
+      priority: 1
+      status: READY_FOR_SETUP
+      branch: recovery/upstream-builders
+      owner_role: implementation_session
+      objective: >-
+        Restore or regenerate the approved Capability Planner, Gate Generator,
+        and Execution Artifact Generator source and structured evidence.
+      dependencies: []
+      blocks:
+        - knowledge-rag-builder-k0-k6
+      allowed_parallel_with:
+        - assembler-research
+
+    - id: knowledge-rag-builder-k0-k6
+      priority: 2
+      status: BLOCKED_FOR_SOURCE
+      branch: codex/knowledge-rag-builder-k0-k6
+      pull_request: 1
+      owner_role: implementation_session
+      objective: Implement Knowledge & RAG Builder K0-K6 local candidate.
+      dependencies:
+        - upstream-recovery: VERIFIED_LOCAL
+      blocks:
+        - assembler-implementation
+
+    - id: assembler-implementation
+      priority: 3
+      status: QUEUED
+      branch: implementation/agent-workflow-assembler
+      owner_role: implementation_session
+      dependencies:
+        - knowledge-rag-builder-k0-k6: VERIFIED_LOCAL
+        - assembler-research: VERIFIED_RESEARCH
+      blocks:
+        - independent-evaluation-implementation
+
+    - id: independent-evaluation-implementation
+      priority: 4
+      status: QUEUED
+      branch: implementation/independent-evaluation
+      owner_role: implementation_session
+      dependencies:
+        - assembler-implementation: VERIFIED_LOCAL
+        - independent-evaluation-research: VERIFIED_RESEARCH
+      blocks:
+        - top-level-integration
+
+    - id: top-level-integration
+      priority: 5
+      status: QUEUED
+      branch: implementation/agent-system-author-integration
+      owner_role: implementation_session
+      dependencies:
+        - independent-evaluation-implementation: VERIFIED_LOCAL
+        - external-discovery-research: VERIFIED_RESEARCH
+
+  research:
+    - id: assembler-research
+      priority: 1
+      status: READY_FOR_SETUP
+      branch: research/agent-workflow-assembler
+      owner_role: research_session
+      objective: Research Agent & Workflow Assembler rules and contracts.
+      dependencies: []
+      blocks:
+        - assembler-implementation
+      allowed_parallel_with:
+        - upstream-recovery
+        - knowledge-rag-builder-k0-k6
+
+    - id: external-discovery-research
+      priority: 2
+      status: QUEUED
+      branch: research/external-capability-discovery
+      owner_role: research_session
+      objective: >-
+        Research discovery and critical evaluation of reusable Skills,
+        plugins, MCP servers, scripts, and packages.
+      dependencies:
+        - assembler-research: READY_FOR_REVIEW_OR_VERIFIED
+      blocks:
+        - top-level-integration
+
+    - id: independent-evaluation-research
+      priority: 3
+      status: QUEUED
+      branch: research/independent-evaluation
+      owner_role: research_session
+      dependencies:
+        - assembler-research: VERIFIED_RESEARCH
+      blocks:
+        - independent-evaluation-implementation
+
+review_sequence:
+  - upstream-recovery
+  - knowledge-rag-builder-k0-k6
+  - assembler-research
+  - external-discovery-research
+  - assembler-implementation
+  - independent-evaluation-research
+  - independent-evaluation-implementation
+  - top-level-integration
+
+next_actions:
+  orchestrator:
+    - Create upstream-recovery workstream branch and inputs.
+    - Create assembler-research workstream branch and inputs.
+  implementation_session:
+    - Do not continue Knowledge/RAG until upstream-recovery is verified.
+  research_session:
+    - Start assembler-research when its branch is ready.
