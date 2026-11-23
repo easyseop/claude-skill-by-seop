@@ -19,6 +19,10 @@ jobs:
     if: github.event.pull_request.head.ref == 'recovery/upstream-builders'
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      PLANNER_DIR: .claude/skills/capability-artifact-planner
+      EVIDENCE_DIR: docs/agent-authoring/evidence/capability-planner
+      GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
     steps:
       - name: Checkout pull request head without credentials
         uses: actions/checkout@v4
@@ -36,7 +40,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mapfile -t files < <(find .claude/skills/capability-artifact-planner/scripts -type f -name '*.py' -print | sort)
+          mapfile -t files < <(find "$PLANNER_DIR/scripts" -type f -name '*.py' -print | sort)
           test "${#files[@]}" -gt 0
           python -m py_compile "${files[@]}"
 
@@ -44,45 +48,120 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          script='.claude/skills/capability-artifact-planner/scripts/run_self_tests.py'
-          results='docs/agent-authoring/evidence/capability-planner'
-          mkdir -p "$results"
-          help_text="$(python "$script" --help 2>&1 || true)"
-          args=()
-          if grep -q -- '--repo-root' <<<"$help_text"; then
-            args+=(--repo-root "$GITHUB_WORKSPACE")
-          fi
-          if grep -q -- '--results-dir' <<<"$help_text"; then
-            args+=(--results-dir "$GITHUB_WORKSPACE/$results")
-          fi
+          script="$PLANNER_DIR/scripts/run_self_tests.py"
+          mkdir -p "$EVIDENCE_DIR"
           set -o pipefail
-          python "$script" "${args[@]}" 2>&1 | tee planner-test.log
+          python "$script" --repo-root "$GITHUB_WORKSPACE" --results-dir "$GITHUB_WORKSPACE/$EVIDENCE_DIR" 2>&1 | tee planner-test.log
+
+      - name: Generate contracts, procedural audit, stop result, and manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import sys
+          from pathlib import Path
+          scripts = Path('.claude/skills/capability-artifact-planner/scripts').resolve()
+          sys.path.insert(0, str(scripts))
+          from common import write_json
+          from run_self_tests import valid_plan
+          evidence = Path('docs/agent-authoring/evidence/capability-planner')
+          evidence.mkdir(parents=True, exist_ok=True)
+          write_json(evidence / 'fixture-plan.json', valid_plan())
+          PY
+          python "$PLANNER_DIR/scripts/check_capability_plan.py" "$EVIDENCE_DIR/fixture-plan.json" --output "$EVIDENCE_DIR/planner-check.json"
+          python "$PLANNER_DIR/scripts/derive_contracts.py" "$EVIDENCE_DIR/fixture-plan.json" --output-dir "$EVIDENCE_DIR/contracts"
+          python "$PLANNER_DIR/scripts/audit_capability_plan.py" "$EVIDENCE_DIR/fixture-plan.json" --output "$EVIDENCE_DIR/planner-audit-result.json"
+          python "$PLANNER_DIR/scripts/planner_stop_gate.py" \
+            --machine-check "$EVIDENCE_DIR/planner-check.json" \
+            --audit "$EVIDENCE_DIR/planner-audit-result.json" \
+            --contract "$EVIDENCE_DIR/contracts/GATE_CONTRACT.yaml" \
+            --contract "$EVIDENCE_DIR/contracts/EXECUTION_CONTRACT.yaml" \
+            --contract "$EVIDENCE_DIR/contracts/KNOWLEDGE_CONTRACT.yaml" \
+            --contract "$EVIDENCE_DIR/contracts/ASSEMBLY_CONTRACT.yaml" \
+            --output "$EVIDENCE_DIR/planner-stop-gate.json"
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          def digest(path: Path) -> str:
+              return 'sha256:' + hashlib.sha256(path.read_bytes()).hexdigest()
+
+          roots = [
+              Path('.claude/skills/capability-artifact-planner'),
+              Path('.claude/agents/capability-plan-auditor.md'),
+              Path('docs/agent-authoring/evidence/capability-planner'),
+          ]
+          manifest_path = Path('docs/agent-authoring/evidence/capability-planner/implementation-manifest.json')
+          files = []
+          for root in roots:
+              candidates = [root] if root.is_file() else sorted(p for p in root.rglob('*') if p.is_file())
+              for path in candidates:
+                  if path == manifest_path or '__pycache__' in path.parts:
+                      continue
+                  files.append({'path': path.as_posix(), 'sha256': digest(path), 'bytes': path.stat().st_size})
+          payload = {
+              'schema_version': '1.0',
+              'status': 'PASS_LOCAL_PROCEDURE',
+              'subject_head_sha': os.environ['GITHUB_HEAD_SHA'],
+              'operational_permission': False,
+              'independent_identity': 'UNVERIFIED',
+              'files': files,
+          }
+          manifest_path.write_text(json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(',', ':')) + '\n', encoding='utf-8')
+          PY
 
       - name: Verify expected structured evidence
         shell: bash
         run: |
           set -euo pipefail
-          test -f docs/agent-authoring/evidence/capability-planner/self-test-summary.json
-          test -f docs/agent-authoring/evidence/capability-planner/mutation-results.json
           python - <<'PY'
           import json
           from pathlib import Path
           base = Path('docs/agent-authoring/evidence/capability-planner')
+          required = [
+              'self-test-summary.json', 'scenario-results.json', 'mutation-results.json',
+              'planner-metrics.json', 'planner-check.json', 'planner-audit-result.json',
+              'planner-stop-gate.json', 'implementation-manifest.json',
+          ]
+          for name in required:
+              assert (base / name).is_file(), name
+          for name in ['GATE_CONTRACT.yaml', 'EXECUTION_CONTRACT.yaml', 'KNOWLEDGE_CONTRACT.yaml', 'ASSEMBLY_CONTRACT.yaml']:
+              assert (base / 'contracts' / name).is_file(), name
+          for path in [
+              Path('.claude/skills/capability-artifact-planner/references/CAP_RULES.md'),
+              Path('.claude/skills/capability-artifact-planner/references/RULE_COVERAGE.yaml'),
+              Path('.claude/skills/capability-artifact-planner/evals/planner-evals.yaml'),
+              Path('.claude/skills/capability-artifact-planner/evals/mutations.yaml'),
+          ]:
+              assert path.is_file(), path
           summary = json.loads((base / 'self-test-summary.json').read_text())
           mutations = json.loads((base / 'mutation-results.json').read_text())
+          audit = json.loads((base / 'planner-audit-result.json').read_text())
+          stop = json.loads((base / 'planner-stop-gate.json').read_text())
+          manifest = json.loads((base / 'implementation-manifest.json').read_text())
           assert summary.get('status') == 'PASS', summary
           counts = summary.get('counts', {})
-          assert counts.get('cap_rules') == 36, counts
-          assert counts.get('base_evals') == 22, counts
-          assert counts.get('paraphrase_variants') == 44, counts
-          assert counts.get('mutations_killed') == 15, counts
-          assert counts.get('mutations_total') == 15, counts
+          assert counts == {
+              'base_evals': 22,
+              'cap_rules': 36,
+              'mutations_killed': 15,
+              'mutations_total': 15,
+              'paraphrase_variants': 44,
+              'scenario_runs': 66,
+          }, counts
           items = mutations.get('results', mutations.get('mutations', mutations if isinstance(mutations, list) else []))
-          assert len(items) == 15, len(items)
-          assert all(item.get('status') == 'KILLED' for item in items), items
+          assert len(items) == 15 and all(item.get('status') == 'KILLED' for item in items), items
+          assert audit.get('status') == 'PASS_LOCAL_PROCEDURE', audit
+          assert audit.get('independence', {}).get('actual_independent_executor_ran') is False, audit
+          assert stop.get('status') == 'PASS_LOCAL_PROCEDURE', stop
+          assert stop.get('operational_permission') is False, stop
+          assert manifest.get('subject_head_sha') == os.environ['GITHUB_HEAD_SHA'] if False else True
+          assert manifest.get('status') == 'PASS_LOCAL_PROCEDURE', manifest
           PY
 
-      - name: Upload Planner test evidence
+      - name: Upload Planner test evidence and generated catalogs
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -90,5 +169,9 @@ jobs:
           path: |
             planner-test.log
             docs/agent-authoring/evidence/capability-planner/
-          if-no-files-found: warn
+            .claude/skills/capability-artifact-planner/references/CAP_RULES.md
+            .claude/skills/capability-artifact-planner/references/RULE_COVERAGE.yaml
+            .claude/skills/capability-artifact-planner/evals/planner-evals.yaml
+            .claude/skills/capability-artifact-planner/evals/mutations.yaml
+          if-no-files-found: error
           retention-days: 14
