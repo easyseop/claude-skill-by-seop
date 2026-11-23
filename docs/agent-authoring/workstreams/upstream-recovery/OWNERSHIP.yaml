@@ -22,6 +22,7 @@ writable_paths:
 
 read_only_paths:
   - docs/agent-authoring/workstreams/upstream-recovery/SESSION_START_PROMPT.md
+  - docs/agent-authoring/workstreams/upstream-recovery/REMOTE_CONNECTOR_MODE.md
   - docs/agent-authoring/workstreams/upstream-recovery/WORK_ORDER.md
   - docs/agent-authoring/workstreams/upstream-recovery/OWNERSHIP.yaml
   - docs/agent-authoring/workstreams/upstream-recovery/INPUT_MANIFEST.yaml
@@ -45,6 +46,7 @@ shared_files:
   orchestrator_only:
     - docs/agent-authoring/session-collaboration/MASTER_WORKSTREAM_BOARD.yaml
     - docs/agent-authoring/session-collaboration/WORKSTREAM_BOUNDARIES.json
+    - docs/agent-authoring/session-collaboration/PREPARED_INPUT_OVERRIDES.json
 
 policy:
   default: deny
