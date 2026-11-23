@@ -118,6 +118,7 @@ jobs:
           set -euo pipefail
           python - <<'PY'
           import json
+          import os
           from pathlib import Path
           base = Path('docs/agent-authoring/evidence/capability-planner')
           required = [
@@ -157,7 +158,7 @@ jobs:
           assert audit.get('independence', {}).get('actual_independent_executor_ran') is False, audit
           assert stop.get('status') == 'PASS_LOCAL_PROCEDURE', stop
           assert stop.get('operational_permission') is False, stop
-          assert manifest.get('subject_head_sha') == os.environ['GITHUB_HEAD_SHA'] if False else True
+          assert manifest.get('subject_head_sha') == os.environ['GITHUB_HEAD_SHA'], manifest
           assert manifest.get('status') == 'PASS_LOCAL_PROCEDURE', manifest
           PY
 
