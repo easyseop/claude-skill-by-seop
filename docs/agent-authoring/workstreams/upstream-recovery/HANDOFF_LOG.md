@@ -89,3 +89,27 @@
   - GitHub 커넥터로 INPUT_MANIFEST와 blob SHA를 검증한다.
   - 상태를 `IN_PROGRESS`, phase `P`로 변경하고 Planner 구현·테스트를 계속한다.
   - 추가 승인이나 로컬 clone 복구를 기다리지 않는다.
+
+## 2026-11-23 — 총괄·구현 진행
+
+- 상태: `IN_PROGRESS`
+- phase: `P_SOURCE_AND_TEST`
+- 기준 commit: `0b8709ac235e39634f6c9021d8dfc78168a950ed`
+- 수행 내용:
+  - Remote Connector Mode로 로컬 main·사용자 미추적 파일을 건드리지 않고 recovery 브랜치에서 Planner source 복구 시작
+  - Planner `SKILL.md`, 입력 템플릿, bounded discovery, plan initializer, checker, downstream contract compiler, procedural audit, stop gate, self-test·mutation harness, auditor 정의 추가
+  - CAP 36·EVAL 22·mutation 15를 봉인된 catalog에서 결정적으로 materialize하도록 구현
+- 검증 결과:
+  - 변경은 `OWNERSHIP.yaml`의 Planner writable path와 상태·로그 경로에 한정
+  - 실제 self-test 실행 evidence는 아직 생성 전이며 PASS를 주장하지 않음
+  - 별도 감사 identity는 여전히 `UNVERIFIED`
+- blocker 또는 결정: 없음
+- 변경한 경로:
+  - `.claude/skills/capability-artifact-planner/**`
+  - `.claude/agents/capability-plan-auditor.md`
+  - `CURRENT_SESSION_STATE.yaml`
+  - `HANDOFF_LOG.md`
+- 다음 행동:
+  - Planner package file completeness와 Python 구문을 검증
+  - self-test·mutation을 실행 또는 독립 재현해 evidence 생성
+  - Phase P 검토 통과 전 Gate 복구를 시작하지 않음
