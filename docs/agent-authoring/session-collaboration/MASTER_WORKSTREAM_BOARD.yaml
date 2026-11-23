@@ -1,6 +1,6 @@
 schema_version: "1.0"
 project: agent-system-author
-updated_at: "2026-11-23T14:04:00+09:00"
+updated_at: "2026-11-23T14:09:00+09:00"
 
 capacity:
   orchestrator_sessions: 1
@@ -37,24 +37,25 @@ lanes:
       pull_request: 4
       owner_role: implementation_session
       reported_blocker: >-
-        Planner and Gate source/tests/mutation/evidence/report commits are present,
-        and Execution source, harness, evidence finalizer and auditor files have
-        been added through PR #4 head 4afb0d1 (2026-11-23 13:12 KST).
-        Gate/Verification CI jobs pass, but Execution tests/evidence are not
-        independently validated. Latest PR #4 Workstream Boundary Check
-        (run 45110410924) still FAILS with one READ_ONLY_PATH:
-        docs/agent-authoring/session-collaboration/check_workstream_boundaries.py.
-        That path's current Git blob equals the PR #3 base blob, so examine
-        three-dot merge-base/diff ancestry before treating it as source drift.
-        The earlier UTF-8 report filename false positives are fixed in the
-        current checker; all 13 protected PR #4 input blobs matched the approved
-        digests/overrides. Keep BLOCKED_FOR_DECISION; no VERIFIED_LOCAL promotion,
-        no new phase authorization or downstream preparation until the boundary
-        check is clean and current evidence is reviewed. PR #3 framework CI
-        also FAILS: upstream-recovery-planner-test.yml and
-        upstream-recovery-gate-test.yml are outside declared ownership; the
-        workflows' write permissions require an explicit ownership decision.
-        Preserve local main and all user untracked files.
+        PR #4 Planner/Gate local candidates and Execution source/test/mutation/
+        evidence/report files now exist through acbdf262 (2026-11-23 14:08 KST).
+        The Execution output manifest reports EXEC 30, EXI 45, EVAL 26,
+        mutations 10, builder tests 16, but independent identity and operational
+        permission remain UNVERIFIED/false. Framework-owned boundary checker
+        content matched the approved base but its mode drifted to 100755
+        on PR #4; the orchestrator restored mode 100644 in 389be7a without
+        changing the Git blob. PR #4 boundary run 45115841754 PASSED on
+        389be7a. The subsequent CI-generated Execution evidence commit acbdf262
+        had only action_required workflows (no jobs); manual comparison found
+        160 writable and 13 digest-matched sealed changed paths, zero violations.
+        Orchestrator appended an audit/recheck entry in 768638f and requested
+        a fresh current-head check. Retain BLOCKED_FOR_DECISION until current
+        boundary CI passes and independent source/evidence/review checks are
+        assessed. PR #3 still FAILS for two unauthorized workflows
+        (.github/workflows/upstream-recovery-{planner,gate}-test.yml) using
+        contents:write; require explicit permission decision, not an automatic
+        ownership expansion. PR #2 remains boundary-blocked. Preserve main
+        and all user untracked files.
       objective: >-
         Restore or regenerate the approved Capability Planner, Gate Generator,
         and Execution Artifact Generator source and structured evidence.
@@ -170,7 +171,7 @@ review_sequence:
 next_actions:
   orchestrator:
     - Resolve PR #3 boundary FAIL for two unowned upstream-recovery workflow files without silently expanding ownership or triggering unapproved writes.
-    - Resolve PR #4 shared-checker READ_ONLY_PATH diff without modifying other workstreams; current checker blob matches PR #3 base, so inspect merge-base ancestry; require fresh passing boundary CI before reentry.
+    - Verify the fresh PR #4 boundary and Execution evidence checks after the approved file-mode repair; do not promote on the earlier PASS alone.
     - PR #2 remains blocked until Remote Research Mode and sealed start prompt are formally corrected or approved with coherent digests.
     - Monitor PR #4 and PR #2 for state changes and boundary violations.
     - Review upstream-recovery before unblocking Knowledge/RAG Builder.
