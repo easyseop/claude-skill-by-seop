@@ -1,7 +1,7 @@
 name: Upstream Recovery Planner Test
 
 on:
-  pull_request_target:
+  pull_request:
     branches:
       - orchestration/session-collaboration-framework
     types: [opened, synchronize, reopened, ready_for_review]
@@ -9,6 +9,7 @@ on:
       - '.claude/skills/capability-artifact-planner/**'
       - '.claude/agents/capability-plan-auditor.md'
       - 'docs/agent-authoring/workstreams/upstream-recovery/**'
+      - '.github/workflows/upstream-recovery-planner-test.yml'
 
 permissions:
   contents: read
