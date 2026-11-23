@@ -3,8 +3,8 @@ workstream_id: upstream-recovery
 session_type: implementation
 repository: easyseop/claude-skill-by-seop
 branch: recovery/upstream-builders
-status: READY_FOR_SESSION
-phase: PRECHECK_REMOTE_CONNECTOR
+status: IN_PROGRESS
+phase: P_SOURCE_AND_TEST
 updated_at: "2026-11-23"
 
 source_of_truth:
@@ -56,13 +56,30 @@ required_results:
     planner_golden: "22/22"
     builder_negative_tests: ">=16"
 
+progress:
+  planner_source:
+    status: IN_PROGRESS
+    implemented:
+      - SKILL.md
+      - canonical input templates
+      - sealed catalog materializer
+      - bounded repository discovery
+      - plan initializer
+      - deterministic plan checker
+      - downstream contract derivation
+      - procedural audit candidate
+      - stop gate
+      - self-test and mutation harness
+      - auditor definition
+  gate_source: PENDING
+  execution_source: PENDING
+
 blocker: null
 last_review:
   decision: >-
     The previous local-checkout/DNS blocker is cleared by Remote Connector Mode.
-    The session must not touch the local main checkout and must write only to the
-    recovery branch through the GitHub connector after scratch-workspace tests.
+    Planner source recovery is now active on the dedicated branch.
 next_action: >-
-  Re-read SESSION_START_PROMPT.md and REMOTE_CONNECTOR_MODE.md, validate the sealed
-  input blobs through the GitHub connector, set status to IN_PROGRESS phase P, and
-  continue Planner implementation without waiting for another approval.
+  Complete Planner package documentation and installation entrypoint, execute or
+  independently reproduce the self-test harness, bind evidence, and review Phase P
+  before starting Gate Generator recovery.
