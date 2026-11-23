@@ -1,11 +1,25 @@
 schema_version: "1.0"
 workstream_id: upstream-recovery
+generated_at: "2026-11-23"
 
 planner:
-  status: VERIFIED_LOCAL_CANDIDATE
+  status: TESTED_PASS_FINAL_HEAD_PENDING
+  source_digest: sha256:6a03348ea7b4c84421794fabe5bde85b31a98347041361741cc9ad1fca75ad8a
+  cap_rules: 36
+  base_evals: 22
+  paraphrase_variants: 44
+  scenario_runs: 66
+  mutations_killed: 15
+  critical_mutants_survived: 0
+  independent_identity: UNVERIFIED
+  operational_permission: false
+  source_path: .claude/skills/capability-artifact-planner/
+  auditor_path: .claude/agents/capability-plan-auditor.md
+  evidence_path: docs/agent-authoring/evidence/capability-planner/
+  report_path: docs/agent-authoring/CAPABILITY_ARTIFACT_PLANNER_구현결과.md
 
 gate:
-  status: TESTED_PASS_BOUNDARY_PENDING
+  status: TESTED_PASS_FINAL_HEAD_PENDING
   source_digest: sha256:bc648b66babfa004def04acee2504f1cc14f7cdbd077cbb9b0e9c14378a264f6
   gate_rules: 80
   invariants: 85
@@ -17,9 +31,43 @@ gate:
   traceability: PASS
   host_enforcement: UNVERIFIED
   independent_identity: UNVERIFIED
+  m4_m7: HARD_ENFORCEMENT_UNAVAILABLE
   operational_permission: false
+  source_path: .claude/skills/gate-generator/
+  auditor_path: .claude/agents/gate-auditor.md
+  evidence_path: docs/agent-authoring/evidence/gate-generator/
+  report_path: docs/agent-authoring/GATE_GENERATOR_MVP_구현결과.md
 
 execution:
-  status: PENDING
+  status: TESTED_PASS_FINAL_HEAD_PENDING
+  source_digest: sha256:b0b0a919e2aa93679ac571e77ac65b3a1fe584b6d477839c8418d732ba97dcdf
+  exec_rules: 30
+  invariants: 45
+  planner_golden: 22
+  evals: 26
+  mutations_killed: 10
+  builder_tests: 16
+  critical_mutants_survived: 0
+  traceability: PASS
+  dynamic_execution: HARD_ENFORCEMENT_UNAVAILABLE
+  independent_identity: UNVERIFIED
+  operational_permission: false
+  source_path: .claude/skills/execution-artifact-generator/
+  auditor_path: .claude/agents/execution-artifact-auditor.md
+  evidence_path: docs/agent-authoring/evidence/execution-artifact-generator/
+  report_path: docs/agent-authoring/EXECUTION_ARTIFACT_GENERATOR_MVP_구현결과.md
 
-review_status: GATE_BOUNDARY_RECHECK
+checks:
+  sealed_inputs_current: PASS
+  ownership_boundary: PENDING_CURRENT_HEAD
+  read_only_verification: PENDING_CURRENT_HEAD
+  evidence_subject_binding: PENDING_CURRENT_HEAD_REVIEW
+  unexpected_changes: PENDING_CURRENT_HEAD
+  independent_identity: UNVERIFIED
+
+limitations:
+  - Production enforcement and operational permission are outside this workstream.
+  - Host Hook, verified sandbox, durable runtime, tenant RAG, and production release remain unavailable.
+  - Creator-produced evidence is not an independent attestation.
+
+review_status: FINAL_HEAD_VERIFICATION_PENDING
