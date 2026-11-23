@@ -11,7 +11,9 @@
   ],
   "shared_orchestrator_only": [
     "docs/agent-authoring/session-collaboration/MASTER_WORKSTREAM_BOARD.yaml",
-    "docs/agent-authoring/session-collaboration/WORKSTREAM_BOUNDARIES.json"
+    "docs/agent-authoring/session-collaboration/WORKSTREAM_BOUNDARIES.json",
+    ".github/workflows/upstream-recovery-planner-test.yml",
+    ".github/workflows/upstream-recovery-gate-test.yml"
   ],
   "workstreams": [
     {
@@ -19,7 +21,9 @@
       "owner_role": "orchestrator",
       "writable_paths": [
         "docs/agent-authoring/session-collaboration/**",
-        ".github/workflows/workstream-boundary-check.yml"
+        ".github/workflows/workstream-boundary-check.yml",
+        ".github/workflows/upstream-recovery-planner-test.yml",
+        ".github/workflows/upstream-recovery-gate-test.yml"
       ],
       "read_only_paths": [],
       "prepared_path_blobs": {},
