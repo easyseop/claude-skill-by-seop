@@ -1,6 +1,6 @@
 schema_version: "1.0"
 project: agent-system-author
-updated_at: "2026-11-23T10:59:32+09:00"
+updated_at: "2026-11-23T13:01:24+09:00"
 
 capacity:
   orchestrator_sessions: 1
@@ -37,13 +37,20 @@ lanes:
       pull_request: 4
       owner_role: implementation_session
       reported_blocker: >-
-        Latest PR #4 Workstream Boundary Check failed (2026-11-23 10:29 KST):
-        REMOTE_CONNECTOR_MODE.md is OUTSIDE_OWNERSHIP, and the sealed
-        SESSION_START_PROMPT.md blob does not match the registered digest
-        (expected 938f4d7d47c96ccb14831899dfd5576feff7e9a9,
-        actual fa09bb0bfc4417946db743ad2db669142b9522ff).
-        Remote Connector Mode is not approved as a VERIFIED entry point until
-        the boundary violation is corrected and input digest revalidation passes.
+        PR #4 submitted new Planner/Gate source, test, mutation, evidence, and reports;
+        independent GitHub Actions Gate/Verification jobs passed on head cd2175e
+        (2026-11-23 13:02 KST), but its latest Workstream Boundary Check still FAILS.
+        Current checker reports a read-only shared
+        docs/agent-authoring/session-collaboration/check_workstream_boundaries.py
+        diff, plus quoted Korean report filenames mistakenly classified OUTSIDE_OWNERSHIP
+        (git core.quotepath escaping). The orchestrator-approved Remote Connector
+        inputs are now sealed via PREPARED_INPUT_OVERRIDES.json; the latest boundary
+        log matched all 13 protected PR #4 blobs. Keep this workstream
+        BLOCKED_FOR_DECISION until the shared checker drift is removed within
+        an authorized owner scope, the Unicode path detection is corrected by
+        the framework owner, and a fresh boundary check passes. Gate is not
+        VERIFIED_LOCAL; Execution source is incomplete. PR #3 framework CI
+        also FAILS for two unowned upstream-recovery workflow files.
         Preserve local main and all user untracked files.
       objective: >-
         Restore or regenerate the approved Capability Planner, Gate Generator,
@@ -159,7 +166,9 @@ review_sequence:
 
 next_actions:
   orchestrator:
-    - Reconcile PR #2 and #4 OWNERSHIP violations and sealed start prompts through an explicitly authorized orchestrator-controlled correction; require passing boundary CI before reentry.
+    - Resolve PR #3 boundary FAIL for two unowned upstream-recovery workflow files without silently expanding ownership or triggering unapproved writes.
+    - Restore PR #4 read-only shared checker to its approved base and correct Unicode-quoted git diff names in orchestrator-owned checker; require a fresh passing boundary CI before reentry.
+    - PR #2 remains blocked until Remote Research Mode and sealed start prompt are formally corrected or approved with coherent digests.
     - Monitor PR #4 and PR #2 for state changes and boundary violations.
     - Review upstream-recovery before unblocking Knowledge/RAG Builder.
     - Review Assembler research independently from implementation work.
