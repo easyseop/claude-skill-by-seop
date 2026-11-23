@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "plan_id": "<target>",
+  "status": "DRAFT",
+  "snapshot": {
+    "planner_version": "recovery-1.0",
+    "repository_ref": "UNRESOLVED",
+    "source_cutoff": "UNRESOLVED",
+    "input_digests": {}
+  },
+  "request": {
+    "target": "<target>",
+    "request_path": "REQUEST.md",
+    "goals": [],
+    "prohibited": [],
+    "acceptance_criteria": []
+  },
+  "repository_facts": {
+    "path": "REPO_FACTS.json",
+    "digest": "UNRESOLVED"
+  },
+  "atomic_capabilities": [],
+  "architecture": {
+    "control_mode": "direct_response",
+    "summary_label": null,
+    "selected_components": [],
+    "rejected_components": []
+  },
+  "workflow": {
+    "termination": {},
+    "retry": {},
+    "compensation": {}
+  },
+  "permissions_and_effects": {
+    "effect_level": "none",
+    "external_write": false,
+    "secret_in_llm_context": false,
+    "required_permissions": [],
+    "human_approvals": []
+  },
+  "state": {
+    "persistent": false,
+    "scope": null,
+    "owner": null,
+    "ttl": null,
+    "deletion": null,
+    "identity_binding": null,
+    "migration": null
+  },
+  "knowledge_plan": {
+    "mode": "none",
+    "corpus": [],
+    "freshness": null,
+    "acl": null,
+    "citation": null,
+    "retrieval_eval": null
+  },
+  "questions": [],
+  "checks_and_evals": {
+    "acceptance_mappings": [],
+    "planned_evals": [],
+    "planned_mutations": []
+  },
+  "handoff_contracts": {},
+  "open_risks": [],
+  "assumptions": [],
+  "change_history": []
+}
