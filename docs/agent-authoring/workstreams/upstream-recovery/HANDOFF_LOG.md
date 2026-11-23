@@ -143,3 +143,19 @@
 - blocker 또는 결정: 없음
 - 다음 행동:
   - 새 workflow run 및 boundary run 결과 확인
+
+## 2026-11-23 14:09 KST — 총괄 경계 복구 및 최종 CI 요청
+
+- 상태: `IN_PROGRESS / E_BOUNDARY_RECHECK` (VERIFIED 승격 아님)
+- 기준 commit: `acbdf26297d740199a1fe45e772973c9f1ed4b6a`
+- 수행 내용:
+  - 프레임워크 소유 검사기의 실행 비트만 승인된 기준(100644)으로 복원한 커밋 `389be7a` 적용; 검사기 내용 Git blob SHA는 변경하지 않음.
+  - 해당 커밋의 boundary check `45115841754` PASS 확인.
+  - 이후 CI가 Execution source/test/mutation/evidence/report 56개 경로를 커밋(`acbdf262`)하여 새 HEAD 생성함.
+- 검증 결과:
+  - 새 HEAD의 PR diff 173경로 중 writable 160, 승인된 봉인 입력 13; OWNERSHIP 위반 및 봉인 digest mismatch 0건(리포지토리 트리/blob SHA 직접 비교).
+  - `acbdf262`의 GitHub Actions 3개는 bot-generated commit에 대해 `action_required`로 job 0개; 이 HEAD의 CI PASS로 간주하지 않음.
+  - Execution 결과는 `TESTED_PASS_BOUNDARY_PENDING`; full workstream `VERIFIED_LOCAL` 승인 없음.
+- blocker 또는 결정: 현재 HEAD의 신선한 boundary/verification run이 필요하며, 총괄이 이 append-only 기록을 통해 PR synchronize를 유도함.
+- 변경한 경로: `docs/agent-authoring/workstreams/upstream-recovery/HANDOFF_LOG.md`만 추가 기록.
+- 다음 행동: 새 CI의 결과와 evidence digest를 확인한 후에만 READY_FOR_REVIEW 가능성을 판단. Knowledge/RAG 및 다른 workstream 착수 금지.
