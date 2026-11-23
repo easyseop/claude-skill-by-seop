@@ -4,10 +4,12 @@ session_type: research
 repository: easyseop/claude-skill-by-seop
 branch: research/agent-workflow-assembler
 status: READY_FOR_SESSION
-updated_at: "2026-11-20T13:20:00+09:00"
+execution_mode: remote_connector_allowed
+updated_at: "2026-11-23"
 
 source_of_truth:
   start_prompt: docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md
+  remote_research_mode: docs/agent-authoring/workstreams/agent-workflow-assembler-research/REMOTE_RESEARCH_MODE.md
   work_order: docs/agent-authoring/workstreams/agent-workflow-assembler-research/WORK_ORDER.md
   ownership: docs/agent-authoring/workstreams/agent-workflow-assembler-research/OWNERSHIP.yaml
   input_manifest: docs/agent-authoring/workstreams/agent-workflow-assembler-research/INPUT_MANIFEST.yaml
@@ -28,6 +30,7 @@ current_task:
     - packaging, install, upgrade, rollback
     - eval, mutation, ablation, and release boundaries
   prohibited:
+    - modifying the current local checkout or user files
     - implementation changes
     - editing .claude or .github
     - modifying other workstreams
@@ -44,5 +47,11 @@ required_results:
   source_traceability: required
 
 blocker: null
-last_review: null
-next_action: Read SESSION_START_PROMPT.md and run research preflight.
+last_review:
+  decision: >-
+    Local branch mismatch or shell DNS failure is not a blocker when the GitHub
+    connector can read sealed inputs and write only to the research branch.
+next_action: >-
+  Re-read SESSION_START_PROMPT.md and REMOTE_RESEARCH_MODE.md, validate the input
+  blob digests through the GitHub connector, set status to IN_PROGRESS, and start
+  the Assembler research without waiting for another approval.
