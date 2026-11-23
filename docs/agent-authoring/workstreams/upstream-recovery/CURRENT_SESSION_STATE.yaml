@@ -4,24 +4,14 @@ session_type: implementation
 repository: easyseop/claude-skill-by-seop
 branch: recovery/upstream-builders
 status: IN_PROGRESS
-phase: E_SOURCE_AND_TEST
-
-source_of_truth:
-  start_prompt: docs/agent-authoring/workstreams/upstream-recovery/SESSION_START_PROMPT.md
-  remote_connector_mode: docs/agent-authoring/workstreams/upstream-recovery/REMOTE_CONNECTOR_MODE.md
-  work_order: docs/agent-authoring/workstreams/upstream-recovery/WORK_ORDER.md
-  ownership: docs/agent-authoring/workstreams/upstream-recovery/OWNERSHIP.yaml
-  input_manifest: docs/agent-authoring/workstreams/upstream-recovery/INPUT_MANIFEST.yaml
-  output_manifest: docs/agent-authoring/workstreams/upstream-recovery/OUTPUT_MANIFEST.yaml
-  handoff_log: docs/agent-authoring/workstreams/upstream-recovery/HANDOFF_LOG.md
+phase: G_BOUNDARY_RECHECK
 
 progress:
   planner_source:
     status: VERIFIED_LOCAL_CANDIDATE
-    source_digest: sha256:6a03348ea7b4c84421794fabe5bde85b31a98347041361741cc9ad1fca75ad8a
     operational_permission: false
   gate_source:
-    status: VERIFIED_LOCAL_CANDIDATE
+    status: TESTED_PASS_BOUNDARY_PENDING
     source_digest: sha256:bc648b66babfa004def04acee2504f1cc14f7cdbd077cbb9b0e9c14378a264f6
     gate_rules: "80/80"
     invariants: "85/85"
@@ -34,19 +24,9 @@ progress:
     independent_identity: UNVERIFIED
     m4_m7: HARD_ENFORCEMENT_UNAVAILABLE
     operational_permission: false
-  execution_source:
-    status: IN_PROGRESS
-    target: E0-E4_LOCAL_CANDIDATE
+  execution_source: PENDING
 
 blocker: null
-last_review:
-  decision: >-
-    Gate source, all 85 invariants, Planner golden 22, GEVAL 48,
-    20 critical mutations, 19 Hook smoke cases, traceability, local procedural
-    audit, evidence binding, and ownership paths passed. Host enforcement and
-    actual independent audit identity remain unavailable.
 next_action: >-
-  Implement Execution Artifact Generator E0-E4 from the sealed EXEC-01~30,
-  EXI-001~45, EXEVAL-001~26, EXMUT-001~10 catalogs. Do not resume
-  Knowledge/RAG until Execution source, negative builder tests, evidence binding,
-  and ownership checks pass.
+  Pass the workstream ownership boundary check, then mark Gate
+  VERIFIED_LOCAL_CANDIDATE and start Execution Artifact Generator E0-E4 recovery.
