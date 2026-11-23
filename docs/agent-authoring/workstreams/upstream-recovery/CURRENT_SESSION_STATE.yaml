@@ -4,7 +4,7 @@ session_type: implementation
 repository: easyseop/claude-skill-by-seop
 branch: recovery/upstream-builders
 status: IN_PROGRESS
-phase: P_BOUNDARY_RECHECK
+phase: G_SOURCE_AND_TEST
 
 source_of_truth:
   start_prompt: docs/agent-authoring/workstreams/upstream-recovery/SESSION_START_PROMPT.md
@@ -17,20 +17,29 @@ source_of_truth:
 
 progress:
   planner_source:
-    status: TESTED_PASS_BOUNDARY_PENDING
+    status: VERIFIED_LOCAL_CANDIDATE
     source_digest: sha256:6a03348ea7b4c84421794fabe5bde85b31a98347041361741cc9ad1fca75ad8a
     cap_rules: "36/36"
     evals: "22/22"
     paraphrase_variants: "44/44"
     scenario_runs: "66/66"
     mutations: "15/15 killed"
+    ownership_boundary: PASS
     local_procedural_audit: PASS
     independent_identity: UNVERIFIED
     operational_permission: false
-  gate_source: PENDING
+  gate_source:
+    status: IN_PROGRESS
+    target: M0-M3_LOCAL_CANDIDATE
   execution_source: PENDING
 
 blocker: null
+last_review:
+  decision: >-
+    Planner source, deterministic tests, mutation campaign, generated contracts,
+    local procedural audit, evidence binding, and ownership boundary all passed.
+    Production permission and independent audit identity remain unavailable.
 next_action: >-
-  Pass the orchestrator-approved ownership boundary check, then mark Planner
-  VERIFIED_LOCAL_CANDIDATE and start Gate Generator M0-M3 recovery.
+  Implement Gate Generator M0-M3 from the sealed GATE-01~80, I-001~85, and
+  GEVAL-001~48 catalogs. Do not start Execution until Gate tests, mutations,
+  Hook smoke, traceability, evidence binding, and boundary checks pass.
