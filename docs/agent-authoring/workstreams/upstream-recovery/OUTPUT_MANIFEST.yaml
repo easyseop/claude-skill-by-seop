@@ -4,68 +4,35 @@ workstream_id: upstream-recovery
 outputs:
   - path: .claude/skills/capability-artifact-planner/
     kind: source_package
-    status: verified_local_candidate
+    status: tested_pass
   - path: .claude/agents/capability-plan-auditor.md
     kind: auditor_definition
     status: implemented_independence_unverified
   - path: docs/agent-authoring/evidence/capability-planner/
     kind: evidence_package
-    status: verified_local_candidate
+    status: tested_pass
   - path: docs/agent-authoring/CAPABILITY_ARTIFACT_PLANNER_구현결과.md
     kind: implementation_report
     status: complete
 
-  - path: .claude/skills/gate-generator/
-    kind: source_package
-    status: in_progress
-  - path: .claude/agents/gate-auditor.md
-    kind: auditor_definition
-    status: pending
-  - path: docs/agent-authoring/evidence/gate-generator/
-    kind: evidence_package
-    status: pending
-  - path: docs/agent-authoring/GATE_GENERATOR_MVP_구현결과.md
-    kind: implementation_report
-    status: pending
-
-  - path: .claude/skills/execution-artifact-generator/
-    kind: source_package
-    status: pending
-  - path: .claude/agents/execution-artifact-auditor.md
-    kind: auditor_definition
-    status: pending
-  - path: docs/agent-authoring/evidence/execution-artifact-generator/
-    kind: evidence_package
-    status: pending
-  - path: docs/agent-authoring/EXECUTION_ARTIFACT_GENERATOR_MVP_구현결과.md
-    kind: implementation_report
-    status: pending
-
 planner_test:
   source_digest: sha256:6a03348ea7b4c84421794fabe5bde85b31a98347041361741cc9ad1fca75ad8a
-  status: VERIFIED_LOCAL_CANDIDATE
+  status: PASS_LOCAL_PROCEDURE
   cap_rules: 36
   base_evals: 22
   paraphrase_variants: 44
   scenario_runs: 66
   mutations_killed: 15
   mutations_total: 15
-  ownership_boundary: PASS
   independent_identity: UNVERIFIED
-  operational_permission: false
 
 checks:
-  ownership_boundary: PASS
+  ownership_boundary: PENDING_RECHECK
   input_manifest_current: PASS_RESEALED
-  planner_complete: VERIFIED_LOCAL_CANDIDATE
-  gate_complete: IN_PROGRESS
+  planner_complete: TESTED_PASS
+  gate_complete: PENDING
   execution_complete: PENDING
-  planner_critical_mutants_survived: 0
+  critical_mutants_survived: 0
   operational_permission: false
 
-limitations:
-  - Production enforcement is outside this workstream.
-  - Actual independent audit identity remains UNVERIFIED.
-  - Knowledge/RAG and Assembler workstreams are immutable here.
-
-review_status: GATE_IN_PROGRESS
+review_status: PLANNER_BOUNDARY_RECHECK
