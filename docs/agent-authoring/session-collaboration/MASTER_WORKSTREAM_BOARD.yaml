@@ -1,6 +1,6 @@
 schema_version: "1.0"
 project: agent-system-author
-updated_at: "2026-11-23T14:12:00+09:00"
+updated_at: "2026-11-23"
 
 capacity:
   orchestrator_sessions: 1
@@ -32,43 +32,32 @@ lanes:
   implementation:
     - id: upstream-recovery
       priority: 1
-      status: BLOCKED_FOR_DECISION
+      status: FINAL_HEAD_VERIFICATION_PENDING
       branch: recovery/upstream-builders
       pull_request: 4
       owner_role: implementation_session
-      reported_blocker: >-
-        PR #4 Execution E0-E4 source, test, mutation and evidence were committed
-        in acbdf262 on 2026-11-23 14:08 KST (EXEC 30, EXI 45, EVAL 26,
-        mutation 10, builder 16 reported), but these are not whole-workstream
-        VERIFIED. The orchestrator restored a shared checker executable-mode
-        drift without changing content (389be7a, 100755 to 100644);
-        boundary checks 45115841754 and 45116019319 PASSED on 389be7a
-        and 768638f respectively. PR #4 is now at 9127f4d (GitHub Actions
-        bot commit); that head's Actions were action_required with 0 jobs,
-        not a fresh PASS. Competing writable Gate/Verification jobs on
-        768638f raced: Gate CI wrote 9127f4d while Verification CI run
-        45116019320 failed at git push (non-fast-forward rejected).
-        Crucially, the new Gate bot commit REGRESSED CURRENT_SESSION_STATE.yaml
-        and OUTPUT_MANIFEST.yaml from Execution TESTED_PASS_BOUNDARY_PENDING
-        back to Execution PENDING and Gate TESTED_PASS_BOUNDARY_PENDING.
-        The upstream artifacts remain in git, but the current state/manifest
-        is NOT trustworthy; do not promote or prepare Knowledge/RAG.
-        Stop concurrent CI writes until authorized workflow ownership and
-        serialized/non-writing test design are resolved, then reconcile the
-        manifest using current verified artifacts and rerun boundary/evidence
-        checks on the exact resulting HEAD. PR #3 framework CI still FAILS
-        for two unowned .github/workflows/upstream-recovery-{planner,gate}-test.yml
-        with contents:write. PR #2 is also boundary-blocked. Preserve main
-        and all user untracked files.
       objective: >-
-        Restore or regenerate the approved Capability Planner, Gate Generator,
-        and Execution Artifact Generator source and structured evidence.
+        Restore and verify Capability Planner, Gate Generator M0-M3, and
+        Execution Artifact Generator E0-E4 source and structured evidence.
+      progress:
+        planner: TESTED_PASS_FINAL_HEAD_PENDING
+        gate: TESTED_PASS_FINAL_HEAD_PENDING
+        execution: TESTED_PASS_FINAL_HEAD_PENDING
+      current_controls:
+        writable_ci_removed: true
+        verification_ci: serialized_read_only
+        state_manifest_reconciled: true
+        operational_permission: false
       dependencies: []
       blocks:
         - knowledge-rag-builder-k0-k6
       allowed_parallel_with:
         - assembler-research
       start_prompt: docs/agent-authoring/workstreams/upstream-recovery/SESSION_START_PROMPT.md
+      next_gate: >-
+        Require both the workstream boundary check and the serialized read-only
+        Planner/Gate/Execution verification to pass on the exact current head,
+        then perform evidence/hash review before VERIFIED_LOCAL.
 
     - id: knowledge-rag-builder-k0-k6
       priority: 2
@@ -82,8 +71,8 @@ lanes:
       blocks:
         - assembler-implementation
       resume_policy: >-
-        Do not resume until upstream-recovery is reviewed and current source/evidence
-        are merged or otherwise digest-bound into this workstream.
+        Resume only after upstream-recovery is reviewed and its current
+        source/evidence are merged or digest-bound into this workstream.
 
     - id: assembler-implementation
       priority: 3
@@ -119,25 +108,24 @@ lanes:
   research:
     - id: assembler-research
       priority: 1
-      status: BLOCKED_FOR_DECISION
+      status: BOUNDARY_RECHECK_PENDING
       branch: research/agent-workflow-assembler
       pull_request: 2
       owner_role: research_session
-      reported_blocker: >-
-        Latest PR #2 Workstream Boundary Check failed (2026-11-23 10:30 KST):
-        REMOTE_RESEARCH_MODE.md is OUTSIDE_OWNERSHIP, and the sealed
-        SESSION_START_PROMPT.md blob does not match the registered digest
-        (expected 89936d77eb72ae89e91713dc7a9a2ff70cc48209,
-        actual fe147efe55f0da39c649b7afcdddde4078621fa3).
-        Do not start the research session until boundary and sealed input
-        validation are restored.
       objective: Research Agent & Workflow Assembler rules and contracts.
+      input_binding:
+        remote_mode_formally_approved: true
+        ownership_resealed: true
+        input_manifest_resealed: true
       dependencies: []
       blocks:
         - assembler-implementation
       allowed_parallel_with:
         - upstream-recovery
       start_prompt: docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md
+      next_gate: >-
+        Require a current-head boundary PASS, then start the 25-section research
+        and write only state, handoff, output manifest, and final research report.
 
     - id: external-discovery-research
       priority: 2
@@ -174,16 +162,13 @@ review_sequence:
 
 next_actions:
   orchestrator:
-    - Resolve PR #3 boundary FAIL for two unowned upstream-recovery workflow files without silently expanding ownership or triggering unapproved writes.
-    - Hold PR #4: resolve the concurrent CI write race and regressed state/OUTPUT_MANIFEST on bot head 9127f4d; require current-head boundary and evidence verification after reconciliation.
-    - PR #2 remains blocked until Remote Research Mode and sealed start prompt are formally corrected or approved with coherent digests.
-    - Monitor PR #4 and PR #2 for state changes and boundary violations.
-    - Review upstream-recovery before unblocking Knowledge/RAG Builder.
-    - Review Assembler research independently from implementation work.
+    - Monitor the exact current PR #4 head for read-only verification and boundary results.
+    - Promote upstream-recovery only after current-head evidence/hash review.
+    - Monitor PR #2 current-head boundary recheck; unblock research only on PASS.
+    - Do not merge or prepare downstream implementation before dependencies verify.
   implementation_session:
-    - Pause execution while PR #4 boundary CI fails; preserve existing untracked changes untouched.
-    - Switch to recovery/upstream-builders and read its SESSION_START_PROMPT.md.
-    - Do not modify or resume Knowledge/RAG PR #1 while recovery is active.
+    - Do not add new source while final-head verification is running.
+    - Do not modify or resume Knowledge/RAG PR #1 yet.
   research_session:
-    - Pause execution while PR #2 boundary CI fails; do not treat the modified sealed start prompt as approved.
+    - Start Assembler research only after the current-head boundary PASS.
     - Do not modify implementation or evidence paths.
