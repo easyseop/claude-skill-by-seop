@@ -77,7 +77,7 @@ jobs:
           assert counts.get('paraphrase_variants') == 44, counts
           assert counts.get('mutations_killed') == 15, counts
           assert counts.get('mutations_total') == 15, counts
-          items = mutations.get('mutations', mutations if isinstance(mutations, list) else [])
+          items = mutations.get('results', mutations.get('mutations', mutations if isinstance(mutations, list) else []))
           assert len(items) == 15, len(items)
           assert all(item.get('status') == 'KILLED' for item in items), items
           PY
