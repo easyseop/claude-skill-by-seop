@@ -63,11 +63,29 @@ def git_blob_sha(path: str) -> str:
     return run_git("hash-object", "--", path).strip()
 
 
+def load_prepared_overrides(path: Path, branch: str) -> tuple[dict[str, str], list[str]]:
+    if not path.is_file():
+        return {}, []
+    data = json.loads(path.read_text(encoding="utf-8"))
+    prepared: dict[str, str] = {}
+    applied: list[str] = []
+    for item in data.get("overrides", []):
+        pattern = item.get("branch_pattern")
+        if pattern and fnmatch.fnmatchcase(branch, pattern):
+            prepared.update(item.get("prepared_path_blobs", {}))
+            applied.append(pattern)
+    return prepared, applied
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--config",
         default="docs/agent-authoring/session-collaboration/WORKSTREAM_BOUNDARIES.json",
+    )
+    parser.add_argument(
+        "--overrides",
+        default="docs/agent-authoring/session-collaboration/PREPARED_INPUT_OVERRIDES.json",
     )
     parser.add_argument("--branch")
     parser.add_argument("--base")
@@ -79,14 +97,16 @@ def main() -> int:
     branch = args.branch or current_branch()
     files = changed_files(args.base, args.changed_files)
     rule = select_rule(config, branch)
+    override_prepared, applied_overrides = load_prepared_overrides(Path(args.overrides), branch)
 
     result = {
-        "schema_version": "1.1",
+        "schema_version": "1.2",
         "branch": branch,
         "base": args.base,
         "status": "FAIL",
         "changed_files": files,
         "prepared_paths_verified": [],
+        "prepared_override_patterns": applied_overrides,
         "violations": [],
     }
 
@@ -97,7 +117,8 @@ def main() -> int:
     else:
         writable = rule.get("writable_paths", [])
         read_only = rule.get("read_only_paths", [])
-        prepared = rule.get("prepared_path_blobs", {})
+        prepared = dict(rule.get("prepared_path_blobs", {}))
+        prepared.update(override_prepared)
         forbidden = config.get("global_forbidden", []) + rule.get("forbidden_paths", [])
         orchestrator_only = config.get("shared_orchestrator_only", [])
         owner_role = rule.get("owner_role")
