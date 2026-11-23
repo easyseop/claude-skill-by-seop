@@ -3,12 +3,13 @@ workstream_id: upstream-recovery
 session_type: implementation
 repository: easyseop/claude-skill-by-seop
 branch: recovery/upstream-builders
-status: BLOCKED_FOR_DECISION
-phase: PRECHECK
-updated_at: "2026-11-20T06:50:47.944Z"
+status: READY_FOR_SESSION
+phase: PRECHECK_REMOTE_CONNECTOR
+updated_at: "2026-11-23"
 
 source_of_truth:
   start_prompt: docs/agent-authoring/workstreams/upstream-recovery/SESSION_START_PROMPT.md
+  remote_connector_mode: docs/agent-authoring/workstreams/upstream-recovery/REMOTE_CONNECTOR_MODE.md
   work_order: docs/agent-authoring/workstreams/upstream-recovery/WORK_ORDER.md
   ownership: docs/agent-authoring/workstreams/upstream-recovery/OWNERSHIP.yaml
   input_manifest: docs/agent-authoring/workstreams/upstream-recovery/INPUT_MANIFEST.yaml
@@ -23,14 +24,15 @@ current_task:
     - capability-artifact-planner
     - gate-generator-m0-m3
     - execution-artifact-generator-e0-e4
+  execution_mode: remote_connector_allowed
   prohibited:
+    - modifying the current local main checkout or user untracked files
     - modifying Knowledge/RAG Builder files
     - modifying Assembler research files
     - modifying .claude/settings.json or .github
     - production enforcement or external writes
     - claiming independent audit identity when none ran
     - direct changes to main
-    - branch switching
     - force push or automatic merge
 
 required_results:
@@ -54,6 +56,13 @@ required_results:
     planner_golden: "22/22"
     builder_negative_tests: ">=16"
 
-blocker: "로컬 checkout은 main이고 담당 경로 밖에 미추적 변경 5개가 있음. 원격 recovery 브랜치를 새로 clone하려 했으나 github.com DNS 조회 실패."
-last_review: null
-next_action: 대상 브랜치의 격리 checkout에서 preflight 재개.
+blocker: null
+last_review:
+  decision: >-
+    The previous local-checkout/DNS blocker is cleared by Remote Connector Mode.
+    The session must not touch the local main checkout and must write only to the
+    recovery branch through the GitHub connector after scratch-workspace tests.
+next_action: >-
+  Re-read SESSION_START_PROMPT.md and REMOTE_CONNECTOR_MODE.md, validate the sealed
+  input blobs through the GitHub connector, set status to IN_PROGRESS phase P, and
+  continue Planner implementation without waiting for another approval.
