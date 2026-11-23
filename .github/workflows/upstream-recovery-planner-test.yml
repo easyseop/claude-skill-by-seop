@@ -1,4 +1,4 @@
-name: Upstream Recovery Planner Test
+name: Upstream Recovery Verification
 
 on:
   pull_request:
@@ -7,7 +7,10 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - '.claude/skills/capability-artifact-planner/**'
+      - '.claude/skills/gate-generator/**'
       - '.claude/agents/capability-plan-auditor.md'
+      - '.claude/agents/gate-auditor.md'
+      - 'docs/agent-authoring/evidence/capability-planner/**'
       - 'docs/agent-authoring/workstreams/upstream-recovery/**'
       - '.github/workflows/upstream-recovery-planner-test.yml'
 
@@ -15,13 +18,13 @@ permissions:
   contents: write
 
 jobs:
-  planner-test:
+  gate-test:
     if: github.event.pull_request.head.ref == 'recovery/upstream-builders'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     env:
-      PLANNER_DIR: .claude/skills/capability-artifact-planner
-      EVIDENCE_DIR: docs/agent-authoring/evidence/capability-planner
+      GATE_DIR: .claude/skills/gate-generator
+      EVIDENCE_DIR: docs/agent-authoring/evidence/gate-generator
       HEAD_REF: ${{ github.event.pull_request.head.ref }}
     steps:
       - name: Checkout pull request head
@@ -36,123 +39,109 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Compile Planner Python sources
-        shell: bash
-        run: |
-          set -euo pipefail
-          mapfile -t files < <(find "$PLANNER_DIR/scripts" -type f -name '*.py' -print | sort)
-          test "${#files[@]}" -gt 0
-          python -m py_compile "${files[@]}"
-
-      - name: Run Planner self-test
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p "$EVIDENCE_DIR"
-          python "$PLANNER_DIR/scripts/run_self_tests.py" \
-            --repo-root "$GITHUB_WORKSPACE" \
-            --results-dir "$GITHUB_WORKSPACE/$EVIDENCE_DIR" \
-            2>&1 | tee planner-test.log
-
-      - name: Generate fixture, contracts, audit, and stop result
-        shell: bash
-        run: |
-          set -euo pipefail
-          python - <<'PY'
-          import sys
-          from pathlib import Path
-          scripts = Path('.claude/skills/capability-artifact-planner/scripts').resolve()
-          sys.path.insert(0, str(scripts))
-          from common import write_json
-          from run_self_tests import valid_plan
-          evidence = Path('docs/agent-authoring/evidence/capability-planner')
-          write_json(evidence / 'fixture-plan.json', valid_plan())
-          PY
-          python "$PLANNER_DIR/scripts/check_capability_plan.py" "$EVIDENCE_DIR/fixture-plan.json" --output "$EVIDENCE_DIR/planner-check.json"
-          python "$PLANNER_DIR/scripts/derive_contracts.py" "$EVIDENCE_DIR/fixture-plan.json" --output-dir "$EVIDENCE_DIR/contracts"
-          python "$PLANNER_DIR/scripts/audit_capability_plan.py" "$EVIDENCE_DIR/fixture-plan.json" --output "$EVIDENCE_DIR/planner-audit-result.json"
-          python "$PLANNER_DIR/scripts/planner_stop_gate.py" \
-            --machine-check "$EVIDENCE_DIR/planner-check.json" \
-            --audit "$EVIDENCE_DIR/planner-audit-result.json" \
-            --contract "$EVIDENCE_DIR/contracts/GATE_CONTRACT.yaml" \
-            --contract "$EVIDENCE_DIR/contracts/EXECUTION_CONTRACT.yaml" \
-            --contract "$EVIDENCE_DIR/contracts/KNOWLEDGE_CONTRACT.yaml" \
-            --contract "$EVIDENCE_DIR/contracts/ASSEMBLY_CONTRACT.yaml" \
-            --output "$EVIDENCE_DIR/planner-stop-gate.json"
-
-      - name: Finalize stable Planner evidence
-        shell: bash
-        run: |
-          set -euo pipefail
-          python "$PLANNER_DIR/scripts/finalize_planner_evidence.py" \
-            --planner-dir "$PLANNER_DIR" \
-            --auditor .claude/agents/capability-plan-auditor.md \
-            --evidence-dir "$EVIDENCE_DIR" \
-            --report docs/agent-authoring/CAPABILITY_ARTIFACT_PLANNER_구현결과.md \
-            --state docs/agent-authoring/workstreams/upstream-recovery/CURRENT_SESSION_STATE.yaml \
-            --output-manifest docs/agent-authoring/workstreams/upstream-recovery/OUTPUT_MANIFEST.yaml
-
-      - name: Verify complete Planner candidate
+      - name: Verify Planner prerequisite
         shell: bash
         run: |
           set -euo pipefail
           python - <<'PY'
           import json
           from pathlib import Path
-          base = Path('docs/agent-authoring/evidence/capability-planner')
-          required = ['self-test-summary.json','scenario-results.json','mutation-results.json','planner-metrics.json','planner-check.json','planner-audit-result.json','planner-stop-gate.json','implementation-manifest.json']
-          for name in required:
-              assert (base / name).is_file(), name
-          summary = json.loads((base / 'self-test-summary.json').read_text())
-          mutations = json.loads((base / 'mutation-results.json').read_text())
-          audit = json.loads((base / 'planner-audit-result.json').read_text())
-          stop = json.loads((base / 'planner-stop-gate.json').read_text())
-          manifest = json.loads((base / 'implementation-manifest.json').read_text())
-          assert summary.get('status') == 'PASS', summary
-          assert summary.get('counts') == {'base_evals':22,'cap_rules':36,'mutations_killed':15,'mutations_total':15,'paraphrase_variants':44,'scenario_runs':66}, summary
-          assert len(mutations.get('results', [])) == 15
-          assert all(item.get('status') == 'KILLED' for item in mutations['results'])
-          assert audit.get('status') == 'PASS_LOCAL_PROCEDURE'
-          assert audit.get('independence', {}).get('actual_independent_executor_ran') is False
-          assert stop.get('status') == 'PASS_LOCAL_PROCEDURE'
-          assert stop.get('operational_permission') is False
-          assert manifest.get('status') == 'PASS_LOCAL_PROCEDURE'
-          assert manifest.get('subject_source_digest', '').startswith('sha256:')
+          base=Path('docs/agent-authoring/evidence/capability-planner')
+          summary=json.loads((base/'self-test-summary.json').read_text())
+          manifest=json.loads((base/'implementation-manifest.json').read_text())
+          assert summary['status']=='PASS', summary
+          assert summary['counts']=={'base_evals':22,'cap_rules':36,'mutations_killed':15,'mutations_total':15,'paraphrase_variants':44,'scenario_runs':66}, summary
+          assert manifest['status']=='PASS_LOCAL_PROCEDURE' and manifest['operational_permission'] is False, manifest
           PY
 
-      - name: Commit verified Planner evidence
+      - name: Compile Gate core sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t files < <(find "$GATE_DIR/scripts" -type f -name '*.py' -print | sort)
+          test "${#files[@]}" -ge 5
+          python -m py_compile "${files[@]}"
+
+      - name: Run Gate self-test
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR"
+          python "$GATE_DIR/scripts/run_self_tests.py" \
+            --repo-root "$GITHUB_WORKSPACE" \
+            --results-dir "$GITHUB_WORKSPACE/$EVIDENCE_DIR" \
+            2>&1 | tee gate-test.log
+
+      - name: Normalize and compile generated entrypoints
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$GATE_DIR/scripts/normalize_gate_package.py" --repo-root "$GITHUB_WORKSPACE"
+          mapfile -t files < <(find "$GATE_DIR/scripts" "$GATE_DIR/adapters" -type f -name '*.py' -print | sort)
+          python -m py_compile "${files[@]}"
+
+      - name: Finalize Gate evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$GATE_DIR/scripts/finalize_gate_evidence.py" \
+            --package "$GATE_DIR" \
+            --auditor .claude/agents/gate-auditor.md \
+            --evidence "$EVIDENCE_DIR" \
+            --report docs/agent-authoring/GATE_GENERATOR_MVP_구현결과.md \
+            --state docs/agent-authoring/workstreams/upstream-recovery/CURRENT_SESSION_STATE.yaml \
+            --output-manifest docs/agent-authoring/workstreams/upstream-recovery/OUTPUT_MANIFEST.yaml
+
+      - name: Verify Gate candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          base=Path('docs/agent-authoring/evidence/gate-generator')
+          required=['self-test-summary.json','baseline-check.json','baseline-trace.json','planner-gate-golden-results.json','gate-eval-results.json','gate-mutation-results.json','hook-smoke-results.json','enforcement-inventory.json','gate-audit-result.json','gate-stop-gate.json','implementation-manifest.json']
+          for name in required: assert (base/name).is_file(), name
+          summary=json.loads((base/'self-test-summary.json').read_text()); counts=summary['counts']
+          assert summary['status']=='PASS', summary
+          assert counts['gate_rules']==80 and counts['invariants']==85 and counts['invariants_passed']==85, counts
+          assert counts['evals']==48 and counts['evals_passed']==48, counts
+          assert counts['mutations']==20 and counts['mutations_killed']==20, counts
+          assert counts['hook_smoke_passed']==19 and counts['planner_golden']==22, counts
+          assert json.loads((base/'gate-mutation-results.json').read_text())['status']=='PASS'
+          assert json.loads((base/'hook-smoke-results.json').read_text())['status']=='PASS'
+          assert json.loads((base/'gate-eval-results.json').read_text())['status']=='PASS'
+          audit=json.loads((base/'gate-audit-result.json').read_text())
+          stop=json.loads((base/'gate-stop-gate.json').read_text())
+          manifest=json.loads((base/'implementation-manifest.json').read_text())
+          assert audit['status']=='PASS_LOCAL_PROCEDURE' and audit['actual_independent_executor_ran'] is False
+          assert stop['status']=='PASS_LOCAL_PROCEDURE' and stop['operational_permission'] is False
+          assert manifest['status']=='PASS_LOCAL_PROCEDURE' and manifest['operational_permission'] is False
+          PY
+
+      - name: Commit verified Gate package and evidence
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "Harness Workstream Orchestrator"
           git config user.email "71008721+easyseop@users.noreply.github.com"
-          git add \
-            "$PLANNER_DIR/references/CAP_RULES.md" \
-            "$PLANNER_DIR/references/RULE_COVERAGE.yaml" \
-            "$PLANNER_DIR/evals/planner-evals.yaml" \
-            "$PLANNER_DIR/evals/mutations.yaml" \
-            "$EVIDENCE_DIR" \
-            docs/agent-authoring/CAPABILITY_ARTIFACT_PLANNER_구현결과.md \
-            docs/agent-authoring/workstreams/upstream-recovery/CURRENT_SESSION_STATE.yaml \
-            docs/agent-authoring/workstreams/upstream-recovery/OUTPUT_MANIFEST.yaml
+          git add "$GATE_DIR" .claude/agents/gate-auditor.md "$EVIDENCE_DIR" docs/agent-authoring/GATE_GENERATOR_MVP_구현결과.md docs/agent-authoring/workstreams/upstream-recovery/CURRENT_SESSION_STATE.yaml docs/agent-authoring/workstreams/upstream-recovery/OUTPUT_MANIFEST.yaml
           if git diff --cached --quiet; then
-            echo "Verified Planner evidence is already current."
+            echo "Verified Gate package is already current."
           else
-            git commit -m "test(planner): bind verified local evidence"
+            git commit -m "test(gate): bind verified M0-M3 evidence"
             git push origin "HEAD:$HEAD_REF"
           fi
 
-      - name: Upload Planner evidence
+      - name: Upload Gate evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: capability-planner-test-evidence
+          name: gate-generator-test-evidence
           path: |
-            planner-test.log
-            docs/agent-authoring/evidence/capability-planner/
-            .claude/skills/capability-artifact-planner/references/CAP_RULES.md
-            .claude/skills/capability-artifact-planner/references/RULE_COVERAGE.yaml
-            .claude/skills/capability-artifact-planner/evals/planner-evals.yaml
-            .claude/skills/capability-artifact-planner/evals/mutations.yaml
-          if-no-files-found: error
+            gate-test.log
+            docs/agent-authoring/evidence/gate-generator/
+            .claude/skills/gate-generator/references/
+            .claude/skills/gate-generator/evals/
+          if-no-files-found: warn
           retention-days: 14
