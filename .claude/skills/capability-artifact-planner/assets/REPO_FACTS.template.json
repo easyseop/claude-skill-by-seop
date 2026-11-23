@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "repository_root": "<repo-root>",
+  "scan_policy": {
+    "read_only": true,
+    "bounded": true
+  },
+  "truncated": false,
+  "file_count": 0,
+  "files": []
+}
