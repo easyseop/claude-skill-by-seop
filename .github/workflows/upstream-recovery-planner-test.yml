@@ -1,0 +1,94 @@
+name: Upstream Recovery Planner Test
+
+on:
+  pull_request:
+    branches:
+      - orchestration/session-collaboration-framework
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - '.claude/skills/capability-artifact-planner/**'
+      - '.claude/agents/capability-plan-auditor.md'
+      - 'docs/agent-authoring/workstreams/upstream-recovery/**'
+      - '.github/workflows/upstream-recovery-planner-test.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  planner-test:
+    if: github.event.pull_request.head.ref == 'recovery/upstream-builders'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout pull request head without credentials
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Compile Planner Python sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t files < <(find .claude/skills/capability-artifact-planner/scripts -type f -name '*.py' -print | sort)
+          test "${#files[@]}" -gt 0
+          python -m py_compile "${files[@]}"
+
+      - name: Run Planner self-test
+        shell: bash
+        run: |
+          set -euo pipefail
+          script='.claude/skills/capability-artifact-planner/scripts/run_self_tests.py'
+          results='docs/agent-authoring/evidence/capability-planner'
+          mkdir -p "$results"
+          help_text="$(python "$script" --help 2>&1 || true)"
+          args=()
+          if grep -q -- '--repo-root' <<<"$help_text"; then
+            args+=(--repo-root "$GITHUB_WORKSPACE")
+          fi
+          if grep -q -- '--results-dir' <<<"$help_text"; then
+            args+=(--results-dir "$GITHUB_WORKSPACE/$results")
+          fi
+          set -o pipefail
+          python "$script" "${args[@]}" 2>&1 | tee planner-test.log
+
+      - name: Verify expected structured evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f docs/agent-authoring/evidence/capability-planner/self-test-summary.json
+          test -f docs/agent-authoring/evidence/capability-planner/mutation-results.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          base = Path('docs/agent-authoring/evidence/capability-planner')
+          summary = json.loads((base / 'self-test-summary.json').read_text())
+          mutations = json.loads((base / 'mutation-results.json').read_text())
+          assert summary.get('status') == 'PASS', summary
+          counts = summary.get('counts', {})
+          assert counts.get('cap_rules') == 36, counts
+          assert counts.get('base_evals') == 22, counts
+          assert counts.get('paraphrase_variants') == 44, counts
+          assert counts.get('mutations_killed') == 15, counts
+          assert counts.get('mutations_total') == 15, counts
+          items = mutations.get('mutations', mutations if isinstance(mutations, list) else [])
+          assert len(items) == 15, len(items)
+          assert all(item.get('status') == 'KILLED' for item in items), items
+          PY
+
+      - name: Upload Planner test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: capability-planner-test-evidence
+          path: |
+            planner-test.log
+            docs/agent-authoring/evidence/capability-planner/
+          if-no-files-found: warn
+          retention-days: 14
