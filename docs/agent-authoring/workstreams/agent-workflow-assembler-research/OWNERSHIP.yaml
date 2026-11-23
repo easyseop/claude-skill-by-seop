@@ -11,6 +11,7 @@ writable_paths:
 
 read_only_paths:
   - docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md
+  - docs/agent-authoring/workstreams/agent-workflow-assembler-research/REMOTE_RESEARCH_MODE.md
   - docs/agent-authoring/workstreams/agent-workflow-assembler-research/WORK_ORDER.md
   - docs/agent-authoring/workstreams/agent-workflow-assembler-research/OWNERSHIP.yaml
   - docs/agent-authoring/workstreams/agent-workflow-assembler-research/INPUT_MANIFEST.yaml
