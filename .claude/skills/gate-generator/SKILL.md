@@ -29,6 +29,19 @@ Capability Planner가 `CAPABILITY_PLAN`과 downstream `GATE_CONTRACT` 요구를 
 9. 구조화 evidence와 source digest를 결박한다.
 10. `PASS_LOCAL_PROCEDURE`까지만 허용한다. Host enforcement가 없으면 운영 권한은 false다.
 
+## 검증 수량
+
+```text
+GATE 80/80
+I 85/85
+Planner golden 22/22
+GEVAL 48/48
+GMUT 20/20 killed
+Hook smoke 19/19
+```
+
+위 수량은 현재 source와 구조화 evidence에 결박되어야 하며, 하나라도 누락되면 Gate 단계는 완료되지 않는다.
+
 ## 상태 경계
 
 ```text
