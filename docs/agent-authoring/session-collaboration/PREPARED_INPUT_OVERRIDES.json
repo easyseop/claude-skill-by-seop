@@ -10,6 +10,16 @@
         "docs/agent-authoring/workstreams/upstream-recovery/OWNERSHIP.yaml": "87282922b099de463be06eab47cd0cd4261859fa",
         "docs/agent-authoring/workstreams/upstream-recovery/INPUT_MANIFEST.yaml": "11b7aeb6c4fee25a9af29b4dc7c15ce163a85cc1"
       }
+    },
+    {
+      "branch_pattern": "research/agent-workflow-assembler",
+      "reason": "Orchestrator-approved Remote Research Mode and resealed research inputs",
+      "prepared_path_blobs": {
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md": "fe147efe55f0da39c649b7afcdddde4078621fa3",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/REMOTE_RESEARCH_MODE.md": "918d243de188b69709416646c0e44ddf58d005aa",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/OWNERSHIP.yaml": "e23f8988b185be8e84b4e22cfe4f6c0a6b1210fb",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/INPUT_MANIFEST.yaml": "c5a22e453d3fa3ef37ea6d3a702f27fecb7a9311"
+      }
     }
   ]
 }
