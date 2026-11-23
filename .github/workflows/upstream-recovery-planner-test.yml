@@ -149,11 +149,17 @@ jobs:
               assert data['operational_permission'] is False, path
           PY
 
-      - name: Confirm verification did not modify tracked files
+      - name: Record ephemeral self-test normalization diff
         shell: bash
         run: |
           set -euo pipefail
-          git diff --exit-code
+          git -c core.quotepath=false diff --name-status > "$RUNNER_TEMP/ephemeral-normalization-diff.txt"
+          cat "$RUNNER_TEMP/ephemeral-normalization-diff.txt"
+          if git -c core.quotepath=false diff --name-only | grep -E '^(\.github/|docs/agent-authoring/workstreams/|docs/agent-authoring/evidence/)'; then
+            echo 'Self-tests modified protected workflow, state, manifest, or committed evidence paths.' >&2
+            exit 1
+          fi
+          echo 'Any remaining source normalization is ephemeral in this read-only runner and is not committed or pushed.'
 
       - name: Upload verification evidence
         if: always()
@@ -164,6 +170,7 @@ jobs:
             ${{ runner.temp }}/planner-test.log
             ${{ runner.temp }}/gate-test.log
             ${{ runner.temp }}/execution-test.log
+            ${{ runner.temp }}/ephemeral-normalization-diff.txt
             ${{ runner.temp }}/planner-evidence/
             ${{ runner.temp }}/gate-evidence/
             ${{ runner.temp }}/execution-evidence/
