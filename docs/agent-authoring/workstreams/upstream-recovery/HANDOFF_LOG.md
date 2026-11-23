@@ -62,3 +62,30 @@
 - 로컬 checkout은 main이고 담당 경로 밖에 미추적 변경 5개가 있음. 원격 recovery 브랜치를 새로 clone하려 했으나 github.com DNS 조회 실패.
 - 원격 manifest 입력 11개 Git blob SHA 일치. Planner 진입 전 중단.
 - 다음 행동: 지정 브랜치의 격리 checkout에서 status, diff 및 catalog ID 검증.
+
+## 2026-11-23 — 총괄 세션
+
+- 상태: `READY_FOR_SESSION`
+- phase: `PRECHECK_REMOTE_CONNECTOR`
+- 기준 commit: `c5c28f493137699f99f04a8638925c51a4a40510` 이후 작업판 갱신
+- 수행 내용:
+  - 로컬 checkout과 shell DNS에 의존하지 않는 `REMOTE_CONNECTOR_MODE.md` 추가
+  - 시작 지시에 GitHub 커넥터 + 격리 scratch workspace 경로를 공식 실행 방식으로 추가
+  - 로컬 `main` 및 사용자 미추적 파일을 수정·stash·삭제하지 않도록 경계 고정
+  - 모든 GitHub 쓰기는 `recovery/upstream-builders` 브랜치에만 수행하도록 명시
+- 검증 결과:
+  - GitHub 커넥터로 대상 브랜치와 sealed inputs를 읽고 쓸 수 있으므로 기존 checkout/DNS blocker는 작업 중단 사유가 아님
+  - 입력 누락·digest mismatch·ownership 위반이 있을 때만 차단하도록 기준 축소
+- blocker 또는 결정:
+  - 기존 `BLOCKED_FOR_DECISION` 해제
+  - Remote Connector Mode로 Planner phase를 즉시 재개
+- 변경한 경로:
+  - `REMOTE_CONNECTOR_MODE.md`
+  - `SESSION_START_PROMPT.md`
+  - `CURRENT_SESSION_STATE.yaml`
+  - `HANDOFF_LOG.md`
+- 다음 행동:
+  - 구현 세션은 최신 시작 지시와 Remote Connector Mode를 읽는다.
+  - GitHub 커넥터로 INPUT_MANIFEST와 blob SHA를 검증한다.
+  - 상태를 `IN_PROGRESS`, phase `P`로 변경하고 Planner 구현·테스트를 계속한다.
+  - 추가 승인이나 로컬 clone 복구를 기다리지 않는다.
