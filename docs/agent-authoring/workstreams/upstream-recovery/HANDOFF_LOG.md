@@ -113,3 +113,20 @@
   - Planner package file completeness와 Python 구문을 검증
   - self-test·mutation을 실행 또는 독립 재현해 evidence 생성
   - Phase P 검토 통과 전 Gate 복구를 시작하지 않음
+
+## 2026-11-23 — 총괄 CI 검증 시작
+
+- 상태: `IN_PROGRESS`
+- phase: `P_CI_TEST`
+- 수행 내용:
+  - 총괄 브랜치에 읽기 전용 `Upstream Recovery Planner Test` 워크플로 추가
+  - PR #4 헤드를 credentials 없이 checkout하고 Python 구문·self-test·mutation evidence를 검증하도록 구성
+  - 이 로그 갱신으로 PR synchronize 이벤트를 발생시켜 원격 테스트 실행 요청
+- 검증 결과:
+  - 구현 브랜치의 `.github/**` 소유 경계는 변경하지 않음
+  - 테스트 워크플로는 PR 헤드에 쓰기 권한이 없고 production secret을 사용하지 않음
+- blocker 또는 결정: 없음
+- 다음 행동:
+  - 원격 workflow run 결과와 artifact를 확인
+  - 실패 시 정확한 source만 수정하고 재실행
+  - 통과 시 evidence를 current digest에 결박하고 Phase P 검토
