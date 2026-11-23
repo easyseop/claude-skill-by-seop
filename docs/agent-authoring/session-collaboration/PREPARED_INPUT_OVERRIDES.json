@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "overrides": [
+    {
+      "branch_pattern": "recovery/upstream-builders",
+      "reason": "Orchestrator-approved Remote Connector Mode and resealed input manifest",
+      "prepared_path_blobs": {
+        "docs/agent-authoring/workstreams/upstream-recovery/SESSION_START_PROMPT.md": "fa09bb0bfc4417946db743ad2db669142b9522ff",
+        "docs/agent-authoring/workstreams/upstream-recovery/REMOTE_CONNECTOR_MODE.md": "81147c1b665b79b5932322a1ca50041912196856",
+        "docs/agent-authoring/workstreams/upstream-recovery/OWNERSHIP.yaml": "87282922b099de463be06eab47cd0cd4261859fa",
+        "docs/agent-authoring/workstreams/upstream-recovery/INPUT_MANIFEST.yaml": "11b7aeb6c4fee25a9af29b4dc7c15ce163a85cc1"
+      }
+    }
+  ]
+}
