@@ -1,63 +1,38 @@
 schema_version: "1.0"
 workstream_id: upstream-recovery
-generated_at: "2026-11-23"
 
 outputs:
   - path: .claude/skills/capability-artifact-planner/
     kind: source_package
-    status: in_progress
-    note: Core source, templates, checker, compiler, audit candidate, stop gate, and self-test harness committed.
+    status: tested_pass
   - path: .claude/agents/capability-plan-auditor.md
     kind: auditor_definition
-    status: implemented_unverified_identity
+    status: implemented_independence_unverified
   - path: docs/agent-authoring/evidence/capability-planner/
     kind: evidence_package
-    status: pending_test_execution
+    status: tested_pass
   - path: docs/agent-authoring/CAPABILITY_ARTIFACT_PLANNER_구현결과.md
     kind: implementation_report
-    status: pending_test_execution
+    status: complete
 
-  - path: .claude/skills/gate-generator/
-    kind: source_package
-    status: pending
-  - path: .claude/agents/gate-auditor.md
-    kind: auditor_definition
-    status: pending
-  - path: docs/agent-authoring/evidence/gate-generator/
-    kind: evidence_package
-    status: pending
-  - path: docs/agent-authoring/GATE_GENERATOR_MVP_구현결과.md
-    kind: implementation_report
-    status: pending
-
-  - path: .claude/skills/execution-artifact-generator/
-    kind: source_package
-    status: pending
-  - path: .claude/agents/execution-artifact-auditor.md
-    kind: auditor_definition
-    status: pending
-  - path: docs/agent-authoring/evidence/execution-artifact-generator/
-    kind: evidence_package
-    status: pending
-  - path: docs/agent-authoring/EXECUTION_ARTIFACT_GENERATOR_MVP_구현결과.md
-    kind: implementation_report
-    status: pending
-
-checks:
-  ownership_boundary: PASS_TO_CURRENT_HEAD
-  input_manifest_current: PASS_CONNECTOR_BLOB_SHA
-  planner_complete: IN_PROGRESS_TESTS_PENDING
-  gate_complete: PENDING
-  execution_complete: PENDING
-  critical_mutants_survived: NOT_RUN
-  traceability_closed: NOT_RUN
-  unexpected_changes: NONE_OBSERVED_IN_WRITTEN_PATHS
+planner_test:
+  source_digest: sha256:6a03348ea7b4c84421794fabe5bde85b31a98347041361741cc9ad1fca75ad8a
+  status: PASS_LOCAL_PROCEDURE
+  cap_rules: 36
+  base_evals: 22
+  paraphrase_variants: 44
+  scenario_runs: 66
+  mutations_killed: 15
+  mutations_total: 15
   independent_identity: UNVERIFIED
 
-limitations:
-  - Production enforcement is outside this workstream.
-  - Actual independent audit identity remains UNVERIFIED until a distinct read-only session runs.
-  - Planner self-test and mutation evidence have not yet been executed on a checked-out snapshot.
-  - Knowledge/RAG and Assembler workstreams are immutable here.
+checks:
+  ownership_boundary: PENDING_RECHECK
+  input_manifest_current: PASS_RESEALED
+  planner_complete: TESTED_PASS
+  gate_complete: PENDING
+  execution_complete: PENDING
+  critical_mutants_survived: 0
+  operational_permission: false
 
-review_status: NOT_READY
+review_status: PLANNER_BOUNDARY_RECHECK
