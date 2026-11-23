@@ -16,6 +16,14 @@ source_of_truth:
   output_manifest: docs/agent-authoring/workstreams/agent-workflow-assembler-research/OUTPUT_MANIFEST.yaml
   handoff_log: docs/agent-authoring/workstreams/agent-workflow-assembler-research/HANDOFF_LOG.md
 
+input_binding:
+  status: RESEALED_BY_ORCHESTRATOR
+  start_prompt_blob: fe147efe55f0da39c649b7afcdddde4078621fa3
+  remote_mode_blob: 918d243de188b69709416646c0e44ddf58d005aa
+  ownership_blob: e23f8988b185be8e84b4e22cfe4f6c0a6b1210fb
+  input_manifest_blob: c5a22e453d3fa3ef37ea6d3a702f27fecb7a9311
+  boundary_recheck: PENDING_CURRENT_HEAD
+
 current_task:
   objective: >-
     Research the Agent & Workflow Assembler that binds approved Planner,
@@ -49,9 +57,10 @@ required_results:
 blocker: null
 last_review:
   decision: >-
-    Local branch mismatch or shell DNS failure is not a blocker when the GitHub
-    connector can read sealed inputs and write only to the research branch.
+    The orchestrator formally registered Remote Research Mode, updated Ownership,
+    resealed the Input Manifest, and added all approved blobs to the central
+    prepared-input overrides. A fresh boundary check is now required on this head.
 next_action: >-
-  Re-read SESSION_START_PROMPT.md and REMOTE_RESEARCH_MODE.md, validate the input
-  blob digests through the GitHub connector, set status to IN_PROGRESS, and start
-  the Assembler research without waiting for another approval.
+  After the current-head boundary check passes, set status to IN_PROGRESS and
+  complete the 25-section Assembler research within the writable paths. Do not
+  wait for another design approval and do not modify implementation workstreams.
