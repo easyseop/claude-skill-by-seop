@@ -1,6 +1,6 @@
 schema_version: "1.0"
 workstream_id: upstream-recovery
-generated_at: "2026-11-20T13:45:00+09:00"
+generated_at: "2026-11-23T12:30:00+09:00"
 
 digest_policy:
   repository_binding: git_blob_sha1
@@ -9,7 +9,14 @@ digest_policy:
 inputs:
   - id: INPUT-START
     path: docs/agent-authoring/workstreams/upstream-recovery/SESSION_START_PROMPT.md
-    digest: 938f4d7d47c96ccb14831899dfd5576feff7e9a9
+    digest: fa09bb0bfc4417946db743ad2db669142b9522ff
+    role: source_of_truth
+    mutable: false
+    required: true
+
+  - id: INPUT-REMOTE-MODE
+    path: docs/agent-authoring/workstreams/upstream-recovery/REMOTE_CONNECTOR_MODE.md
+    digest: 81147c1b665b79b5932322a1ca50041912196856
     role: source_of_truth
     mutable: false
     required: true
@@ -23,7 +30,7 @@ inputs:
 
   - id: INPUT-OWNERSHIP
     path: docs/agent-authoring/workstreams/upstream-recovery/OWNERSHIP.yaml
-    digest: 32cd3931a9760fdf26f64c8e2af4c4fbfa87847a
+    digest: 87282922b099de463be06eab47cd0cd4261859fa
     role: source_of_truth
     mutable: false
     required: true
@@ -99,5 +106,6 @@ validation:
     exec_evals: 26
     exec_mutations: 10
   note: >-
-    Git blob SHA-1 binds repository inputs. The implementation session must
-    recompute SHA-256 for all current source, test, and evidence artifacts.
+    Git blob SHA-1 binds repository inputs, including the orchestrator-approved
+    Remote Connector Mode. The implementation session must recompute SHA-256 for
+    all current source, test, and evidence artifacts.
