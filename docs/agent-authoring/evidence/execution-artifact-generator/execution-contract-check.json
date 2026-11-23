@@ -1,0 +1,238 @@
+{
+  "counts": {
+    "failed": 0,
+    "invariants": 45,
+    "passed": 45
+  },
+  "failures": {},
+  "results": [
+    {
+      "id": "EXI-001",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-002",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-003",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-004",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-005",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-006",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-007",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-008",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-009",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-010",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-011",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-012",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-013",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-014",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-015",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-016",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-017",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-018",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-019",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-020",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-021",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-022",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-023",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-024",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-025",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-026",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-027",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-028",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-029",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-030",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-031",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-032",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-033",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-034",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-035",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-036",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-037",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-038",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-039",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-040",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-041",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-042",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-043",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-044",
+      "message": null,
+      "status": "PASS"
+    },
+    {
+      "id": "EXI-045",
+      "message": null,
+      "status": "PASS"
+    }
+  ],
+  "schema_version": "1.0",
+  "status": "PASS",
+  "subject_digest": "sha256:17ee5477c636c5e7dd39954bc127c61f3513a1c216e0f3e92c6403ba9833aad0"
+}

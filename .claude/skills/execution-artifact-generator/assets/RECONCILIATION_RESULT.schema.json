@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "required": [
+    "status",
+    "source_of_truth",
+    "expected",
+    "actual",
+    "result_digest"
+  ],
+  "title": "Reconciliation Result",
+  "type": "object"
+}

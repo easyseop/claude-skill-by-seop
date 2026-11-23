@@ -1,0 +1,118 @@
+{
+  "cases": [
+    {
+      "actual": "PASS",
+      "expected": "PASS",
+      "id": "BUILD-01",
+      "status": "PASS",
+      "title": "no-code source 0"
+    },
+    {
+      "actual": "PASS",
+      "expected": "PASS",
+      "id": "BUILD-02",
+      "status": "PASS",
+      "title": "reuse-direct new source 0"
+    },
+    {
+      "actual": "PASS",
+      "expected": "PASS",
+      "id": "BUILD-03",
+      "status": "PASS",
+      "title": "thin adapter effect not expanded"
+    },
+    {
+      "actual": "PASS",
+      "expected": "PASS",
+      "id": "BUILD-04",
+      "status": "PASS",
+      "title": "unsupported runtime no Python fallback"
+    },
+    {
+      "actual": "PASS",
+      "expected": "PASS",
+      "id": "BUILD-05",
+      "status": "PASS",
+      "title": "source digest required after generated"
+    },
+    {
+      "actual": "PASS",
+      "expected": "PASS",
+      "id": "BUILD-06",
+      "status": "PASS",
+      "title": "test evidence required after tested"
+    },
+    {
+      "actual": "PASS",
+      "expected": "PASS",
+      "id": "BUILD-07",
+      "status": "PASS",
+      "title": "CLI stdout rule not misapplied to library"
+    },
+    {
+      "actual": "PASS",
+      "expected": "PASS",
+      "id": "BUILD-08",
+      "status": "PASS",
+      "title": "contract PASS before source"
+    },
+    {
+      "actual": "PASS",
+      "expected": "PASS",
+      "id": "BUILD-09",
+      "status": "PASS",
+      "title": "repo outside path blocked"
+    },
+    {
+      "actual": "PASS",
+      "expected": "PASS",
+      "id": "BUILD-10",
+      "status": "PASS",
+      "title": "python local static scaffold"
+    },
+    {
+      "actual": "PASS",
+      "expected": "PASS",
+      "id": "BUILD-11",
+      "status": "PASS",
+      "title": "network source blocked"
+    },
+    {
+      "actual": "PASS",
+      "expected": "PASS",
+      "id": "BUILD-12",
+      "status": "PASS",
+      "title": "secret canary blocked"
+    },
+    {
+      "actual": "PASS",
+      "expected": "PASS",
+      "id": "BUILD-13",
+      "status": "PASS",
+      "title": "unverified runner blocks dynamic test"
+    },
+    {
+      "actual": "PASS",
+      "expected": "PASS",
+      "id": "BUILD-14",
+      "status": "PASS",
+      "title": "Java new pack contract-only"
+    },
+    {
+      "actual": "PASS",
+      "expected": "PASS",
+      "id": "BUILD-15",
+      "status": "PASS",
+      "title": "shell string injection blocked"
+    },
+    {
+      "actual": "PASS",
+      "expected": "PASS",
+      "id": "BUILD-16",
+      "status": "PASS",
+      "title": "historical evidence rejected"
+    }
+  ],
+  "schema_version": "1.0",
+  "status": "PASS"
+}

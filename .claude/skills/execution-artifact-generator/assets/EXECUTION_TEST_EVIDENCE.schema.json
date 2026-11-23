@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "required": [
+    "artifact_digest",
+    "test_digest",
+    "runner_digest",
+    "environment_digest",
+    "result_digest",
+    "self_digest"
+  ],
+  "title": "Execution Test Evidence",
+  "type": "object"
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "required": [
+    "artifact_id",
+    "source_digest",
+    "builder",
+    "toolchain_digest"
+  ],
+  "title": "Execution Build Manifest",
+  "type": "object"
+}

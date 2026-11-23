@@ -1,0 +1,98 @@
+{
+  "mutations": [
+    {
+      "detected_failures": [
+        "EXI-003"
+      ],
+      "id": "EXMUT-001",
+      "mutation": "delete Planner component/control binding",
+      "primary_detector": "EXI-003",
+      "status": "KILLED"
+    },
+    {
+      "detected_failures": [
+        "EXI-004"
+      ],
+      "id": "EXMUT-002",
+      "mutation": "change `execution_required:false` to add script",
+      "primary_detector": "EXI-004",
+      "status": "KILLED"
+    },
+    {
+      "detected_failures": [
+        "EXI-016",
+        "EXI-043"
+      ],
+      "id": "EXMUT-003",
+      "mutation": "delete pre-effect Gate ID",
+      "primary_detector": "EXI-016",
+      "status": "KILLED"
+    },
+    {
+      "detected_failures": [
+        "EXI-011"
+      ],
+      "id": "EXMUT-004",
+      "mutation": "accept extra schema field",
+      "primary_detector": "EXI-011",
+      "status": "KILLED"
+    },
+    {
+      "detected_failures": [
+        "EXI-029"
+      ],
+      "id": "EXMUT-005",
+      "mutation": "`deny` → `allow`, path resolver skipped",
+      "primary_detector": "EXI-029",
+      "status": "KILLED"
+    },
+    {
+      "detected_failures": [
+        "EXI-030"
+      ],
+      "id": "EXMUT-006",
+      "mutation": "`shell=False` → string shell",
+      "primary_detector": "EXI-030",
+      "status": "KILLED"
+    },
+    {
+      "detected_failures": [
+        "EXI-021"
+      ],
+      "id": "EXMUT-007",
+      "mutation": "retry unknown write with new key",
+      "primary_detector": "EXI-021",
+      "status": "KILLED"
+    },
+    {
+      "detected_failures": [
+        "EXI-018"
+      ],
+      "id": "EXMUT-008",
+      "mutation": "remove target fingerprint recheck",
+      "primary_detector": "EXI-018",
+      "status": "KILLED"
+    },
+    {
+      "detected_failures": [
+        "EXI-036",
+        "EXI-037"
+      ],
+      "id": "EXMUT-009",
+      "mutation": "drop lock/image digest or use `latest`",
+      "primary_detector": "EXI-036",
+      "status": "KILLED"
+    },
+    {
+      "detected_failures": [
+        "EXI-040"
+      ],
+      "id": "EXMUT-010",
+      "mutation": "swap test evidence/skip execution/exit code",
+      "primary_detector": "EXI-040",
+      "status": "KILLED"
+    }
+  ],
+  "schema_version": "1.0",
+  "status": "PASS"
+}

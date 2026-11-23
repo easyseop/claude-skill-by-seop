@@ -1,0 +1,10 @@
+{
+  "decisions": [
+    "NOT_REQUIRED",
+    "REUSE_DIRECT",
+    "NEW_ARTIFACT_JUSTIFIED",
+    "UNSUPPORTED_RUNTIME_PACK"
+  ],
+  "schema_version": "1.0",
+  "status": "PASS"
+}

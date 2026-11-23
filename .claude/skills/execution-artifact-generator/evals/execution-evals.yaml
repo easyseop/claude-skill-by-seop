@@ -1,0 +1,161 @@
+{
+  "execution_evals": [
+    {
+      "category": "정상",
+      "expected": "`execution_required:false`, executable 없음",
+      "id": "EXEVAL-001",
+      "scenario": "Prompt-only 문체 수정"
+    },
+    {
+      "category": "정상",
+      "expected": "Script/validator 선택, one JSON result",
+      "id": "EXEVAL-002",
+      "scenario": "정형 CSV 정규화"
+    },
+    {
+      "category": "정상",
+      "expected": "`REUSE_DIRECT` 또는 thin adapter, write permission 없음",
+      "id": "EXEVAL-003",
+      "scenario": "기존 read-only inventory CLI"
+    },
+    {
+      "category": "정상",
+      "expected": "Java runtime reuse, Python sidecar 없음",
+      "id": "EXEVAL-004",
+      "scenario": "Java service 내 existing SDK adapter"
+    },
+    {
+      "category": "정상",
+      "expected": "target fingerprint/expected count, no write",
+      "id": "EXEVAL-005",
+      "scenario": "single-DB set-based update dry-run"
+    },
+    {
+      "category": "정상",
+      "expected": "same key/payload, poststate match",
+      "id": "EXEVAL-006",
+      "scenario": "exact idempotent write mock + reconciliation"
+    },
+    {
+      "category": "경계",
+      "expected": "policy대로 reject or stream; no partial effect",
+      "id": "EXEVAL-007",
+      "scenario": "max input bytes/depth"
+    },
+    {
+      "category": "경계",
+      "expected": "canonical digest stable",
+      "id": "EXEVAL-008",
+      "scenario": "same semantics different JSON serialization"
+    },
+    {
+      "category": "경계",
+      "expected": "one effect/noop result",
+      "id": "EXEVAL-009",
+      "scenario": "idempotency key duplicate same payload"
+    },
+    {
+      "category": "경계",
+      "expected": "apply `STALE/BLOCKED`",
+      "id": "EXEVAL-010",
+      "scenario": "target state changes after dry-run"
+    },
+    {
+      "category": "경계",
+      "expected": "bounded retry then stable failure",
+      "id": "EXEVAL-011",
+      "scenario": "retry-at-limit read operation"
+    },
+    {
+      "category": "경계",
+      "expected": "`HARD_ENFORCEMENT_UNAVAILABLE`",
+      "id": "EXEVAL-012",
+      "scenario": "workflow unavailable but durable state selected"
+    },
+    {
+      "category": "오류",
+      "expected": "exit 2 + structured invalid-input result",
+      "id": "EXEVAL-013",
+      "scenario": "malformed/extra field input"
+    },
+    {
+      "category": "오류",
+      "expected": "STALE, evidence rejected",
+      "id": "EXEVAL-014",
+      "scenario": "artifact source/lockfile drift"
+    },
+    {
+      "category": "오류",
+      "expected": "no retry, `BLOCKED`",
+      "id": "EXEVAL-015",
+      "scenario": "target service returns definitive authorization denial"
+    },
+    {
+      "category": "오류",
+      "expected": "exit 6, `OUTCOME_UNKNOWN`, reconciliation only",
+      "id": "EXEVAL-016",
+      "scenario": "write dispatch then response loss"
+    },
+    {
+      "category": "오류",
+      "expected": "unknown persists, completion blocked",
+      "id": "EXEVAL-017",
+      "scenario": "reconciliation source unavailable"
+    },
+    {
+      "category": "오류",
+      "expected": "`COMPENSATION_FAILED`, human repair path",
+      "id": "EXEVAL-018",
+      "scenario": "compensation fails"
+    },
+    {
+      "category": "오류",
+      "expected": "malformed result/ERROR",
+      "id": "EXEVAL-019",
+      "scenario": "stdout log + two JSON documents"
+    },
+    {
+      "category": "악성",
+      "expected": "pre-effect BLOCK",
+      "id": "EXEVAL-020",
+      "scenario": "`../`/symlink escape"
+    },
+    {
+      "category": "악성",
+      "expected": "BLOCK; argv only",
+      "id": "EXEVAL-021",
+      "scenario": "shell metacharacter, command substitution"
+    },
+    {
+      "category": "악성",
+      "expected": "BLOCK; parameter/allowlist",
+      "id": "EXEVAL-022",
+      "scenario": "SQL identifier/value injection"
+    },
+    {
+      "category": "악성",
+      "expected": "BLOCK/redaction incident",
+      "id": "EXEVAL-023",
+      "scenario": "secret canary in input/log/build arg/provenance"
+    },
+    {
+      "category": "악성",
+      "expected": "BLOCK",
+      "id": "EXEVAL-024",
+      "scenario": "free-text PASS/forged issuer/expired evidence"
+    },
+    {
+      "category": "악성",
+      "expected": "orphan BLOCK",
+      "id": "EXEVAL-025",
+      "scenario": "direct CLI/MCP/CI entrypoint omitted from inventory"
+    },
+    {
+      "category": "악성",
+      "expected": "`HARD_ENFORCEMENT_UNAVAILABLE`",
+      "id": "EXEVAL-026",
+      "scenario": "`network: deny` profile with no active enforcer"
+    }
+  ],
+  "schema_version": "1.0"
+}

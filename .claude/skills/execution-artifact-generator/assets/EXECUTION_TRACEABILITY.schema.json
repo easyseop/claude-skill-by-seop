@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "required": [
+    "forward",
+    "reverse",
+    "known_entrypoints"
+  ],
+  "title": "Execution Traceability",
+  "type": "object"
+}

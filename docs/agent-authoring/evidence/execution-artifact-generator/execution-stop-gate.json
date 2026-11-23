@@ -1,0 +1,7 @@
+{
+  "dynamic_execution": "HARD_ENFORCEMENT_UNAVAILABLE",
+  "operational_permission": false,
+  "schema_version": "1.0",
+  "status": "PASS_LOCAL_PROCEDURE",
+  "verified_runner": false
+}

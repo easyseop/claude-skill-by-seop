@@ -1,0 +1,22 @@
+{
+  "builders": [
+    {
+      "id": "no_code",
+      "status": "SUPPORTED_AND_TESTED"
+    },
+    {
+      "id": "existing_artifact",
+      "status": "SUPPORTED_AND_TESTED"
+    },
+    {
+      "dynamic_execution": false,
+      "id": "python_local",
+      "status": "SUPPORTED_AND_TESTED"
+    },
+    {
+      "id": "java_cli",
+      "status": "SUPPORTED_CONTRACT_ONLY"
+    }
+  ],
+  "schema_version": "1.0"
+}

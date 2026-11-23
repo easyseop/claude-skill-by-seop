@@ -1,0 +1,375 @@
+{
+  "artifacts": [
+    {
+      "acceptance_ids": [
+        "AC-EXEC-1"
+      ],
+      "apply": {
+        "recheck_gate": true,
+        "recheck_plan": true,
+        "recheck_target_fingerprint": true
+      },
+      "audit": {
+        "actual_independent_executor_ran": false,
+        "auditor_identity": "unverified-separate-required",
+        "blind_first": true,
+        "evidence": [
+          "evidence://execution-audit"
+        ]
+      },
+      "builder": "python_local",
+      "compensation": {
+        "idempotent": true,
+        "manual_repair": "escalate with target id",
+        "registered": true
+      },
+      "dependency": {
+        "floating": false,
+        "image_digest": "sha256:no-image-local",
+        "lock_digest": "sha256:lock",
+        "toolchain_digest": "sha256:toolchain"
+      },
+      "diagnostics_channel": "stderr",
+      "dry_run": {
+        "same_validation": true,
+        "target_fingerprint": "sha256:target",
+        "writer_called": false
+      },
+      "effect_class": "write",
+      "egress": {
+        "allowlist": [],
+        "enforcer_verified": false,
+        "required": false
+      },
+      "entrypoint": [
+        "python",
+        "generated/normalize_csv.py"
+      ],
+      "id": "ART-001",
+      "idempotency": {
+        "payload_digest_bound": true,
+        "required": true,
+        "same_key_different_payload": "reject",
+        "scope": "tenant+operation"
+      },
+      "implementation_state": "TESTED",
+      "input_schema_digest": "sha256:input-schema",
+      "kind": "cli_script",
+      "necessity_test": {
+        "baseline": "prompt-only fails deterministic rows",
+        "expected_gain": "stable transform"
+      },
+      "output_schema_digest": "sha256:output-schema",
+      "owner": "execution-generator",
+      "path": "generated/normalize_csv.py",
+      "path_policy": {
+        "canonicalize": true,
+        "root": "generated",
+        "symlink_check": true
+      },
+      "permission_scopes": [
+        "read",
+        "write",
+        "reconcile"
+      ],
+      "post_effect_gate_ids": [
+        "G-POST-001"
+      ],
+      "pre_effect_gate_ids": [
+        "G-PRE-001"
+      ],
+      "primary_responsibility": "normalize a bounded CSV fixture",
+      "reconciliation": {
+        "actual_fields": [
+          "count",
+          "digest"
+        ],
+        "expected_fields": [
+          "count",
+          "digest"
+        ],
+        "result_schema_digest": "sha256:reconcile-schema",
+        "source_of_truth": "target-system"
+      },
+      "retry": {
+        "max_attempts": 3,
+        "max_elapsed_seconds": 30,
+        "outcome_unknown_auto_retry": false,
+        "policy_owned": true,
+        "retryable": [
+          "rate_limit"
+        ]
+      },
+      "reuse_assessment": {
+        "candidates": [],
+        "gap": "no compatible existing artifact",
+        "inventory_complete": true,
+        "status": "NEW_ARTIFACT_JUSTIFIED"
+      },
+      "runtime": {
+        "compatible": true,
+        "language": "python",
+        "repository_fact": "pyproject/test runner present",
+        "version": "3.11"
+      },
+      "sandbox": {
+        "inventory_digest": "sha256:sandbox-inventory",
+        "required": true,
+        "status": "HARD_ENFORCEMENT_UNAVAILABLE",
+        "verified": false
+      },
+      "secret_policy": {
+        "build_args": false,
+        "cli_args": false,
+        "logs": false,
+        "references_only": true,
+        "value_fields": false
+      },
+      "shell": {
+        "cwd_allowlist": [
+          "repo"
+        ],
+        "env_allowlist": [
+          "PATH"
+        ],
+        "fixed_executable": true,
+        "mode": "argv",
+        "shell": false
+      },
+      "source_digest": "sha256:source",
+      "sql": {
+        "autocommit": false,
+        "identifier_allowlist": true,
+        "raw_strings": false,
+        "values_bound": true
+      },
+      "stdout_policy": "one-json-document",
+      "supply_chain": {
+        "artifact_digest": "sha256:artifact",
+        "provenance_required": false,
+        "sbom_required": false
+      },
+      "test_evidence": {
+        "artifact_digest": "sha256:artifact",
+        "environment_digest": "sha256:env",
+        "executed": true,
+        "historical": false,
+        "result_digest": "sha256:result",
+        "runner_digest": "sha256:runner",
+        "self_digest": "sha256:evidence",
+        "test_digest": "sha256:test"
+      },
+      "unknown_fields": "reject"
+    }
+  ],
+  "contract_digest": "sha256:1342adc0eae7dbb47a25d5a24e4e23319f3e4829472f166f7f1e2d8957498c95",
+  "contract_id": "EXECUTION-CONTRACT-FIXTURE",
+  "control_flow": {
+    "exit_zero_is_pass": false,
+    "free_text_pass": false,
+    "uses_error_codes": true,
+    "uses_error_text": false
+  },
+  "decision": {
+    "disposition": "NEW_ARTIFACT_JUSTIFIED",
+    "execution_required": true,
+    "reason": "deterministic repeated transform"
+  },
+  "exit_registry": {
+    "DEPENDENCY_EXHAUSTED": 4,
+    "GATE_BLOCKED": 3,
+    "INVALID_INPUT": 2,
+    "OUTCOME_UNKNOWN": 6,
+    "RESULT_EMITTED": 0,
+    "RUNNER_ERROR": 5
+  },
+  "gate_binding": {
+    "catalog_gate_ids": [
+      "G-PRE-001",
+      "G-POST-001"
+    ],
+    "checker_digest": "sha256:gate-checker",
+    "current_status": "PASS_LOCAL_PROCEDURE",
+    "required_gate_ids": [
+      "G-PRE-001",
+      "G-POST-001"
+    ]
+  },
+  "invariant_assertions": {
+    "EXI-001": true,
+    "EXI-002": true,
+    "EXI-003": true,
+    "EXI-004": true,
+    "EXI-005": true,
+    "EXI-006": true,
+    "EXI-007": true,
+    "EXI-008": true,
+    "EXI-009": true,
+    "EXI-010": true,
+    "EXI-011": true,
+    "EXI-012": true,
+    "EXI-013": true,
+    "EXI-014": true,
+    "EXI-015": true,
+    "EXI-016": true,
+    "EXI-017": true,
+    "EXI-018": true,
+    "EXI-019": true,
+    "EXI-020": true,
+    "EXI-021": true,
+    "EXI-022": true,
+    "EXI-023": true,
+    "EXI-024": true,
+    "EXI-025": true,
+    "EXI-026": true,
+    "EXI-027": true,
+    "EXI-028": true,
+    "EXI-029": true,
+    "EXI-030": true,
+    "EXI-031": true,
+    "EXI-032": true,
+    "EXI-033": true,
+    "EXI-034": true,
+    "EXI-035": true,
+    "EXI-036": true,
+    "EXI-037": true,
+    "EXI-038": true,
+    "EXI-039": true,
+    "EXI-040": true,
+    "EXI-041": true,
+    "EXI-042": true,
+    "EXI-043": true,
+    "EXI-044": true,
+    "EXI-045": true
+  },
+  "permissions": {
+    "default": "deny",
+    "separated": [
+      "read",
+      "write",
+      "reconcile",
+      "release"
+    ],
+    "wildcard": false
+  },
+  "planner_binding": {
+    "control_mode": "deterministic_workflow",
+    "current_control_mode": "deterministic_workflow",
+    "current_selected_components": [
+      "script",
+      "validator"
+    ],
+    "reentry_required": false,
+    "selected_components": [
+      "script",
+      "validator"
+    ]
+  },
+  "repository_facts": {
+    "complete_bounded": true,
+    "existing_entrypoints": [],
+    "lockfiles": [
+      "pyproject.lock"
+    ],
+    "supported_runtimes": [
+      "python:3.11",
+      "java:17"
+    ],
+    "test_runners": [
+      "python"
+    ]
+  },
+  "result_contract": {
+    "free_text_pass": false,
+    "gate_statuses_not_pass": [
+      "ERROR",
+      "STALE",
+      "OUTCOME_UNKNOWN",
+      "WAIVED"
+    ],
+    "statuses": [
+      "NOT_REQUIRED",
+      "REUSE_READY",
+      "STATIC_CHECKED",
+      "TESTED",
+      "BLOCKED",
+      "STALE",
+      "OUTCOME_UNKNOWN",
+      "HARD_ENFORCEMENT_UNAVAILABLE",
+      "UNSUPPORTED_RUNTIME_PACK",
+      "PLANNER_REENTRY_REQUIRED",
+      "GATE_REENTRY_REQUIRED"
+    ]
+  },
+  "runtime_boundary": {
+    "dynamic_execution_permitted": false,
+    "local_pure_static_check": true,
+    "operational_permission": false,
+    "verified_runner": false
+  },
+  "schema_version": "1.0",
+  "snapshot": {
+    "checker_digest": "sha256:checker",
+    "gate_digest": "sha256:gate",
+    "input_digest": "sha256:input",
+    "inventory_digest": "sha256:inventory",
+    "lock_digest": "sha256:lock",
+    "planner_digest": "sha256:planner",
+    "runtime_digest": "sha256:runtime",
+    "schema_digest": "sha256:contract-schema",
+    "source_digest": "sha256:source",
+    "test_digest": "sha256:test",
+    "toolchain_digest": "sha256:toolchain"
+  },
+  "stale_dependencies": [
+    "planner",
+    "gate",
+    "source",
+    "lock",
+    "toolchain",
+    "schema",
+    "inventory",
+    "input",
+    "test",
+    "runtime"
+  ],
+  "status": "READY_FOR_BUILD",
+  "traceability": {
+    "forward": [
+      {
+        "acceptance_id": "AC-EXEC-1",
+        "artifact_id": "ART-001",
+        "entrypoint": "generated/normalize_csv.py",
+        "evidence": [
+          "evidence://execution-test"
+        ],
+        "gate_ids": [
+          "G-PRE-001",
+          "G-POST-001"
+        ],
+        "mutation_ids": [
+          "EXMUT-003"
+        ],
+        "test_ids": [
+          "EXEVAL-002"
+        ]
+      }
+    ],
+    "known_entrypoints": [
+      "generated/normalize_csv.py"
+    ],
+    "reverse": [
+      {
+        "acceptance_ids": [
+          "AC-EXEC-1"
+        ],
+        "artifact_id": "ART-001",
+        "entrypoint": "generated/normalize_csv.py",
+        "gate_ids": [
+          "G-PRE-001",
+          "G-POST-001"
+        ]
+      }
+    ]
+  }
+}
