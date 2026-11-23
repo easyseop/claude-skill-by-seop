@@ -90,3 +90,29 @@
   - 사용자가 조사 세션에 Assembler 조사 인수인계 프롬프트와 입력자료를 전달한다.
   - 선행 구현 bundle 또는 승인된 재생성 전략이 확정되면 총괄 세션이 이 로그와 `CURRENT_WORK_STATE.yaml`에 결정을 기록한다.
   - Codex 세션은 해당 변경을 pull한 뒤 K0를 재실행한다.
+
+## 2026-11-23 — 총괄·검토 세션
+
+- 상태: `READY_FOR_CODEX / K0`
+- 기준 upstream commit: `c1710fc2d96ff0c3161231377dfeef303ab5983b`
+- 수행 내용:
+  - PR #4에서 Planner·Gate·Execution 실제 source·tests·mutation·evidence 복구 완료
+  - 경쟁하던 writable CI를 제거하고 검증을 직렬 read-only 방식으로 전환
+  - PR #4 동일 HEAD에서 경계검사와 통합검증 PASS 확인
+  - PR #1 base를 `recovery/upstream-builders`로 변경하여 검증된 선행 구현을 읽기 전용 입력으로 제공
+- 검증 결과:
+  - Workstream Boundary Check `45139722797`: PASS
+  - Upstream Recovery Verification `45139722726`: PASS
+  - Planner: CAP 36, eval 22, paraphrase 44, scenario 66, mutation 15 killed
+  - Gate: GATE 80, invariant 85, golden 22, eval 48, mutation 20 killed, Hook smoke 19
+  - Execution: EXEC 30, invariant 45, golden 22, eval 26, mutation 10 killed, builder 16
+  - 운영 permission 없음, 독립 감사 identity 및 Host enforcement는 `UNVERIFIED`
+- blocker 또는 결정:
+  - `UPSTREAM_MISSING` 해제
+  - Knowledge/RAG K0~K6 구현 재개 승인
+  - PR #4는 사용자 병합 승인 전까지 Draft·미병합 유지
+- 다음 행동:
+  - `CODEX_SESSION_START_PROMPT.md`와 Work Order를 다시 읽는다.
+  - stacked base의 upstream head와 evidence를 K0에서 검증한다.
+  - 상태를 `IN_PROGRESS`로 전환하고 K0→K6을 중간 승인 대기 없이 수행한다.
+  - upstream source/evidence, Assembler 조사, main은 수정하지 않는다.
