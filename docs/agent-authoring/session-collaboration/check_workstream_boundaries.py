@@ -39,9 +39,9 @@ def changed_files(base: str | None, file_list: Path | None) -> list[str]:
     if not base:
         base = os.environ.get("WORKSTREAM_BASE") or os.environ.get("GITHUB_BASE_REF") or "main"
     try:
-        output = run_git("diff", "--name-only", f"origin/{base}...HEAD")
+        output = run_git("-c", "core.quotepath=false", "diff", "--name-only", f"origin/{base}...HEAD")
     except RuntimeError:
-        output = run_git("diff", "--name-only", f"{base}...HEAD")
+        output = run_git("-c", "core.quotepath=false", "diff", "--name-only", f"{base}...HEAD")
     return [line.strip() for line in output.splitlines() if line.strip()]
 
 
