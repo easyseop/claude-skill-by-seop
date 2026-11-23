@@ -1,6 +1,6 @@
 schema_version: "1.0"
 project: agent-system-author
-updated_at: "2026-11-20T15:56:57+09:00"
+updated_at: "2026-11-23T10:59:32+09:00"
 
 capacity:
   orchestrator_sessions: 1
@@ -37,10 +37,14 @@ lanes:
       pull_request: 4
       owner_role: implementation_session
       reported_blocker: >-
-        Implementation session reports local checkout on main with 5 out-of-scope
-        untracked changes; isolated clone could not proceed due to github.com DNS failure.
-        No Planner source or test evidence was generated. Continue only from a clean,
-        isolated checkout of recovery/upstream-builders after preflight.
+        Latest PR #4 Workstream Boundary Check failed (2026-11-23 10:29 KST):
+        REMOTE_CONNECTOR_MODE.md is OUTSIDE_OWNERSHIP, and the sealed
+        SESSION_START_PROMPT.md blob does not match the registered digest
+        (expected 938f4d7d47c96ccb14831899dfd5576feff7e9a9,
+        actual fa09bb0bfc4417946db743ad2db669142b9522ff).
+        Remote Connector Mode is not approved as a VERIFIED entry point until
+        the boundary violation is corrected and input digest revalidation passes.
+        Preserve local main and all user untracked files.
       objective: >-
         Restore or regenerate the approved Capability Planner, Gate Generator,
         and Execution Artifact Generator source and structured evidence.
@@ -100,10 +104,18 @@ lanes:
   research:
     - id: assembler-research
       priority: 1
-      status: READY_FOR_SESSION
+      status: BLOCKED_FOR_DECISION
       branch: research/agent-workflow-assembler
       pull_request: 2
       owner_role: research_session
+      reported_blocker: >-
+        Latest PR #2 Workstream Boundary Check failed (2026-11-23 10:30 KST):
+        REMOTE_RESEARCH_MODE.md is OUTSIDE_OWNERSHIP, and the sealed
+        SESSION_START_PROMPT.md blob does not match the registered digest
+        (expected 89936d77eb72ae89e91713dc7a9a2ff70cc48209,
+        actual fe147efe55f0da39c649b7afcdddde4078621fa3).
+        Do not start the research session until boundary and sealed input
+        validation are restored.
       objective: Research Agent & Workflow Assembler rules and contracts.
       dependencies: []
       blocks:
@@ -147,13 +159,14 @@ review_sequence:
 
 next_actions:
   orchestrator:
+    - Reconcile PR #2 and #4 OWNERSHIP violations and sealed start prompts through an explicitly authorized orchestrator-controlled correction; require passing boundary CI before reentry.
     - Monitor PR #4 and PR #2 for state changes and boundary violations.
     - Review upstream-recovery before unblocking Knowledge/RAG Builder.
     - Review Assembler research independently from implementation work.
   implementation_session:
-    - Resolve isolated checkout/DNS blocker first; preserve existing untracked changes untouched.
+    - Pause execution while PR #4 boundary CI fails; preserve existing untracked changes untouched.
     - Switch to recovery/upstream-builders and read its SESSION_START_PROMPT.md.
     - Do not modify or resume Knowledge/RAG PR #1 while recovery is active.
   research_session:
-    - Use research/agent-workflow-assembler and read its SESSION_START_PROMPT.md.
+    - Pause execution while PR #2 boundary CI fails; do not treat the modified sealed start prompt as approved.
     - Do not modify implementation or evidence paths.
