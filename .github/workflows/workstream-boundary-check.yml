@@ -33,14 +33,14 @@ jobs:
           name: workstream-boundary-result
           path: workstream-boundary-result.json
 
-  gate-test:
+  execution-test:
     needs: boundary-check
     if: github.head_ref == 'recovery/upstream-builders'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      GATE_DIR: .claude/skills/gate-generator
-      EVIDENCE_DIR: docs/agent-authoring/evidence/gate-generator
+      EXEC_DIR: .claude/skills/execution-artifact-generator
+      EVIDENCE_DIR: docs/agent-authoring/evidence/execution-artifact-generator
       HEAD_REF: ${{ github.head_ref }}
     steps:
       - name: Checkout pull request head
@@ -54,95 +54,102 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Verify Planner prerequisite
+      - name: Verify Planner and Gate prerequisites
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          base=Path('docs/agent-authoring/evidence/capability-planner')
-          summary=json.loads((base/'self-test-summary.json').read_text())
-          manifest=json.loads((base/'implementation-manifest.json').read_text())
-          assert summary['status']=='PASS'
-          assert summary['counts']=={'base_evals':22,'cap_rules':36,'mutations_killed':15,'mutations_total':15,'paraphrase_variants':44,'scenario_runs':66}
-          assert manifest['status']=='PASS_LOCAL_PROCEDURE' and manifest['operational_permission'] is False
+          p=Path('docs/agent-authoring/evidence/capability-planner')
+          g=Path('docs/agent-authoring/evidence/gate-generator')
+          ps=json.loads((p/'self-test-summary.json').read_text())
+          pm=json.loads((p/'implementation-manifest.json').read_text())
+          gs=json.loads((g/'self-test-summary.json').read_text())
+          gm=json.loads((g/'implementation-manifest.json').read_text())
+          assert ps['status']=='PASS' and pm['status']=='PASS_LOCAL_PROCEDURE'
+          assert gs['status']=='PASS' and gm['status']=='PASS_LOCAL_PROCEDURE'
+          counts=gs['counts']
+          assert counts['gate_rules']==80 and counts['invariants_passed']==85
+          assert counts['evals_passed']==48 and counts['mutations_killed']==20
+          assert counts['hook_smoke_passed']==19 and counts['planner_golden']==22
+          assert pm['operational_permission'] is False and gm['operational_permission'] is False
           PY
 
-      - name: Compile Gate core
+      - name: Compile Execution core
         run: |
-          mapfile -t files < <(find "$GATE_DIR/scripts" -type f -name '*.py' -print | sort)
-          test "${#files[@]}" -ge 5
+          mapfile -t files < <(find "$EXEC_DIR/scripts" -type f -name '*.py' -print | sort)
+          test "${#files[@]}" -ge 4
           python -m py_compile "${files[@]}"
 
-      - name: Run Gate self-test
+      - name: Run Execution self-test
         run: |
           mkdir -p "$EVIDENCE_DIR"
-          python "$GATE_DIR/scripts/run_self_tests.py" \
+          python "$EXEC_DIR/scripts/run_self_tests.py" \
             --repo-root "$GITHUB_WORKSPACE" \
             --results-dir "$GITHUB_WORKSPACE/$EVIDENCE_DIR" \
-            2>&1 | tee gate-test.log
+            2>&1 | tee execution-test.log
 
-      - name: Normalize and compile generated entrypoints
+      - name: Compile generated Execution package
         run: |
-          python "$GATE_DIR/scripts/normalize_gate_package.py" --repo-root "$GITHUB_WORKSPACE"
-          mapfile -t files < <(find "$GATE_DIR/scripts" "$GATE_DIR/adapters" -type f -name '*.py' -print | sort)
+          mapfile -t files < <(find "$EXEC_DIR/scripts" "$EXEC_DIR/builders" -type f -name '*.py' -print | sort)
           python -m py_compile "${files[@]}"
 
-      - name: Finalize Gate evidence
+      - name: Finalize Execution evidence
         run: |
-          python "$GATE_DIR/scripts/finalize_gate_evidence.py" \
-            --package "$GATE_DIR" \
-            --auditor .claude/agents/gate-auditor.md \
+          python "$EXEC_DIR/scripts/finalize_execution_evidence.py" \
+            --package "$EXEC_DIR" \
+            --auditor .claude/agents/execution-artifact-auditor.md \
             --evidence "$EVIDENCE_DIR" \
-            --report docs/agent-authoring/GATE_GENERATOR_MVP_구현결과.md \
+            --report docs/agent-authoring/EXECUTION_ARTIFACT_GENERATOR_MVP_구현결과.md \
             --state docs/agent-authoring/workstreams/upstream-recovery/CURRENT_SESSION_STATE.yaml \
             --output-manifest docs/agent-authoring/workstreams/upstream-recovery/OUTPUT_MANIFEST.yaml
 
-      - name: Verify Gate candidate
+      - name: Verify Execution candidate
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          base=Path('docs/agent-authoring/evidence/gate-generator')
-          required=['self-test-summary.json','baseline-check.json','baseline-trace.json','planner-gate-golden-results.json','gate-eval-results.json','gate-mutation-results.json','hook-smoke-results.json','enforcement-inventory.json','gate-audit-result.json','gate-stop-gate.json','implementation-manifest.json']
+          base=Path('docs/agent-authoring/evidence/execution-artifact-generator')
+          required=['self-test-summary.json','execution-contract-check.json','traceability-results.json','planner-execution-golden-results.json','execution-eval-results.json','execution-mutation-results.json','builder-test-results.json','execution-inventory.json','reuse-assessment-results.json','execution-audit-result.json','execution-stop-gate.json','implementation-manifest.json']
           for name in required: assert (base/name).is_file(), name
           summary=json.loads((base/'self-test-summary.json').read_text()); counts=summary['counts']
           assert summary['status']=='PASS'
-          assert counts['gate_rules']==80 and counts['invariants']==85 and counts['invariants_passed']==85
-          assert counts['evals']==48 and counts['evals_passed']==48
-          assert counts['mutations']==20 and counts['mutations_killed']==20
-          assert counts['hook_smoke_passed']==19 and counts['planner_golden']==22
-          assert json.loads((base/'gate-mutation-results.json').read_text())['status']=='PASS'
-          assert json.loads((base/'hook-smoke-results.json').read_text())['status']=='PASS'
-          assert json.loads((base/'gate-eval-results.json').read_text())['status']=='PASS'
-          audit=json.loads((base/'gate-audit-result.json').read_text())
-          stop=json.loads((base/'gate-stop-gate.json').read_text())
+          assert counts['rules']==30 and counts['invariants']==45 and counts['invariants_passed']==45
+          assert counts['evals']==26 and counts['evals_passed']==26
+          assert counts['mutations']==10 and counts['mutations_killed']==10
+          assert counts['planner_golden']==22
+          assert counts['builder_tests']>=16 and counts['builder_tests_passed']==counts['builder_tests']
+          assert json.loads((base/'execution-mutation-results.json').read_text())['status']=='PASS'
+          assert json.loads((base/'execution-eval-results.json').read_text())['status']=='PASS'
+          assert json.loads((base/'builder-test-results.json').read_text())['status']=='PASS'
+          audit=json.loads((base/'execution-audit-result.json').read_text())
+          stop=json.loads((base/'execution-stop-gate.json').read_text())
           manifest=json.loads((base/'implementation-manifest.json').read_text())
           assert audit['status']=='PASS_LOCAL_PROCEDURE' and audit['actual_independent_executor_ran'] is False
           assert stop['status']=='PASS_LOCAL_PROCEDURE' and stop['operational_permission'] is False
           assert manifest['status']=='PASS_LOCAL_PROCEDURE' and manifest['operational_permission'] is False
           PY
 
-      - name: Commit verified Gate package and evidence
+      - name: Commit verified Execution package and evidence
         run: |
           git config user.name "Harness Workstream Orchestrator"
           git config user.email "71008721+easyseop@users.noreply.github.com"
-          git add "$GATE_DIR" .claude/agents/gate-auditor.md "$EVIDENCE_DIR" docs/agent-authoring/GATE_GENERATOR_MVP_구현결과.md docs/agent-authoring/workstreams/upstream-recovery/CURRENT_SESSION_STATE.yaml docs/agent-authoring/workstreams/upstream-recovery/OUTPUT_MANIFEST.yaml
+          git add "$EXEC_DIR" .claude/agents/execution-artifact-auditor.md "$EVIDENCE_DIR" docs/agent-authoring/EXECUTION_ARTIFACT_GENERATOR_MVP_구현결과.md docs/agent-authoring/workstreams/upstream-recovery/CURRENT_SESSION_STATE.yaml docs/agent-authoring/workstreams/upstream-recovery/OUTPUT_MANIFEST.yaml
           if git diff --cached --quiet; then
-            echo "Verified Gate package is already current."
+            echo "Verified Execution package is already current."
           else
-            git commit -m "test(gate): bind verified M0-M3 evidence"
+            git commit -m "test(execution): bind verified E0-E4 evidence"
             git push origin "HEAD:$HEAD_REF"
           fi
 
-      - name: Upload Gate evidence
+      - name: Upload Execution evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: gate-generator-test-evidence
+          name: execution-artifact-generator-test-evidence
           path: |
-            gate-test.log
-            docs/agent-authoring/evidence/gate-generator/
-            .claude/skills/gate-generator/references/
-            .claude/skills/gate-generator/evals/
+            execution-test.log
+            docs/agent-authoring/evidence/execution-artifact-generator/
+            .claude/skills/execution-artifact-generator/references/
+            .claude/skills/execution-artifact-generator/evals/
           if-no-files-found: warn
           retention-days: 14
