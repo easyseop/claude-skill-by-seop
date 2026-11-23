@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail when a branch changes files outside its declared workstream ownership."""
+"""Enforce branch-specific workstream ownership and sealed prepared inputs."""
 
 from __future__ import annotations
 
@@ -56,11 +56,36 @@ def select_rule(config: dict, branch: str) -> dict | None:
     return None
 
 
+def git_blob_sha(path: str) -> str:
+    file_path = Path(path)
+    if not file_path.is_file():
+        raise FileNotFoundError(path)
+    return run_git("hash-object", "--", path).strip()
+
+
+def load_prepared_overrides(path: Path, branch: str) -> tuple[dict[str, str], list[str]]:
+    if not path.is_file():
+        return {}, []
+    data = json.loads(path.read_text(encoding="utf-8"))
+    prepared: dict[str, str] = {}
+    applied: list[str] = []
+    for item in data.get("overrides", []):
+        pattern = item.get("branch_pattern")
+        if pattern and fnmatch.fnmatchcase(branch, pattern):
+            prepared.update(item.get("prepared_path_blobs", {}))
+            applied.append(pattern)
+    return prepared, applied
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--config",
         default="docs/agent-authoring/session-collaboration/WORKSTREAM_BOUNDARIES.json",
+    )
+    parser.add_argument(
+        "--overrides",
+        default="docs/agent-authoring/session-collaboration/PREPARED_INPUT_OVERRIDES.json",
     )
     parser.add_argument("--branch")
     parser.add_argument("--base")
@@ -72,13 +97,16 @@ def main() -> int:
     branch = args.branch or current_branch()
     files = changed_files(args.base, args.changed_files)
     rule = select_rule(config, branch)
+    override_prepared, applied_overrides = load_prepared_overrides(Path(args.overrides), branch)
 
     result = {
-        "schema_version": "1.0",
+        "schema_version": "1.2",
         "branch": branch,
         "base": args.base,
         "status": "FAIL",
         "changed_files": files,
+        "prepared_paths_verified": [],
+        "prepared_override_patterns": applied_overrides,
         "violations": [],
     }
 
@@ -89,6 +117,8 @@ def main() -> int:
     else:
         writable = rule.get("writable_paths", [])
         read_only = rule.get("read_only_paths", [])
+        prepared = dict(rule.get("prepared_path_blobs", {}))
+        prepared.update(override_prepared)
         forbidden = config.get("global_forbidden", []) + rule.get("forbidden_paths", [])
         orchestrator_only = config.get("shared_orchestrator_only", [])
         owner_role = rule.get("owner_role")
@@ -99,6 +129,7 @@ def main() -> int:
                     {"path": path, "code": "FORBIDDEN_PATH", "message": "Path is explicitly forbidden."}
                 )
                 continue
+
             if matches(path, orchestrator_only) and owner_role != "orchestrator":
                 result["violations"].append(
                     {
@@ -108,11 +139,42 @@ def main() -> int:
                     }
                 )
                 continue
+
+            if path in prepared:
+                try:
+                    actual_sha = git_blob_sha(path)
+                except (FileNotFoundError, RuntimeError) as exc:
+                    result["violations"].append(
+                        {
+                            "path": path,
+                            "code": "PREPARED_INPUT_MISSING",
+                            "message": f"Prepared read-only input is missing or unreadable: {exc}",
+                            "expected_blob": prepared[path],
+                        }
+                    )
+                    continue
+                if actual_sha != prepared[path]:
+                    result["violations"].append(
+                        {
+                            "path": path,
+                            "code": "PREPARED_INPUT_MODIFIED",
+                            "message": "Orchestrator-prepared input differs from its sealed Git blob digest.",
+                            "expected_blob": prepared[path],
+                            "actual_blob": actual_sha,
+                        }
+                    )
+                    continue
+                result["prepared_paths_verified"].append(
+                    {"path": path, "blob_sha": actual_sha}
+                )
+                continue
+
             if matches(path, read_only):
                 result["violations"].append(
                     {"path": path, "code": "READ_ONLY_PATH", "message": "Path is input/reference only."}
                 )
                 continue
+
             if not matches(path, writable):
                 result["violations"].append(
                     {
