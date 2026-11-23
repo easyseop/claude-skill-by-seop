@@ -1,0 +1,21 @@
+{
+  "counts": {
+    "evals": 48,
+    "evals_passed": 48,
+    "gate_rules": 80,
+    "hook_smoke_passed": 19,
+    "invariants": 85,
+    "invariants_passed": 85,
+    "mutations": 20,
+    "mutations_killed": 20,
+    "planner_golden": 22,
+    "trace_forward": 4,
+    "trace_reverse": 4
+  },
+  "host_enforcement": "UNVERIFIED",
+  "m4_m7": "HARD_ENFORCEMENT_UNAVAILABLE",
+  "operational_permission": false,
+  "schema_version": "1.0",
+  "scope": "M0-M3_LOCAL_CANDIDATE",
+  "status": "PASS"
+}

@@ -1,0 +1,125 @@
+{
+  "mutations": [
+    {
+      "critical": true,
+      "description": "upstream digest 제거",
+      "id": "GMUT-001",
+      "primary_detector": "I-005"
+    },
+    {
+      "critical": true,
+      "description": "free-text PASS 허용",
+      "id": "GMUT-002",
+      "primary_detector": "I-058"
+    },
+    {
+      "critical": true,
+      "description": "fail-closed를 fail-open으로 변경",
+      "id": "GMUT-003",
+      "primary_detector": "I-067"
+    },
+    {
+      "critical": true,
+      "description": "mandatory Gate implementation mapping 제거",
+      "id": "GMUT-004",
+      "primary_detector": "I-071"
+    },
+    {
+      "critical": true,
+      "description": "high-risk approval 제거",
+      "id": "GMUT-005",
+      "primary_detector": "I-012"
+    },
+    {
+      "critical": true,
+      "description": "permission 제거",
+      "id": "GMUT-006",
+      "primary_detector": "I-025"
+    },
+    {
+      "critical": true,
+      "description": "Hook timeout을 allow로 변경",
+      "id": "GMUT-007",
+      "primary_detector": "I-022"
+    },
+    {
+      "critical": true,
+      "description": "malformed Hook output을 allow로 변경",
+      "id": "GMUT-008",
+      "primary_detector": "I-022"
+    },
+    {
+      "critical": true,
+      "description": "canonical path resolution 제거",
+      "id": "GMUT-009",
+      "primary_detector": "I-026"
+    },
+    {
+      "critical": true,
+      "description": "Tool namespace/version/server binding 제거",
+      "id": "GMUT-010",
+      "primary_detector": "I-021"
+    },
+    {
+      "critical": true,
+      "description": "RAG ACL 제거",
+      "id": "GMUT-011",
+      "primary_detector": "I-016"
+    },
+    {
+      "critical": true,
+      "description": "Agent termination 제거",
+      "id": "GMUT-012",
+      "primary_detector": "I-017"
+    },
+    {
+      "critical": true,
+      "description": "state TTL 제거",
+      "id": "GMUT-013",
+      "primary_detector": "I-018"
+    },
+    {
+      "critical": true,
+      "description": "approval expiry/nonce 제거",
+      "id": "GMUT-014",
+      "primary_detector": "I-031"
+    },
+    {
+      "critical": true,
+      "description": "idempotency payload binding 제거",
+      "id": "GMUT-015",
+      "primary_detector": "I-036"
+    },
+    {
+      "critical": true,
+      "description": "OUTCOME_UNKNOWN blind retry",
+      "id": "GMUT-016",
+      "primary_detector": "I-037"
+    },
+    {
+      "critical": true,
+      "description": "attestation subject 교체",
+      "id": "GMUT-017",
+      "primary_detector": "I-061"
+    },
+    {
+      "critical": true,
+      "description": "audit blind-first 제거",
+      "id": "GMUT-018",
+      "primary_detector": "I-081"
+    },
+    {
+      "critical": true,
+      "description": "phase boundary digest 제거",
+      "id": "GMUT-019",
+      "primary_detector": "I-049"
+    },
+    {
+      "critical": true,
+      "description": "required test skip를 success 처리",
+      "id": "GMUT-020",
+      "primary_detector": "I-076"
+    }
+  ],
+  "schema_version": "1.0"
+}

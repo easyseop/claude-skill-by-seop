@@ -1,0 +1,8 @@
+{
+  "default": "deny",
+  "direct_bypass_inventory_complete": false,
+  "known_tools": [
+    "repo.read",
+    "repo.write"
+  ]
+}

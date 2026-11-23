@@ -1,38 +1,25 @@
 schema_version: "1.0"
 workstream_id: upstream-recovery
 
-outputs:
-  - path: .claude/skills/capability-artifact-planner/
-    kind: source_package
-    status: tested_pass
-  - path: .claude/agents/capability-plan-auditor.md
-    kind: auditor_definition
-    status: implemented_independence_unverified
-  - path: docs/agent-authoring/evidence/capability-planner/
-    kind: evidence_package
-    status: tested_pass
-  - path: docs/agent-authoring/CAPABILITY_ARTIFACT_PLANNER_구현결과.md
-    kind: implementation_report
-    status: complete
+planner:
+  status: VERIFIED_LOCAL_CANDIDATE
 
-planner_test:
-  source_digest: sha256:6a03348ea7b4c84421794fabe5bde85b31a98347041361741cc9ad1fca75ad8a
-  status: PASS_LOCAL_PROCEDURE
-  cap_rules: 36
-  base_evals: 22
-  paraphrase_variants: 44
-  scenario_runs: 66
-  mutations_killed: 15
-  mutations_total: 15
-  independent_identity: UNVERIFIED
-
-checks:
-  ownership_boundary: PENDING_RECHECK
-  input_manifest_current: PASS_RESEALED
-  planner_complete: TESTED_PASS
-  gate_complete: PENDING
-  execution_complete: PENDING
+gate:
+  status: TESTED_PASS_BOUNDARY_PENDING
+  source_digest: sha256:bc648b66babfa004def04acee2504f1cc14f7cdbd077cbb9b0e9c14378a264f6
+  gate_rules: 80
+  invariants: 85
+  planner_golden: 22
+  evals: 48
+  mutations_killed: 20
+  hook_smoke: 19
   critical_mutants_survived: 0
+  traceability: PASS
+  host_enforcement: UNVERIFIED
+  independent_identity: UNVERIFIED
   operational_permission: false
 
-review_status: PLANNER_BOUNDARY_RECHECK
+execution:
+  status: PENDING
+
+review_status: GATE_BOUNDARY_RECHECK

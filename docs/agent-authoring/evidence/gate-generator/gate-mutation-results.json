@@ -1,0 +1,191 @@
+{
+  "mutations": [
+    {
+      "description": "upstream digest 제거",
+      "detected_failures": [
+        "I-005"
+      ],
+      "id": "GMUT-001",
+      "primary_detector": "I-005",
+      "status": "KILLED"
+    },
+    {
+      "description": "free-text PASS 허용",
+      "detected_failures": [
+        "I-058"
+      ],
+      "id": "GMUT-002",
+      "primary_detector": "I-058",
+      "status": "KILLED"
+    },
+    {
+      "description": "fail-closed를 fail-open으로 변경",
+      "detected_failures": [
+        "I-067"
+      ],
+      "id": "GMUT-003",
+      "primary_detector": "I-067",
+      "status": "KILLED"
+    },
+    {
+      "description": "mandatory Gate implementation mapping 제거",
+      "detected_failures": [
+        "I-071"
+      ],
+      "id": "GMUT-004",
+      "primary_detector": "I-071",
+      "status": "KILLED"
+    },
+    {
+      "description": "high-risk approval 제거",
+      "detected_failures": [
+        "I-012"
+      ],
+      "id": "GMUT-005",
+      "primary_detector": "I-012",
+      "status": "KILLED"
+    },
+    {
+      "description": "permission 제거",
+      "detected_failures": [
+        "I-011",
+        "I-025"
+      ],
+      "id": "GMUT-006",
+      "primary_detector": "I-025",
+      "status": "KILLED"
+    },
+    {
+      "description": "Hook timeout을 allow로 변경",
+      "detected_failures": [
+        "I-022",
+        "I-067"
+      ],
+      "id": "GMUT-007",
+      "primary_detector": "I-022",
+      "status": "KILLED"
+    },
+    {
+      "description": "malformed Hook output을 allow로 변경",
+      "detected_failures": [
+        "I-022",
+        "I-067"
+      ],
+      "id": "GMUT-008",
+      "primary_detector": "I-022",
+      "status": "KILLED"
+    },
+    {
+      "description": "canonical path resolution 제거",
+      "detected_failures": [
+        "I-026"
+      ],
+      "id": "GMUT-009",
+      "primary_detector": "I-026",
+      "status": "KILLED"
+    },
+    {
+      "description": "Tool namespace/version/server binding 제거",
+      "detected_failures": [
+        "I-021"
+      ],
+      "id": "GMUT-010",
+      "primary_detector": "I-021",
+      "status": "KILLED"
+    },
+    {
+      "description": "RAG ACL 제거",
+      "detected_failures": [
+        "I-016",
+        "I-051",
+        "I-052"
+      ],
+      "id": "GMUT-011",
+      "primary_detector": "I-016",
+      "status": "KILLED"
+    },
+    {
+      "description": "Agent termination 제거",
+      "detected_failures": [
+        "I-017"
+      ],
+      "id": "GMUT-012",
+      "primary_detector": "I-017",
+      "status": "KILLED"
+    },
+    {
+      "description": "state TTL 제거",
+      "detected_failures": [
+        "I-018"
+      ],
+      "id": "GMUT-013",
+      "primary_detector": "I-018",
+      "status": "KILLED"
+    },
+    {
+      "description": "approval expiry/nonce 제거",
+      "detected_failures": [
+        "I-031"
+      ],
+      "id": "GMUT-014",
+      "primary_detector": "I-031",
+      "status": "KILLED"
+    },
+    {
+      "description": "idempotency payload binding 제거",
+      "detected_failures": [
+        "I-036"
+      ],
+      "id": "GMUT-015",
+      "primary_detector": "I-036",
+      "status": "KILLED"
+    },
+    {
+      "description": "OUTCOME_UNKNOWN blind retry",
+      "detected_failures": [
+        "I-037"
+      ],
+      "id": "GMUT-016",
+      "primary_detector": "I-037",
+      "status": "KILLED"
+    },
+    {
+      "description": "attestation subject 교체",
+      "detected_failures": [
+        "I-061"
+      ],
+      "id": "GMUT-017",
+      "primary_detector": "I-061",
+      "status": "KILLED"
+    },
+    {
+      "description": "audit blind-first 제거",
+      "detected_failures": [
+        "I-081"
+      ],
+      "id": "GMUT-018",
+      "primary_detector": "I-081",
+      "status": "KILLED"
+    },
+    {
+      "description": "phase boundary digest 제거",
+      "detected_failures": [
+        "I-049"
+      ],
+      "id": "GMUT-019",
+      "primary_detector": "I-049",
+      "status": "KILLED"
+    },
+    {
+      "description": "required test skip를 success 처리",
+      "detected_failures": [
+        "I-076"
+      ],
+      "id": "GMUT-020",
+      "primary_detector": "I-076",
+      "status": "KILLED"
+    }
+  ],
+  "schema_version": "1.0",
+  "status": "PASS"
+}

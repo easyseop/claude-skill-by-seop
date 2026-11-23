@@ -1,0 +1,7 @@
+{
+  "host_enforcement": "UNVERIFIED",
+  "independent_identity": "UNVERIFIED",
+  "operational_permission": false,
+  "schema_version": "1.0",
+  "status": "PASS_LOCAL_PROCEDURE"
+}

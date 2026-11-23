@@ -1,0 +1,15 @@
+{
+  "enabled": false,
+  "hooks": {
+    "PostToolUse": [
+      "posttool_gate.py"
+    ],
+    "PreToolUse": [
+      "pretool_gate.py"
+    ],
+    "Stop": [
+      "stop_gate.py"
+    ]
+  },
+  "note": "Example only; do not modify .claude/settings.json automatically."
+}

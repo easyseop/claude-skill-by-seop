@@ -1,0 +1,8 @@
+{
+  "actual_independent_executor_ran": false,
+  "blind_first_procedure": true,
+  "independence_status": "UNVERIFIED",
+  "operational_permission": false,
+  "schema_version": "1.0",
+  "status": "PASS_LOCAL_PROCEDURE"
+}
