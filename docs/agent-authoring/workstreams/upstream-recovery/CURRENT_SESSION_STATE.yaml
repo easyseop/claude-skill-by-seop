@@ -4,31 +4,29 @@ session_type: implementation
 repository: easyseop/claude-skill-by-seop
 branch: recovery/upstream-builders
 status: IN_PROGRESS
-phase: E_BOUNDARY_RECHECK
+phase: G_BOUNDARY_RECHECK
 
 progress:
   planner_source:
     status: VERIFIED_LOCAL_CANDIDATE
     operational_permission: false
   gate_source:
-    status: VERIFIED_LOCAL_CANDIDATE
-    operational_permission: false
-  execution_source:
     status: TESTED_PASS_BOUNDARY_PENDING
-    source_digest: sha256:b0b0a919e2aa93679ac571e77ac65b3a1fe584b6d477839c8418d732ba97dcdf
-    exec_rules: "30/30"
-    invariants: "45/45"
+    source_digest: sha256:bc648b66babfa004def04acee2504f1cc14f7cdbd077cbb9b0e9c14378a264f6
+    gate_rules: "80/80"
+    invariants: "85/85"
     planner_golden: "22/22"
-    evals: "26/26"
-    mutations: "10/10 killed"
-    builder_tests: "16/16"
+    evals: "48/48"
+    mutations: "20/20 killed"
+    hook_smoke: "19/19"
     traceability: PASS
-    verified_runner: false
-    dynamic_execution: HARD_ENFORCEMENT_UNAVAILABLE
+    host_enforcement: UNVERIFIED
     independent_identity: UNVERIFIED
+    m4_m7: HARD_ENFORCEMENT_UNAVAILABLE
     operational_permission: false
+  execution_source: PENDING
 
 blocker: null
 next_action: >-
-  Pass the workstream ownership boundary check, then mark the full upstream
-  recovery workstream READY_FOR_REVIEW and unblock Knowledge/RAG Builder K0-K6.
+  Pass the workstream ownership boundary check, then mark Gate
+  VERIFIED_LOCAL_CANDIDATE and start Execution Artifact Generator E0-E4 recovery.

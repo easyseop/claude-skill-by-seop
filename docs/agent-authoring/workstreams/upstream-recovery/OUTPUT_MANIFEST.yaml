@@ -5,22 +5,21 @@ planner:
   status: VERIFIED_LOCAL_CANDIDATE
 
 gate:
-  status: VERIFIED_LOCAL_CANDIDATE
-
-execution:
   status: TESTED_PASS_BOUNDARY_PENDING
-  source_digest: sha256:b0b0a919e2aa93679ac571e77ac65b3a1fe584b6d477839c8418d732ba97dcdf
-  exec_rules: 30
-  invariants: 45
+  source_digest: sha256:bc648b66babfa004def04acee2504f1cc14f7cdbd077cbb9b0e9c14378a264f6
+  gate_rules: 80
+  invariants: 85
   planner_golden: 22
-  evals: 26
-  mutations_killed: 10
-  builder_tests: 16
+  evals: 48
+  mutations_killed: 20
+  hook_smoke: 19
   critical_mutants_survived: 0
   traceability: PASS
-  verified_runner: false
-  dynamic_execution: HARD_ENFORCEMENT_UNAVAILABLE
+  host_enforcement: UNVERIFIED
   independent_identity: UNVERIFIED
   operational_permission: false
 
-review_status: EXECUTION_BOUNDARY_RECHECK
+execution:
+  status: PENDING
+
+review_status: GATE_BOUNDARY_RECHECK
