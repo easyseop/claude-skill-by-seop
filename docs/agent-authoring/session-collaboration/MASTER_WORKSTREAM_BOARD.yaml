@@ -18,10 +18,10 @@ policies:
 
 active_assignment_policy:
   implementation_session:
-    current: upstream-recovery
+    current: knowledge-rag-builder-k0-k6
     forbidden_concurrent:
-      - knowledge-rag-builder-k0-k6
       - assembler-implementation
+      - independent-evaluation-implementation
   research_session:
     current: assembler-research
     forbidden_concurrent:
@@ -32,47 +32,44 @@ lanes:
   implementation:
     - id: upstream-recovery
       priority: 1
-      status: FINAL_HEAD_VERIFICATION_PENDING
+      status: VERIFIED_LOCAL
       branch: recovery/upstream-builders
       pull_request: 4
       owner_role: implementation_session
-      objective: >-
-        Restore and verify Capability Planner, Gate Generator M0-M3, and
-        Execution Artifact Generator E0-E4 source and structured evidence.
+      verified_head: c1710fc2d96ff0c3161231377dfeef303ab5983b
+      verification:
+        boundary_run: 45139722797
+        boundary_status: PASS
+        read_only_verification_run: 45139722726
+        read_only_verification_status: PASS
       progress:
-        planner: TESTED_PASS_FINAL_HEAD_PENDING
-        gate: TESTED_PASS_FINAL_HEAD_PENDING
-        execution: TESTED_PASS_FINAL_HEAD_PENDING
-      current_controls:
-        writable_ci_removed: true
-        verification_ci: serialized_read_only
-        state_manifest_reconciled: true
+        planner: VERIFIED_LOCAL_CANDIDATE
+        gate: VERIFIED_LOCAL_CANDIDATE
+        execution: VERIFIED_LOCAL_CANDIDATE
+      limits:
         operational_permission: false
-      dependencies: []
-      blocks:
-        - knowledge-rag-builder-k0-k6
-      allowed_parallel_with:
-        - assembler-research
-      start_prompt: docs/agent-authoring/workstreams/upstream-recovery/SESSION_START_PROMPT.md
-      next_gate: >-
-        Require both the workstream boundary check and the serialized read-only
-        Planner/Gate/Execution verification to pass on the exact current head,
-        then perform evidence/hash review before VERIFIED_LOCAL.
+        independent_identity: UNVERIFIED
+        host_enforcement: UNVERIFIED
+        production_release: unavailable
+      blocks: []
+      merge_requires_user_approval: true
 
     - id: knowledge-rag-builder-k0-k6
       priority: 2
-      status: BLOCKED_FOR_SOURCE
+      status: READY_FOR_SESSION
       branch: codex/knowledge-rag-builder-k0-k6
       pull_request: 1
       owner_role: implementation_session
       objective: Implement Knowledge & RAG Builder K0-K6 local candidate.
+      upstream_binding:
+        workstream: upstream-recovery
+        verified_head: c1710fc2d96ff0c3161231377dfeef303ab5983b
+        delivery: stacked_pr_base
       dependencies:
         - upstream-recovery: VERIFIED_LOCAL
       blocks:
         - assembler-implementation
-      resume_policy: >-
-        Resume only after upstream-recovery is reviewed and its current
-        source/evidence are merged or digest-bound into this workstream.
+      start_prompt: docs/agent-authoring/CODEX_SESSION_START_PROMPT.md
 
     - id: assembler-implementation
       priority: 3
@@ -108,7 +105,7 @@ lanes:
   research:
     - id: assembler-research
       priority: 1
-      status: BOUNDARY_RECHECK_PENDING
+      status: READY_FOR_SESSION
       branch: research/agent-workflow-assembler
       pull_request: 2
       owner_role: research_session
@@ -117,15 +114,15 @@ lanes:
         remote_mode_formally_approved: true
         ownership_resealed: true
         input_manifest_resealed: true
+        boundary_head: 308b8652afa1362759e1874f8fda9a4a40d2535a
+        boundary_run: 45138836654
+        boundary_status: PASS
       dependencies: []
       blocks:
         - assembler-implementation
       allowed_parallel_with:
-        - upstream-recovery
+        - knowledge-rag-builder-k0-k6
       start_prompt: docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md
-      next_gate: >-
-        Require a current-head boundary PASS, then start the 25-section research
-        and write only state, handoff, output manifest, and final research report.
 
     - id: external-discovery-research
       priority: 2
@@ -151,7 +148,6 @@ lanes:
         - independent-evaluation-implementation
 
 review_sequence:
-  - upstream-recovery
   - knowledge-rag-builder-k0-k6
   - assembler-research
   - external-discovery-research
@@ -162,13 +158,13 @@ review_sequence:
 
 next_actions:
   orchestrator:
-    - Monitor the exact current PR #4 head for read-only verification and boundary results.
-    - Promote upstream-recovery only after current-head evidence/hash review.
-    - Monitor PR #2 current-head boundary recheck; unblock research only on PASS.
-    - Do not merge or prepare downstream implementation before dependencies verify.
+    - Retarget PR #1 onto recovery/upstream-builders and record verified upstream binding.
+    - Monitor Knowledge/RAG K0-K6 source, tests, mutations, evidence, and boundaries.
+    - Monitor Assembler research output and review it independently.
+    - Keep PR #4 draft and unmerged until explicit user approval.
   implementation_session:
-    - Do not add new source while final-head verification is running.
-    - Do not modify or resume Knowledge/RAG PR #1 yet.
+    - Resume PR #1 and execute Knowledge/RAG K0-K6 from K0 preflight.
+    - Do not modify upstream-recovery or Assembler research paths.
   research_session:
-    - Start Assembler research only after the current-head boundary PASS.
+    - Start the 25-section Assembler research and write only owned outputs.
     - Do not modify implementation or evidence paths.
