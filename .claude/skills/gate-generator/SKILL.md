@@ -40,7 +40,7 @@ GMUT 20/20 killed
 Hook smoke 19/19
 ```
 
-위 수량은 현재 source와 구조화 evidence에 결박되어야 하며, 하나라도 누락되면 Gate 단계는 완료되지 않는다.
+위 수량은 현재 source와 구조화 evidence에 결박되어야 하며, 하나라도 누락되면 Gate 단계는 완료되지 않는다. 검증은 등록된 `Workstream Boundary Check`의 Gate job에서 격리 실행한다.
 
 ## 상태 경계
 
