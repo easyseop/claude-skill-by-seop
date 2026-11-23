@@ -3,9 +3,11 @@ workstream_id: upstream-recovery
 
 planner:
   status: VERIFIED_LOCAL_CANDIDATE
+  source_digest: sha256:6a03348ea7b4c84421794fabe5bde85b31a98347041361741cc9ad1fca75ad8a
+  operational_permission: false
 
 gate:
-  status: TESTED_PASS_BOUNDARY_PENDING
+  status: VERIFIED_LOCAL_CANDIDATE
   source_digest: sha256:bc648b66babfa004def04acee2504f1cc14f7cdbd077cbb9b0e9c14378a264f6
   gate_rules: 80
   invariants: 85
@@ -15,11 +17,14 @@ gate:
   hook_smoke: 19
   critical_mutants_survived: 0
   traceability: PASS
+  ownership_boundary: PASS_BY_COMMIT_SCOPE_REVIEW
   host_enforcement: UNVERIFIED
   independent_identity: UNVERIFIED
+  m4_m7: HARD_ENFORCEMENT_UNAVAILABLE
   operational_permission: false
 
 execution:
-  status: PENDING
+  status: IN_PROGRESS
+  target: E0-E4_LOCAL_CANDIDATE
 
-review_status: GATE_BOUNDARY_RECHECK
+review_status: EXECUTION_IN_PROGRESS
