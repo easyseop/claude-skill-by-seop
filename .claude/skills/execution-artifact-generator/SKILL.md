@@ -37,6 +37,8 @@ Planner execution golden 22/22
 Builder negative tests >=16
 ```
 
+위 수량은 등록된 `Workstream Boundary Check`의 Execution job에서 격리 실행하고 현재 source digest에 결박한다.
+
 ## 안전 경계
 
 ```text
