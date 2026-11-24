@@ -116,3 +116,11 @@
   - stacked base의 upstream head와 evidence를 K0에서 검증한다.
   - 상태를 `IN_PROGRESS`로 전환하고 K0→K6을 중간 승인 대기 없이 수행한다.
   - upstream source/evidence, Assembler 조사, main은 수정하지 않는다.
+
+## 2026-11-24 — 구현 세션 K0 재개
+
+- 시작 HEAD `330ce3f9fc99e26aba7ca673960638b029c75735`, 선행 입력 `c1710fc2d96ff0c3161231377dfeef303ab5983b`.
+- 두 CI 성공 확인. 세 manifest 소스·증거 151개 SHA-256 일치.
+- 현재 Planner 입력으로 계약을 재생성함. Gate checker PASS이나 plan ID 불일치. Execution checker FAIL (`EXI-002: Planner digest stale`).
+- 상태 `REENTRY_REQUIRED / K0`. K1~K6 미실행. 다음 행동은 선행 compiler의 실제 입력 결박 수정 후 K0 재검사.
+- 재현 명령과 snapshot은 `docs/agent-authoring/evidence/knowledge-rag-builder/k0-upstream-binding.json`에 기록.
