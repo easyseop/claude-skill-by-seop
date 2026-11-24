@@ -4,8 +4,9 @@ repository: easyseop/claude-skill-by-seop
 branch: codex/knowledge-rag-builder-k0-k6
 workstream: knowledge-rag-builder
 milestone: K0-K6-local-mvp
-status: READY_FOR_CODEX
-updated_at: "2026-11-23"
+status: REENTRY_REQUIRED
+phase: K0
+updated_at: "2026-11-24"
 
 source_of_truth:
   work_order: docs/agent-authoring/CODEX_KNOWLEDGE_RAG_BUILDER_K0_K6_WORK_ORDER.md
@@ -93,17 +94,17 @@ expected_paths:
   evidence: docs/agent-authoring/evidence/knowledge-rag-builder/
   report: docs/agent-authoring/KNOWLEDGE_RAG_BUILDER_MVP_구현결과.md
 
-codex_next_action: >-
-  Read CODEX_SESSION_START_PROMPT.md and the work order, verify the stacked upstream
-  source/evidence and exact verified head, set status to IN_PROGRESS, and execute K0
-  through K6 without waiting for another approval.
+codex_next_action: Rerun K0 against corrected upstream compiler bindings and checker results.
 
 review_policy:
   review_owner: current_chatgpt_orchestrator_session
   merge_requires_user_approval: true
   local_verified_is_not_production_approval: true
 
-blocker: null
+blocker:
+  id: EXECUTION_REENTRY_REQUIRED
+  reason: Freshly derived execution contract fails EXI-002 (Planner digest stale).
+  evidence: docs/agent-authoring/evidence/knowledge-rag-builder/k0-upstream-binding.json
 last_review:
   decision: >-
     UPSTREAM_MISSING is resolved by the verified stacked base. Knowledge/RAG K0-K6
