@@ -74,3 +74,25 @@
   - sealed input blob SHA를 검증한다.
   - 상태를 `IN_PROGRESS`로 바꾸고 Assembler 심층조사를 즉시 시작한다.
   - 중간 승인이나 로컬 clone 복구를 기다리지 않는다.
+
+## 2026-11-24 16:35 KST — 조사 세션 / 기존 PR #2 재개
+
+- 상태: `IN_PROGRESS`
+- 실행 모드: `remote_connector`; 기존 Draft PR #2와 `research/agent-workflow-assembler`를 계속 사용.
+- 기준 commit: `308b8652afa1362759e1874f8fda9a4a40d2535a`
+- 수행 내용:
+  - 최신 시작 지시·Remote Research Mode·Work Order·Ownership·상태·로그·입력 manifest·상위 계약 요약을 읽고 재진입 조건을 확인.
+  - 사용자의 우선 요청에 따라 Planner 정본 22개가 승인 입력에 있는지 읽기 전용으로 감사.
+- 검증 결과:
+  - [Workstream Boundary Check 45138836654](https://github.com/easyseop/claude-skill-by-seop/actions/runs/45138836654)는 위 exact head에서 `success`; execution-test job은 `skipped`.
+  - INPUT_MANIFEST 등록 입력 5/5의 Git blob SHA가 head tree와 일치.
+  - 총괄 정책 `ce5c90e29261e4026b03a05c9c3925d80b785710`의 기본 prepared inputs와 승인 override를 합친 6/6 blob이 일치.
+  - 입력 폴더의 파일은 `UPSTREAM_CONTRACT_SUMMARY.md` 1개. 정본 22개 fixture 또는 개별 승인 계획 등록은 없음.
+  - 조사 보고서 경로는 현재 head tree에 없고 기존 OUTPUT_MANIFEST는 pending.
+- blocker 또는 결정:
+  - 원격 작업·쓰기 경계 재진입은 통과. 정본 부재가 필수 golden mapping에 미치는 결과와 재개 조건을 다음 완료 기록으로 남긴다.
+- 변경한 경로:
+  - `CURRENT_SESSION_STATE.yaml`
+  - `HANDOFF_LOG.md` append
+- 다음 행동:
+  - 승인 입력 가용성 감사 결과를 OUTPUT_MANIFEST에 기록하고, 시작 지시의 입력 누락 처리에 따라 최종 상태와 인수인계를 갱신한다.
