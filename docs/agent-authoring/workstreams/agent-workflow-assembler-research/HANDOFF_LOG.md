@@ -96,3 +96,37 @@
   - `HANDOFF_LOG.md` append
 - 다음 행동:
   - 승인 입력 가용성 감사 결과를 OUTPUT_MANIFEST에 기록하고, 시작 지시의 입력 누락 처리에 따라 최종 상태와 인수인계를 갱신한다.
+
+## 2026-11-24 16:36 KST — 조사 세션 / Planner 정본 입력 감사 완료
+
+- 상태: `BLOCKED_FOR_SOURCE` / `PLANNER_REENTRY_REQUIRED`
+- 기준 commit:
+  - 승인 입력 감사: `308b8652afa1362759e1874f8fda9a4a40d2535a`
+  - `IN_PROGRESS` 재개 기록: `04fb5151de549eb06442c8eae93b573eac09c39a`
+  - 총괄 승인 정책 확인: `ce5c90e29261e4026b03a05c9c3925d80b785710`
+- 수행 내용:
+  - 기존 PR #2에서 시작 지시에 따라 원격 재개하고 Planner 정본 22개 가용성을 먼저 확인.
+  - 승인 manifest, 입력 디렉터리 tree, 상위 계약 요약, Work Order §19 및 총괄 prepared-input overrides를 대조.
+  - 같은 세션의 읽기 전용 독립 감사에서도 manifest의 5개 입력에 canonical fixture가 없음을 확인.
+- 검증 결과:
+  - [INPUT_MANIFEST](https://github.com/easyseop/claude-skill-by-seop/blob/308b8652afa1362759e1874f8fda9a4a40d2535a/docs/agent-authoring/workstreams/agent-workflow-assembler-research/INPUT_MANIFEST.yaml): 등록 입력은 START, REMOTE-RESEARCH, WORK-ORDER, OWNERSHIP, UPSTREAM-SUMMARY의 5개. 해당 5개 SHA 전부 일치.
+  - [상위 계약 요약](https://github.com/easyseop/claude-skill-by-seop/blob/308b8652afa1362759e1874f8fda9a4a40d2535a/docs/agent-authoring/workstreams/agent-workflow-assembler-research/inputs/UPSTREAM_CONTRACT_SUMMARY.md): 승인된 고수준 원칙만 존재. 실제 시나리오 22개, 정확한 ID 집합, 개별 승인 expected plan은 제공하지 않음.
+  - [WORK_ORDER §19](https://github.com/easyseop/claude-skill-by-seop/blob/308b8652afa1362759e1874f8fda9a4a40d2535a/docs/agent-authoring/workstreams/agent-workflow-assembler-research/WORK_ORDER.md): Planner 22개 Assembly golden mapping을 요구하지만 canonical 데이터나 정본 위치를 제공하지 않음.
+  - [총괄 승인 override](https://github.com/easyseop/claude-skill-by-seop/blob/ce5c90e29261e4026b03a05c9c3925d80b785710/docs/agent-authoring/session-collaboration/PREPARED_INPUT_OVERRIDES.json)는 Remote Research Mode와 재봉인된 입력에 대한 승인. Planner 정본 추가 승인은 포함하지 않음.
+  - 기본 prepared inputs와 override를 합친 6개 봉인 blob 모두 일치. manifest의 `READY` 및 boundary CI 성공은 정본 22개 가용성 증거가 아님.
+  - 정본 fixture 등록 0개, 정본 시나리오 검증 0/22, golden mapping 완료 0/22. 실행 테스트·mutation·E2E는 `NOT_RUN`; 22개 테스트가 실행되어 실패했다는 뜻이 아님.
+  - 감사 head에는 조사 보고서 파일이 없고 manifest도 pending. 이전 로컬 연구 파일은 현재 작업공간에 남아 있지 않으며 복구 검색에서도 동일 보고서가 확인되지 않았으므로, 과거 수량·digest를 제출 결과로 옮기지 않음.
+- blocker 또는 결정:
+  - `PLANNER_CANONICAL_22_NOT_REGISTERED`. 시작 지시 §2의 입력 누락 처리에 따라 source blocker로 기록.
+  - 정본 22개를 임의 생성하거나 상위 요약·다른 위치의 자료로 대체하지 않는다.
+  - 이 판정은 현재 승인 입력 범위에 한정하며 다른 브랜치·장소 전체에 정본이 없다고 주장하지 않는다.
+  - 조사 보고서와 검토 상태는 pending / NOT_READY로 유지. 완료·VERIFIED_RESEARCH·production을 주장하지 않는다.
+- 변경한 경로:
+  - `CURRENT_SESSION_STATE.yaml`
+  - `HANDOFF_LOG.md` append
+  - `OUTPUT_MANIFEST.yaml`
+- 다음 행동:
+  - 총괄이 Planner 원본을 이번 workstream의 승인 입력으로 배치·등록하고 digest 및 prepared-input policy를 재봉인한다.
+  - 재개를 위한 감사 제안: 정확한 정본 ID 집합 22개와 원 요청, 각 ID의 승인 expected plan, source version/commit·digest·승인 연결을 제공한다. 이는 기존 파일에 이미 정의된 세부 스키마라고 주장하는 것이 아니라 대조 가능성을 위한 요청이다.
+  - 조사 세션은 새 head의 입력·digest·경계 CI를 재확인한 뒤 동일 PR에서 정본 22개 매핑 및 나머지 보고서를 이어간다.
+  - 입력 manifest·ownership·코드·설정·evidence·다른 workstream·PR metadata·main은 이 세션에서 수정하지 않는다.
