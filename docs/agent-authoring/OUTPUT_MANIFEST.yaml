@@ -18,7 +18,9 @@ outputs:
 
 checks:
   ownership_boundary: PENDING
-  upstream_inputs_current: BLOCKED_FOR_SOURCE
+  upstream_inputs_current: EXECUTION_REENTRY_REQUIRED
+  upstream_file_digests: MATCH_151_OF_151
+  k0_binding_evidence: docs/agent-authoring/evidence/knowledge-rag-builder/k0-upstream-binding.json
   prompt_coverage: PENDING
   know_84: PENDING
   kinv_100: PENDING
@@ -29,5 +31,5 @@ checks:
   independent_identity: UNVERIFIED
 
 limitations:
-  - Current workstream is blocked until Planner, Gate, and Execution source/evidence are restored.
+  - Fresh execution compiler output failed EXI-002 at the pinned upstream commit.
 review_status: NOT_READY
