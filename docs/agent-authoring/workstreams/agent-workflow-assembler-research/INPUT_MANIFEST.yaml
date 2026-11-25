@@ -1,6 +1,6 @@
 schema_version: "1.0"
 workstream_id: assembler-research
-generated_at: "2026-11-23"
+generated_at: "2026-11-25"
 
 inputs:
   - id: INPUT-START
@@ -43,6 +43,34 @@ inputs:
     mutable: false
     required: true
 
+  - id: INPUT-PLANNER-EVALS-22
+    path: docs/agent-authoring/workstreams/agent-workflow-assembler-research/inputs/PLANNER_EVALS_01_22.json
+    digest_algorithm: git_blob_sha1
+    digest: 8f057b4d8acbe2c250de2d821db2bf582bc3d87d
+    role: section_19_request_and_expected_architecture_source
+    mutable: false
+    required: true
+    provenance:
+      source_commit: c1710fc2d96ff0c3161231377dfeef303ab5983b
+      source_path: docs/agent-authoring/workstreams/upstream-recovery/inputs/PLANNER_EVALS_01_22.json
+    usage_constraints:
+      - Use EVAL-01 through EVAL-22 request text, expected architecture, rationale, and wrong-choice fields as the canonical scenario source.
+      - Do not treat this catalog as evidence that any scenario was executed or approved as a complete individual plan.
+
+  - id: INPUT-PLANNER-SCENARIO-EXPECTATIONS-22
+    path: docs/agent-authoring/workstreams/agent-workflow-assembler-research/inputs/PLANNER_SCENARIO_RESULTS_22.json
+    digest_algorithm: git_blob_sha1
+    digest: 9e30cf4552f0a75c1ceab5c7073c33cdafa0b364
+    role: section_19_expected_control_mode_and_components
+    mutable: false
+    required: true
+    provenance:
+      source_commit: c1710fc2d96ff0c3161231377dfeef303ab5983b
+      source_path: docs/agent-authoring/evidence/capability-planner/scenario-results.json
+    usage_constraints:
+      - Use only base[].id, source_title, expected_control_mode, and expected_components as normalized expectation data for §19.
+      - The status fields and paraphrase PASS entries are runner-declared expectations, not actual execution, independent verification, or complete approved plan evidence.
+
 external_research:
   allowed: true
   source_priority:
@@ -56,11 +84,43 @@ external_research:
     - record_version_or_commit_when_unstable
     - distinguish_current_feature_from_research_and_proposal
 
+section_19_validation:
+  status: READY
+  required_scenario_count: 22
+  required_ids: EVAL-01~EVAL-22
+  join_key: id
+  required_mapping_fields:
+    - request
+    - expected_architecture
+    - expected_control_mode
+    - expected_components
+    - assembly_decision
+    - entrypoint_and_control_owner
+    - required_bindings
+    - prohibited_or_rejected_assembly
+    - gate_or_reentry_result
+  acceptance:
+    - Exactly one mapping row exists for every EVAL-01 through EVAL-22.
+    - The request and expected architecture are derived from INPUT-PLANNER-EVALS-22 without silent correction.
+    - Expected control mode and components are derived from INPUT-PLANNER-SCENARIO-EXPECTATIONS-22 base entries.
+    - Any Assembler-specific assembly decision is explicitly marked as research output, not an upstream approved plan field.
+    - PASS strings from scenario-results.json are ignored as execution or approval evidence.
+  not_required_for_section_19_research_mapping:
+    - complete individual CAPABILITY_PLAN output for each scenario
+    - actual 22-run execution traces
+    - individual approval attestations
+  escalation:
+    - If implementation or release approval later requires exact capability IDs, acceptance IDs, Gate IDs, permissions, digests, or full per-scenario plans, return PLANNER_REENTRY_REQUIRED rather than synthesizing them.
+
 validation:
   status: READY
   missing: []
   digest_mismatch: []
+  approved_input_count: 7
+  section_19_input_status: READY
   note: >-
-    Git blob SHA is used for repository input binding. The research session may
-    use the approved Remote Research Mode and may compute SHA-256 locally for
+    Git blob SHA is used for repository input binding. The two Planner scenario
+    inputs are approved only for the §19 research mapping scope described above.
+    They do not prove scenario execution, independent verification, or complete
+    plan approval. The research session may compute SHA-256 locally for
     OUTPUT_MANIFEST without modifying source inputs.
