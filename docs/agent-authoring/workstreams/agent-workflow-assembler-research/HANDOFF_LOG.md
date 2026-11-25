@@ -130,3 +130,35 @@
   - 재개를 위한 감사 제안: 정확한 정본 ID 집합 22개와 원 요청, 각 ID의 승인 expected plan, source version/commit·digest·승인 연결을 제공한다. 이는 기존 파일에 이미 정의된 세부 스키마라고 주장하는 것이 아니라 대조 가능성을 위한 요청이다.
   - 조사 세션은 새 head의 입력·digest·경계 CI를 재확인한 뒤 동일 PR에서 정본 22개 매핑 및 나머지 보고서를 이어간다.
   - 입력 manifest·ownership·코드·설정·evidence·다른 workstream·PR metadata·main은 이 세션에서 수정하지 않는다.
+
+## 2026-11-25 — 총괄 세션 / §19 Planner 22개 입력 승인
+
+- 상태: `INPUT_APPROVED_BOUNDARY_RECHECK`
+- 기준 자료:
+  - `PLANNER_EVALS_01_22.json` — Git blob `8f057b4d8acbe2c250de2d821db2bf582bc3d87d`
+  - `PLANNER_SCENARIO_RESULTS_22.json` — Git blob `9e30cf4552f0a75c1ceab5c7073c33cdafa0b364`
+  - 원천 commit `c1710fc2d96ff0c3161231377dfeef303ab5983b`
+- 수행 내용:
+  - 두 원천 파일을 내용 변경 없이 PR #2의 승인 입력 경로에 배치.
+  - INPUT_MANIFEST에 경로·원천 commit·Git blob·용도 제한을 등록.
+  - §19 검증 기준을 22개 ID의 정확한 1:1 mapping과 필수 출력 필드로 재고정.
+  - 중앙 prepared-input 경계 정본에 현재 시작 지시·Remote Research Mode·Ownership·Input Manifest와 두 신규 입력 blob을 재봉인.
+- 검증 결과:
+  - 첫 파일은 EVAL-01~22의 요청 원문·기대 아키텍처·판정 근거·틀린 선택을 제공.
+  - 둘째 파일은 동일 ID 22개의 기대 control mode와 component set을 제공.
+  - 두 자료는 Work Order §19의 연구용 Assembly golden mapping을 작성하기에 충분함.
+  - `scenario-results.json`의 `PASS`와 paraphrase 결과는 실행·독립 검증·개별 plan 승인 증거로 사용하지 않음.
+  - §19 연구 mapping에는 22개 완성 CAPABILITY_PLAN 전체 출력이 필수 아님. 다만 향후 구현·release 검증이 capability/acceptance/Gate ID, exact permission, digest가 포함된 plan을 요구하면 합성하지 않고 `PLANNER_REENTRY_REQUIRED`로 반환.
+- blocker 또는 결정:
+  - `PLANNER_CANONICAL_22_NOT_REGISTERED` 입력 blocker는 해소.
+  - current-head boundary 검사 재실행 후 PASS일 때 기존 조사 세션이 같은 PR에서 재개 가능.
+- 변경한 경로:
+  - `inputs/PLANNER_EVALS_01_22.json`
+  - `inputs/PLANNER_SCENARIO_RESULTS_22.json`
+  - `INPUT_MANIFEST.yaml`
+  - 중앙 `WORKSTREAM_BOUNDARIES.json` prepared-input seal
+  - `HANDOFF_LOG.md` append
+- 다음 행동:
+  - 최신 PR #2 head와 최신 collaboration-framework base로 boundary 검사를 재실행.
+  - PASS이면 조사 세션은 동일 PR에서 §19의 22개 mapping과 나머지 25개 섹션 조사를 재개.
+  - 새 세션·main 수정·병합·배포는 하지 않음.
