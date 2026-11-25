@@ -3,7 +3,7 @@ workstream_id: assembler-research
 session_type: research
 repository: easyseop/claude-skill-by-seop
 branch: research/agent-workflow-assembler
-status: READY_FOR_BOUNDARY_RECHECK
+status: READY_FOR_SESSION
 execution_mode: remote_connector
 updated_at: "2026-11-25"
 
@@ -17,7 +17,7 @@ source_of_truth:
   handoff_log: docs/agent-authoring/workstreams/agent-workflow-assembler-research/HANDOFF_LOG.md
 
 input_binding:
-  status: RESEALED_BY_ORCHESTRATOR
+  status: RESEALED_AND_BOUNDARY_VERIFIED
   start_prompt_blob: fe147efe55f0da39c649b7afcdddde4078621fa3
   remote_mode_blob: 918d243de188b69709416646c0e44ddf58d005aa
   work_order_blob: c8f4ec136ee16f90f79bf401356c731f01537045
@@ -27,9 +27,11 @@ input_binding:
   planner_evals_blob: 8f057b4d8acbe2c250de2d821db2bf582bc3d87d
   planner_scenario_expectations_blob: 9e30cf4552f0a75c1ceab5c7073c33cdafa0b364
   registered_inputs_verified: 7
-  prepared_inputs_expected: 8
+  prepared_inputs_verified: 8
   boundary_policy_commit: 67dd45c0459541282a68877a838bc4a9eb18b0cb
-  boundary_recheck: RETRIGGERED_AFTER_OVERRIDE_RESEAL
+  boundary_verified_head: 4f65d5ecb0124097d2f165565ba15b9bd51cf99a
+  boundary_run_id: 45529821793
+  boundary_recheck: PASS
 
 current_task:
   objective: >-
@@ -72,7 +74,7 @@ section_19_source_audit:
     - complete per-scenario CAPABILITY_PLAN outputs are not required for §19 research mapping
     - Assembler-specific decisions must be marked as research output
     - later implementation requiring exact capability, acceptance, Gate, permission, or digest bindings must return PLANNER_REENTRY_REQUIRED
-  golden_mapping_status: READY_TO_AUTHOR_AFTER_BOUNDARY_PASS
+  golden_mapping_status: READY_TO_AUTHOR
 
 blocker: null
 last_review:
@@ -80,10 +82,11 @@ last_review:
     The prior PLANNER_CANONICAL_22_NOT_REGISTERED source blocker is resolved for
     WORK_ORDER §19 research mapping. The two approved inputs provide the exact
     22 requests, expected architectures, normalized control modes, and selected
-    component expectations. They do not prove runtime execution or full plan approval.
+    component expectations. Workstream Boundary Check run 45529821793 passed on
+    the exact approved-input head. The inputs do not prove runtime execution or
+    full individual plan approval.
 next_action: >-
-  Require a fresh Workstream Boundary Check PASS on this exact head after the
-  PREPARED_INPUT_OVERRIDES reseal. After PASS, resume the same research session
-  in this PR, set status to IN_PROGRESS, complete the 22 Assembly golden mappings
-  and the remaining report sections. Do not create a new session, modify main,
-  merge, or deploy.
+  Resume the existing research session in this same PR. Re-read INPUT_MANIFEST,
+  verify the seven registered input blobs, set status to IN_PROGRESS, author the
+  exact EVAL-01 through EVAL-22 Assembly golden mappings, and complete the remaining
+  report sections. Do not create a new session, modify main, merge, or deploy.
