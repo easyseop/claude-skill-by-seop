@@ -41,17 +41,21 @@
       "read_only_paths": [
         ".claude/**",
         "docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/REMOTE_RESEARCH_MODE.md",
         "docs/agent-authoring/workstreams/agent-workflow-assembler-research/WORK_ORDER.md",
         "docs/agent-authoring/workstreams/agent-workflow-assembler-research/OWNERSHIP.yaml",
         "docs/agent-authoring/workstreams/agent-workflow-assembler-research/INPUT_MANIFEST.yaml",
         "docs/agent-authoring/workstreams/agent-workflow-assembler-research/inputs/**"
       ],
       "prepared_path_blobs": {
-        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md": "89936d77eb72ae89e91713dc7a9a2ff70cc48209",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md": "fe147efe55f0da39c649b7afcdddde4078621fa3",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/REMOTE_RESEARCH_MODE.md": "918d243de188b69709416646c0e44ddf58d005aa",
         "docs/agent-authoring/workstreams/agent-workflow-assembler-research/WORK_ORDER.md": "c8f4ec136ee16f90f79bf401356c731f01537045",
-        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/OWNERSHIP.yaml": "f63466f29ac044927d125ce2d7e5cfcb4c15df2f",
-        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/INPUT_MANIFEST.yaml": "d11a2385ddbc84c281f2bdbbec3b49cb7ba0fe9c",
-        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/inputs/UPSTREAM_CONTRACT_SUMMARY.md": "b01803cfa471aeff4a2faf9dbbd986ddad4d57c3"
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/OWNERSHIP.yaml": "e23f8988b185be8e84b4e22cfe4f6c0a6b1210fb",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/INPUT_MANIFEST.yaml": "3243aab3f2266a722c46e78ecd9d0d45477a8393",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/inputs/UPSTREAM_CONTRACT_SUMMARY.md": "b01803cfa471aeff4a2faf9dbbd986ddad4d57c3",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/inputs/PLANNER_EVALS_01_22.json": "8f057b4d8acbe2c250de2d821db2bf582bc3d87d",
+        "docs/agent-authoring/workstreams/agent-workflow-assembler-research/inputs/PLANNER_SCENARIO_RESULTS_22.json": "9e30cf4552f0a75c1ceab5c7073c33cdafa0b364"
       },
       "forbidden_paths": [
         ".claude/settings.json",
