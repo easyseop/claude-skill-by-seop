@@ -1,0 +1,178 @@
+name: Upstream Recovery Verification
+
+on:
+  pull_request:
+    branches:
+      - orchestration/session-collaboration-framework
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - '.claude/skills/capability-artifact-planner/**'
+      - '.claude/skills/gate-generator/**'
+      - '.claude/skills/execution-artifact-generator/**'
+      - '.claude/agents/capability-plan-auditor.md'
+      - '.claude/agents/gate-auditor.md'
+      - '.claude/agents/execution-artifact-auditor.md'
+      - 'docs/agent-authoring/evidence/capability-planner/**'
+      - 'docs/agent-authoring/evidence/gate-generator/**'
+      - 'docs/agent-authoring/evidence/execution-artifact-generator/**'
+      - 'docs/agent-authoring/*_구현결과.md'
+      - 'docs/agent-authoring/workstreams/upstream-recovery/**'
+      - '.github/workflows/upstream-recovery-planner-test.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: upstream-recovery-verification-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    if: github.event.pull_request.head.ref == 'recovery/upstream-builders'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      PLANNER_DIR: .claude/skills/capability-artifact-planner
+      GATE_DIR: .claude/skills/gate-generator
+      EXEC_DIR: .claude/skills/execution-artifact-generator
+    steps:
+      - name: Checkout pull request head
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Compile source without repository writes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          roots = [
+              Path('.claude/skills/capability-artifact-planner'),
+              Path('.claude/skills/gate-generator'),
+              Path('.claude/skills/execution-artifact-generator'),
+          ]
+          files = sorted(p for root in roots for p in root.rglob('*.py'))
+          assert files, 'no Python sources found'
+          for path in files:
+              compile(path.read_text(encoding='utf-8'), str(path), 'exec')
+          print(f'compiled {len(files)} Python sources')
+          PY
+
+      - name: Run Planner self-test in temporary evidence directory
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/planner-evidence"
+          python "$PLANNER_DIR/scripts/run_self_tests.py" \
+            --repo-root "$GITHUB_WORKSPACE" \
+            --results-dir "$RUNNER_TEMP/planner-evidence" \
+            | tee "$RUNNER_TEMP/planner-test.log"
+
+      - name: Run Gate self-test in temporary evidence directory
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/gate-evidence"
+          python "$GATE_DIR/scripts/run_self_tests.py" \
+            --repo-root "$GITHUB_WORKSPACE" \
+            --results-dir "$RUNNER_TEMP/gate-evidence" \
+            | tee "$RUNNER_TEMP/gate-test.log"
+
+      - name: Run Execution self-test in temporary evidence directory
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/execution-evidence"
+          python "$EXEC_DIR/scripts/run_self_tests.py" \
+            --repo-root "$GITHUB_WORKSPACE" \
+            --results-dir "$RUNNER_TEMP/execution-evidence" \
+            | tee "$RUNNER_TEMP/execution-test.log"
+
+      - name: Verify generated and committed evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import os
+
+          temp = Path(os.environ['RUNNER_TEMP'])
+
+          planner_generated = json.loads((temp/'planner-evidence/self-test-summary.json').read_text())
+          assert planner_generated['status'] == 'PASS', planner_generated
+          assert planner_generated['counts'] == {
+              'base_evals': 22,
+              'cap_rules': 36,
+              'mutations_killed': 15,
+              'mutations_total': 15,
+              'paraphrase_variants': 44,
+              'scenario_runs': 66,
+          }, planner_generated['counts']
+
+          gate_generated = json.loads((temp/'gate-evidence/self-test-summary.json').read_text())
+          assert gate_generated['status'] == 'PASS', gate_generated
+          gc = gate_generated['counts']
+          assert gc['gate_rules'] == 80
+          assert gc['invariants'] == gc['invariants_passed'] == 85
+          assert gc['evals'] == gc['evals_passed'] == 48
+          assert gc['mutations'] == gc['mutations_killed'] == 20
+          assert gc['hook_smoke_passed'] == 19
+          assert gc['planner_golden'] == 22
+
+          execution_generated = json.loads((temp/'execution-evidence/self-test-summary.json').read_text())
+          assert execution_generated['status'] == 'PASS', execution_generated
+          ec = execution_generated['counts']
+          assert ec['rules'] == 30
+          assert ec['invariants'] == ec['invariants_passed'] == 45
+          assert ec['evals'] == ec['evals_passed'] == 26
+          assert ec['mutations'] == ec['mutations_killed'] == 10
+          assert ec['builder_tests'] == ec['builder_tests_passed'] == 16
+          assert ec['planner_golden'] == 22
+
+          committed = [
+              Path('docs/agent-authoring/evidence/capability-planner/implementation-manifest.json'),
+              Path('docs/agent-authoring/evidence/gate-generator/implementation-manifest.json'),
+              Path('docs/agent-authoring/evidence/execution-artifact-generator/implementation-manifest.json'),
+          ]
+          for path in committed:
+              data = json.loads(path.read_text())
+              assert data['status'] == 'PASS_LOCAL_PROCEDURE', (path, data.get('status'))
+              assert data['operational_permission'] is False, path
+          PY
+
+      - name: Record ephemeral self-test normalization diff
+        shell: bash
+        run: |
+          set -euo pipefail
+          git -c core.quotepath=false diff --name-status > "$RUNNER_TEMP/ephemeral-normalization-diff.txt"
+          cat "$RUNNER_TEMP/ephemeral-normalization-diff.txt"
+          if git -c core.quotepath=false diff --name-only | grep -E '^(\.github/|docs/agent-authoring/workstreams/|docs/agent-authoring/evidence/)'; then
+            echo 'Self-tests modified protected workflow, state, manifest, or committed evidence paths.' >&2
+            exit 1
+          fi
+          echo 'Any remaining source normalization is ephemeral in this read-only runner and is not committed or pushed.'
+
+      - name: Upload verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: upstream-recovery-read-only-verification
+          path: |
+            ${{ runner.temp }}/planner-test.log
+            ${{ runner.temp }}/gate-test.log
+            ${{ runner.temp }}/execution-test.log
+            ${{ runner.temp }}/ephemeral-normalization-diff.txt
+            ${{ runner.temp }}/planner-evidence/
+            ${{ runner.temp }}/gate-evidence/
+            ${{ runner.temp }}/execution-evidence/
+          if-no-files-found: warn
+          retention-days: 14

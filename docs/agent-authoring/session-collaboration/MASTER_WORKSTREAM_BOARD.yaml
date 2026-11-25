@@ -1,0 +1,215 @@
+schema_version: "1.0"
+project: agent-system-author
+updated_at: "2026-11-25"
+
+capacity:
+  orchestrator_sessions: 1
+  research_sessions: 1
+  implementation_sessions: 1
+  review_sessions: 1
+
+policies:
+  auto_merge: false
+  main_direct_write: false
+  one_active_workstream_per_session: true
+  cross_workstream_write: false
+  start_downstream_before_dependency_verified: false
+  research_can_run_parallel_with_unrelated_implementation: true
+
+active_assignment_policy:
+  implementation_session:
+    current: upstream-recovery
+    assignment_status: REENTRY_REQUIRED_NOT_STARTED
+    forbidden_concurrent:
+      - knowledge-rag-builder-k0-k6
+      - assembler-implementation
+      - independent-evaluation-implementation
+  research_session:
+    current: assembler-research
+    assignment_status: READY_FOR_SESSION
+    forbidden_concurrent:
+      - external-discovery-research
+      - independent-evaluation-research
+
+lanes:
+  implementation:
+    - id: upstream-recovery
+      priority: 1
+      status: REENTRY_REQUIRED
+      branch: recovery/upstream-builders
+      pull_request: 4
+      owner_role: implementation_session
+      prior_verified_head: c1710fc2d96ff0c3161231377dfeef303ab5983b
+      verification:
+        scope: HISTORICAL_PASS_SUPERSEDED_FOR_DEPENDENCY_READINESS
+        boundary_run: 45139722797
+        boundary_status: PASS
+        read_only_verification_run: 45139722726
+        read_only_verification_status: PASS
+      progress:
+        planner: VERIFIED_LOCAL_CANDIDATE
+        gate: VERIFIED_LOCAL_CANDIDATE
+        execution: VERIFIED_LOCAL_CANDIDATE
+      limits:
+        operational_permission: false
+        independent_identity: UNVERIFIED
+        host_enforcement: UNVERIFIED
+        production_release: unavailable
+      blocks:
+        - knowledge-rag-builder-k0-k6
+      reentry:
+        observed_at: "2026-11-24T17:00:00+09:00"
+        knowledge_evidence_head: b2282647e8212db17f664091ead6d54eb6372de8
+        research_audit_head: 7573a68045d0fe21dae5fd8bf4aa653ccbbd4bee
+        blockers:
+          - EXECUTION_REENTRY_REQUIRED: fresh contract fails EXI-002 because checker compares digest to a literal placeholder.
+          - GATE_PLAN_ID_MISMATCH: derivation retains PLAN-1 instead of actual input plan ID fixture.
+          - PLANNER_IMPLEMENTATION_GOLDEN_EVIDENCE_INSUFFICIENT: the two approved Planner scenario inputs are sufficient for Assembler research §19 only; they do not provide full per-scenario approved CAPABILITY_PLAN outputs or actual planning/comparison evidence for implementation verification.
+        required: Repair within upstream ownership, produce actual fresh Planner/Gate/Execution comparison evidence, and pass fresh cross-component binding plus boundary checks.
+        session_started_by_orchestrator: false
+      merge_requires_user_approval: true
+
+    - id: knowledge-rag-builder-k0-k6
+      priority: 2
+      status: REENTRY_REQUIRED
+      branch: codex/knowledge-rag-builder-k0-k6
+      pull_request: 1
+      owner_role: implementation_session
+      objective: Implement Knowledge & RAG Builder K0-K6 local candidate.
+      upstream_binding:
+        workstream: upstream-recovery
+        verified_head: c1710fc2d96ff0c3161231377dfeef303ab5983b
+        delivery: stacked_pr_base
+        status: BLOCKED_FOR_SOURCE_PENDING_UPSTREAM_REVERIFICATION
+      blocker:
+        code: EXECUTION_REENTRY_REQUIRED
+        evidence: docs/agent-authoring/evidence/knowledge-rag-builder/k0-upstream-binding.json
+        observed_head: b2282647e8212db17f664091ead6d54eb6372de8
+        boundary_run: 45348917222
+        boundary_status: PASS
+        next: Rerun K0 only after upstream corrected and verified; K1-K6 remain unstarted.
+      dependencies:
+        - upstream-recovery: VERIFIED_LOCAL
+      blocks:
+        - assembler-implementation
+      start_prompt: docs/agent-authoring/CODEX_SESSION_START_PROMPT.md
+
+    - id: assembler-implementation
+      priority: 3
+      status: QUEUED
+      readiness: BLOCKED_FOR_SOURCE
+      missing_verified_inputs:
+        - knowledge-rag-builder-k0-k6 VERIFIED_LOCAL source and evidence
+        - assembler-research VERIFIED_RESEARCH report and manifest
+      branch: implementation/agent-workflow-assembler
+      owner_role: implementation_session
+      dependencies:
+        - knowledge-rag-builder-k0-k6: VERIFIED_LOCAL
+        - assembler-research: VERIFIED_RESEARCH
+      blocks:
+        - independent-evaluation-implementation
+
+    - id: independent-evaluation-implementation
+      priority: 4
+      status: QUEUED
+      branch: implementation/independent-evaluation
+      owner_role: implementation_session
+      dependencies:
+        - assembler-implementation: VERIFIED_LOCAL
+        - independent-evaluation-research: VERIFIED_RESEARCH
+      blocks:
+        - top-level-integration
+
+    - id: top-level-integration
+      priority: 5
+      status: QUEUED
+      branch: implementation/agent-system-author-integration
+      owner_role: implementation_session
+      dependencies:
+        - independent-evaluation-implementation: VERIFIED_LOCAL
+        - external-discovery-research: VERIFIED_RESEARCH
+
+  research:
+    - id: assembler-research
+      priority: 1
+      status: READY_FOR_SESSION
+      branch: research/agent-workflow-assembler
+      pull_request: 2
+      owner_role: research_session
+      objective: Research Agent & Workflow Assembler rules and contracts.
+      input_binding:
+        remote_mode_formally_approved: true
+        ownership_resealed: true
+        input_manifest_resealed: true
+        boundary_head: e2e1628b7070e314f59f49cb03f435d47dd29abb
+        boundary_run: 45529919670
+        boundary_status: PASS
+        registered_inputs: 7
+        prepared_inputs: 8
+        planner_evals_blob: 8f057b4d8acbe2c250de2d821db2bf582bc3d87d
+        planner_scenario_expectations_blob: 9e30cf4552f0a75c1ceab5c7073c33cdafa0b364
+      section_19:
+        status: READY
+        scope: RESEARCH_GOLDEN_MAPPING_ONLY
+        canonical_ids: EVAL-01~EVAL-22
+        decision: >-
+          The approved inputs provide exact requests, expected architectures,
+          normalized control modes and selected component expectations for all
+          22 scenarios. scenario-results PASS values are not execution,
+          independent verification or full-plan approval evidence.
+        full_capability_plans_required: false
+        later_exact_binding_policy: PLANNER_REENTRY_REQUIRED
+      blocker: null
+      dependencies: []
+      blocks:
+        - assembler-implementation
+      allowed_parallel_with:
+        - knowledge-rag-builder-k0-k6
+      start_prompt: docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md
+      next: Resume the existing research session in PR #2; do not create a new session.
+
+    - id: external-discovery-research
+      priority: 2
+      status: QUEUED
+      branch: research/external-capability-discovery
+      owner_role: research_session
+      objective: >-
+        Research discovery and critical evaluation of reusable Skills,
+        plugins, MCP servers, scripts, and packages.
+      dependencies:
+        - assembler-research: READY_FOR_REVIEW_OR_VERIFIED
+      blocks:
+        - top-level-integration
+
+    - id: independent-evaluation-research
+      priority: 3
+      status: QUEUED
+      branch: research/independent-evaluation
+      owner_role: research_session
+      dependencies:
+        - assembler-research: VERIFIED_RESEARCH
+      blocks:
+        - independent-evaluation-implementation
+
+review_sequence:
+  - knowledge-rag-builder-k0-k6
+  - assembler-research
+  - external-discovery-research
+  - assembler-implementation
+  - independent-evaluation-research
+  - independent-evaluation-implementation
+  - top-level-integration
+
+next_actions:
+  orchestrator:
+    - Preserve historical implementation verification without treating it as current approval.
+    - Require upstream reentry with actual fresh Planner/Gate/Execution binding and comparison evidence.
+    - Monitor PR #2 research output against the approved 22-scenario input scope.
+    - Keep all PRs draft and unmerged until explicit user approval.
+  implementation_session:
+    - The existing single implementation session must remain on PR #4 reentry.
+    - Repair only PR #4 owned paths, submit fresh evidence, then resume PR #1 only after verification.
+  research_session:
+    - Resume the existing PR #2 session now that the input blocker is cleared and boundary check passed.
+    - Re-verify seven registered input blobs, set status to IN_PROGRESS, complete §19 mappings and the remaining report.
+    - Do not modify implementation or evidence paths.
