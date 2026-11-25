@@ -28,7 +28,8 @@ input_binding:
   planner_scenario_expectations_blob: 9e30cf4552f0a75c1ceab5c7073c33cdafa0b364
   registered_inputs_verified: 7
   prepared_inputs_expected: 8
-  boundary_recheck: PENDING_CURRENT_HEAD
+  boundary_policy_commit: 67dd45c0459541282a68877a838bc4a9eb18b0cb
+  boundary_recheck: RETRIGGERED_AFTER_OVERRIDE_RESEAL
 
 current_task:
   objective: >-
@@ -81,8 +82,8 @@ last_review:
     22 requests, expected architectures, normalized control modes, and selected
     component expectations. They do not prove runtime execution or full plan approval.
 next_action: >-
-  Require a fresh Workstream Boundary Check PASS on the exact current PR #2 head
-  using the resealed collaboration-framework policy. After PASS, resume the same
-  research session in this PR, set status to IN_PROGRESS, complete the 22 Assembly
-  golden mappings and the remaining report sections. Do not create a new session,
-  modify main, merge, or deploy.
+  Require a fresh Workstream Boundary Check PASS on this exact head after the
+  PREPARED_INPUT_OVERRIDES reseal. After PASS, resume the same research session
+  in this PR, set status to IN_PROGRESS, complete the 22 Assembly golden mappings
+  and the remaining report sections. Do not create a new session, modify main,
+  merge, or deploy.
