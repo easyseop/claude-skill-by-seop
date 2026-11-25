@@ -3,9 +3,9 @@ workstream_id: assembler-research
 session_type: research
 repository: easyseop/claude-skill-by-seop
 branch: research/agent-workflow-assembler
-status: BLOCKED_FOR_SOURCE
+status: READY_FOR_BOUNDARY_RECHECK
 execution_mode: remote_connector
-updated_at: "2026-11-24T16:36:57.000+09:00"
+updated_at: "2026-11-25"
 
 source_of_truth:
   start_prompt: docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md
@@ -20,14 +20,15 @@ input_binding:
   status: RESEALED_BY_ORCHESTRATOR
   start_prompt_blob: fe147efe55f0da39c649b7afcdddde4078621fa3
   remote_mode_blob: 918d243de188b69709416646c0e44ddf58d005aa
+  work_order_blob: c8f4ec136ee16f90f79bf401356c731f01537045
   ownership_blob: e23f8988b185be8e84b4e22cfe4f6c0a6b1210fb
-  input_manifest_blob: c5a22e453d3fa3ef37ea6d3a702f27fecb7a9311
-  boundary_recheck: PASSED_FOR_INPUT_BASELINE
-  verified_head: 308b8652afa1362759e1874f8fda9a4a40d2535a
-  boundary_run_id: 45138836654
-  policy_ref: ce5c90e29261e4026b03a05c9c3925d80b785710
-  registered_inputs_verified: 5
-  prepared_inputs_verified: 6
+  input_manifest_blob: 3243aab3f2266a722c46e78ecd9d0d45477a8393
+  upstream_summary_blob: b01803cfa471aeff4a2faf9dbbd986ddad4d57c3
+  planner_evals_blob: 8f057b4d8acbe2c250de2d821db2bf582bc3d87d
+  planner_scenario_expectations_blob: 9e30cf4552f0a75c1ceab5c7073c33cdafa0b364
+  registered_inputs_verified: 7
+  prepared_inputs_expected: 8
+  boundary_recheck: PENDING_CURRENT_HEAD
 
 current_task:
   objective: >-
@@ -59,55 +60,29 @@ required_results:
   planner_assembly_golden: "22/22"
   source_traceability: required
 
-source_audit:
-  audited_input_head: 308b8652afa1362759e1874f8fda9a4a40d2535a
-  resumed_from_commit: 04fb5151de549eb06442c8eae93b573eac09c39a
-  input_manifest_blob: c5a22e453d3fa3ef37ea6d3a702f27fecb7a9311
-  registered_input_count: 5
-  registered_input_digests_matched: 5
-  prepared_input_seals_matched: 6
-  workstream_input_file_count: 1
-  canonical_planner_fixture_registered: false
-  canonical_scenarios_required: 22
-  canonical_scenarios_verified: 0
-  golden_mapping_status: BLOCKED_FOR_SOURCE
-  runtime_tests_status: NOT_RUN
-  report_present_at_audited_input_head: false
-  scope_note: >-
-    This finding is limited to approved inputs on the audited research head.
-    It does not assert that canonical data is absent from every other branch
-    or location. Other locations are not promoted to approved inputs.
+section_19_source_audit:
+  decision: SUFFICIENT_FOR_RESEARCH_GOLDEN_MAPPING
+  canonical_scenario_ids: EVAL-01~EVAL-22
+  canonical_scenarios_registered: 22
+  request_and_architecture_source: INPUT-PLANNER-EVALS-22
+  normalized_control_and_components_source: INPUT-PLANNER-SCENARIO-EXPECTATIONS-22
+  usage_limits:
+    - scenario PASS strings are not execution or independent verification evidence
+    - complete per-scenario CAPABILITY_PLAN outputs are not required for §19 research mapping
+    - Assembler-specific decisions must be marked as research output
+    - later implementation requiring exact capability, acceptance, Gate, permission, or digest bindings must return PLANNER_REENTRY_REQUIRED
+  golden_mapping_status: READY_TO_AUTHOR_AFTER_BOUNDARY_PASS
 
-blocker:
-  code: PLANNER_CANONICAL_22_NOT_REGISTERED
-  reentry: PLANNER_REENTRY_REQUIRED
-  reason: >-
-    WORK_ORDER requires Planner 22-scenario Assembly golden mapping, but
-    INPUT_MANIFEST registers only the start prompt, remote mode, work order,
-    ownership, and upstream summary. The only file in the approved inputs
-    directory is that high-level summary; it contains no canonical scenario
-    set or individually approved Planner expected plans.
-  affected_requirement: WORK_ORDER section 19 and final readiness
-  required_action: >-
-    The orchestrator must provide and approve the canonical Planner scenario
-    fixture and expected plans, register their paths and immutable digests in
-    INPUT_MANIFEST, and reseal applicable prepared-input policy. The research
-    session must not make those changes or synthesize replacements.
-  suggested_source_acceptance_details:
-    - Exact canonical scenario ID set of 22 and original requests.
-    - Approved expected plans readable for control_mode and selected_components.
-    - Source version or commit, file or bundle digests, and approval binding.
-  acceptance_details_status: AUDIT_REENTRY_PROPOSAL_NOT_EXISTING_SOURCE_SCHEMA
-
+blocker: null
 last_review:
   decision: >-
-    Registered input integrity and remote-mode authorization passed. Canonical
-    source availability did not: 0 of 22 scenarios can be verified from the
-    approved inputs. This is an input audit, not a runtime test failure or
-    independent VERIFIED_RESEARCH decision.
+    The prior PLANNER_CANONICAL_22_NOT_REGISTERED source blocker is resolved for
+    WORK_ORDER §19 research mapping. The two approved inputs provide the exact
+    22 requests, expected architectures, normalized control modes, and selected
+    component expectations. They do not prove runtime execution or full plan approval.
 next_action: >-
-  Await orchestrator-provided canonical Planner inputs and resealing.
-  Recheck exact-head branch identity, input digests, and boundary CI; then
-  resume this same PR, map the exact approved 22 IDs, and complete the report.
-  Keep the report pending and the PR Draft until the work-order requirements
-  are actually satisfied.
+  Require a fresh Workstream Boundary Check PASS on the exact current PR #2 head
+  using the resealed collaboration-framework policy. After PASS, resume the same
+  research session in this PR, set status to IN_PROGRESS, complete the 22 Assembly
+  golden mappings and the remaining report sections. Do not create a new session,
+  modify main, merge, or deploy.
