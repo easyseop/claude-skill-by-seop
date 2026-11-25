@@ -1,6 +1,6 @@
 schema_version: "1.0"
 project: agent-system-author
-updated_at: "2026-11-24"
+updated_at: "2026-11-25"
 
 capacity:
   orchestrator_sessions: 1
@@ -26,7 +26,7 @@ active_assignment_policy:
       - independent-evaluation-implementation
   research_session:
     current: assembler-research
-    assignment_status: BLOCKED_FOR_SOURCE
+    assignment_status: READY_FOR_SESSION
     forbidden_concurrent:
       - external-discovery-research
       - independent-evaluation-research
@@ -57,7 +57,6 @@ lanes:
         production_release: unavailable
       blocks:
         - knowledge-rag-builder-k0-k6
-        - assembler-research
       reentry:
         observed_at: "2026-11-24T17:00:00+09:00"
         knowledge_evidence_head: b2282647e8212db17f664091ead6d54eb6372de8
@@ -65,9 +64,8 @@ lanes:
         blockers:
           - EXECUTION_REENTRY_REQUIRED: fresh contract fails EXI-002 because checker compares digest to a literal placeholder.
           - GATE_PLAN_ID_MISMATCH: derivation retains PLAN-1 instead of actual input plan ID fixture.
-          - PLANNER_CANONICAL_22_NOT_REGISTERED: sealed original catalog exists but approved per-scenario expected plans are missing from research inputs.
-          - PLANNER_GOLDEN_EVIDENCE_INSUFFICIENT: run_self_tests.py emits unconditional PASS rows from GOLDEN and paraphrase labels without actual per-scenario planning/comparison.
-        required: Repair within upstream ownership, produce independently reviewable canonical 22-plan fixtures and actual comparison evidence, and pass fresh cross-component binding plus boundary checks.
+          - PLANNER_IMPLEMENTATION_GOLDEN_EVIDENCE_INSUFFICIENT: the two approved Planner scenario inputs are sufficient for Assembler research §19 only; they do not provide full per-scenario approved CAPABILITY_PLAN outputs or actual planning/comparison evidence for implementation verification.
+        required: Repair within upstream ownership, produce actual fresh Planner/Gate/Execution comparison evidence, and pass fresh cross-component binding plus boundary checks.
         session_started_by_orchestrator: false
       merge_requires_user_approval: true
 
@@ -134,7 +132,7 @@ lanes:
   research:
     - id: assembler-research
       priority: 1
-      status: BLOCKED_FOR_SOURCE
+      status: READY_FOR_SESSION
       branch: research/agent-workflow-assembler
       pull_request: 2
       owner_role: research_session
@@ -143,25 +141,32 @@ lanes:
         remote_mode_formally_approved: true
         ownership_resealed: true
         input_manifest_resealed: true
-        boundary_head: 308b8652afa1362759e1874f8fda9a4a40d2535a
-        boundary_run: 45138836654
+        boundary_head: e2e1628b7070e314f59f49cb03f435d47dd29abb
+        boundary_run: 45529919670
         boundary_status: PASS
-      blocker:
-        code: PLANNER_CANONICAL_22_NOT_REGISTERED
-        observed_head: 7573a68045d0fe21dae5fd8bf4aa653ccbbd4bee
-        boundary_run: 45349419326
-        boundary_status: PASS
-        canonical_scenarios_verified: "0/22"
-        candidate_catalog: docs/agent-authoring/workstreams/upstream-recovery/inputs/PLANNER_EVALS_01_22.json
-        candidate_catalog_blob: 8f057b4d8acbe2c250de2d821db2bf582bc3d87d
-        missing: Approved exact 22 expected plans with control_mode and selected_components, actual verification evidence, source commit and immutable research input registration.
-        next: Orchestrator registers and reseals verified canonical inputs after upstream reentry; research stays paused.
+        registered_inputs: 7
+        prepared_inputs: 8
+        planner_evals_blob: 8f057b4d8acbe2c250de2d821db2bf582bc3d87d
+        planner_scenario_expectations_blob: 9e30cf4552f0a75c1ceab5c7073c33cdafa0b364
+      section_19:
+        status: READY
+        scope: RESEARCH_GOLDEN_MAPPING_ONLY
+        canonical_ids: EVAL-01~EVAL-22
+        decision: >-
+          The approved inputs provide exact requests, expected architectures,
+          normalized control modes and selected component expectations for all
+          22 scenarios. scenario-results PASS values are not execution,
+          independent verification or full-plan approval evidence.
+        full_capability_plans_required: false
+        later_exact_binding_policy: PLANNER_REENTRY_REQUIRED
+      blocker: null
       dependencies: []
       blocks:
         - assembler-implementation
       allowed_parallel_with:
         - knowledge-rag-builder-k0-k6
       start_prompt: docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md
+      next: Resume the existing research session in PR #2; do not create a new session.
 
     - id: external-discovery-research
       priority: 2
@@ -197,13 +202,14 @@ review_sequence:
 
 next_actions:
   orchestrator:
-    - Hold downstream readiness; preserve historical verification evidence without treating it as current approval.
-    - Require upstream reentry with actual fresh Planner/Gate/Execution binding and canonical golden evidence.
-    - Register and reseal verified canonical Planner inputs before research resumes.
+    - Preserve historical implementation verification without treating it as current approval.
+    - Require upstream reentry with actual fresh Planner/Gate/Execution binding and comparison evidence.
+    - Monitor PR #2 research output against the approved 22-scenario input scope.
     - Keep all PRs draft and unmerged until explicit user approval.
   implementation_session:
-    - The existing single implementation session must pause PR #1 and be explicitly reassigned to PR #4 for reentry.
+    - The existing single implementation session must remain on PR #4 reentry.
     - Repair only PR #4 owned paths, submit fresh evidence, then resume PR #1 only after verification.
   research_session:
-    - Remain BLOCKED_FOR_SOURCE until canonical Planner inputs are verified, approved, registered and resealed.
+    - Resume the existing PR #2 session now that the input blocker is cleared and boundary check passed.
+    - Re-verify seven registered input blobs, set status to IN_PROGRESS, complete §19 mappings and the remaining report.
     - Do not modify implementation or evidence paths.
