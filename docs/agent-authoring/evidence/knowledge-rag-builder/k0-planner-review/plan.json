@@ -1,0 +1,137 @@
+{
+  "architecture": {
+    "control_mode": "deterministic_workflow",
+    "rejected_components": [
+      {
+        "type": "rag",
+        "reason": "가상 표의 데이터는 한 행",
+        "reconsider_when": "직접 조회로 검색 요구를 충족하지 못할 때"
+      }
+    ],
+    "selected_components": [
+      {
+        "type": "reference",
+        "capability_ids": [
+          "LOOKUP"
+        ],
+        "evidence": "코드 Q17의 뜻은 요청에 제공된 표에 정의됨",
+        "owner": "knowledge",
+        "necessity_test": {
+          "planned_hypothesis": "표를 제거하면 출처를 제시할 수 없음"
+        }
+      }
+    ],
+    "summary_label": null
+  },
+  "assumptions": [],
+  "atomic_capabilities": [
+    {
+      "id": "LOOKUP",
+      "name": "용어표 조회",
+      "purpose": "가상 코드 확인",
+      "inputs": [
+        "코드",
+        "용어표 v1"
+      ],
+      "outputs": [
+        "정의와 행 또는 미등록"
+      ],
+      "failure_modes": [
+        "코드 없음"
+      ],
+      "recovery": [
+        "미등록 반환"
+      ],
+      "placement": {
+        "primary_owner": "knowledge"
+      },
+      "acceptance_criteria": [
+        "AC-1"
+      ]
+    }
+  ],
+  "change_history": [
+    {
+      "at": "2026-11-26T05:45:51+00:00",
+      "event": "INITIALIZED",
+      "subject_digest": null
+    }
+  ],
+  "checks_and_evals": {
+    "acceptance_mappings": [
+      {
+        "acceptance_id": "AC-1",
+        "eval_ids": [
+          "Q17-FOUND",
+          "Q18-ABSENT"
+        ]
+      }
+    ],
+    "planned_evals": [],
+    "planned_mutations": []
+  },
+  "handoff_contracts": {},
+  "knowledge_plan": {
+    "acl": null,
+    "citation": {
+      "required": true
+    },
+    "corpus": [
+      "request.md: 가상 용어표 v1"
+    ],
+    "freshness": null,
+    "mode": "static_reference",
+    "retrieval_eval": null
+  },
+  "open_risks": [],
+  "permissions_and_effects": {
+    "effect_level": "none",
+    "external_write": false,
+    "human_approvals": [],
+    "required_permissions": [],
+    "secret_in_llm_context": false
+  },
+  "plan_id": "K0-LOCAL-GLOSSARY-Q17",
+  "questions": [],
+  "repository_facts": {
+    "digest": "sha256:0b78fde29da6eba60e5b7be733d756234732af1662d1185de06b345c522b03c7",
+    "path": "facts.json"
+  },
+  "request": {
+    "acceptance_criteria": [
+      "AC-1"
+    ],
+    "goals": [
+      "가상 용어표의 코드 정의를 출처와 함께 제공"
+    ],
+    "prohibited": [],
+    "request_path": "request.md",
+    "target": "K0-LOCAL-GLOSSARY-Q17"
+  },
+  "schema_version": "1.0",
+  "snapshot": {
+    "input_digests": {
+      "policy": "sha256:b2b5ce7ae8862ee4dd2874b5836068cc3410081e11455cba48fd54d105a96e97",
+      "repo_facts": "sha256:0b78fde29da6eba60e5b7be733d756234732af1662d1185de06b345c522b03c7",
+      "request": "sha256:11ef43a2c10859a806476ca6d22c6ddbfb5f84eb231abbcb711340452d25d2a5"
+    },
+    "planner_version": "recovery-1.0",
+    "repository_ref": "0930894a913608bbcc0c3645b45013fc65c04b57",
+    "source_cutoff": "2026-11-26T05:45:51+00:00"
+  },
+  "state": {
+    "deletion": null,
+    "identity_binding": null,
+    "migration": null,
+    "owner": null,
+    "persistent": false,
+    "scope": null,
+    "ttl": null
+  },
+  "status": "DRAFT",
+  "workflow": {
+    "compensation": {},
+    "retry": {},
+    "termination": {}
+  }
+}

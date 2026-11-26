@@ -94,7 +94,7 @@ expected_paths:
   evidence: docs/agent-authoring/evidence/knowledge-rag-builder/
   report: docs/agent-authoring/KNOWLEDGE_RAG_BUILDER_MVP_구현결과.md
 
-codex_next_action: Recheck K0 with a derivation-eligible Planner input.
+codex_next_action: Obtain independent review for K0-LOCAL-GLOSSARY-Q17 and a formally issued eligible plan, then recheck K0.
 
 review_policy:
   review_owner: current_chatgpt_orchestrator_session
@@ -103,7 +103,7 @@ review_policy:
 
 blocker:
   id: PLANNER_REENTRY_REQUIRED
-  reason: Actual Planner fixture status DRAFT fails Gate I-006.
+  reason: Candidate K0-LOCAL-GLOSSARY-Q17 passed local Planner checks. Independent audit is unverified; candidate remains DRAFT.
   evidence: docs/agent-authoring/evidence/knowledge-rag-builder/k0-upstream-binding.json
 last_review:
   decision: >-
