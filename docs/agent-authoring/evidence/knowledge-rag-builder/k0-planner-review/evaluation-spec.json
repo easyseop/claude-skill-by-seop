@@ -1,0 +1,30 @@
+{
+  "plan_id": "K0-LOCAL-GLOSSARY-Q17",
+  "plan_subject_digest": "sha256:c8bef633ddb01af8b99d0980bf32d67d14eeb46283585219849db041f55ca1a6",
+  "source": "request.md",
+  "acceptance_id": "AC-1",
+  "cases": [
+    {
+      "id": "Q17-FOUND",
+      "input": "Q17",
+      "expected": {
+        "definition": "정기점검",
+        "source": {
+          "document": "가상 용어표 v1",
+          "data_row": 1,
+          "row_content": "Q17,정기점검"
+        }
+      },
+      "pass_condition": "정의와 해당 출처 행이 모두 일치한다."
+    },
+    {
+      "id": "Q18-ABSENT",
+      "input": "Q18",
+      "expected": {
+        "response": "미등록",
+        "matched_row": null
+      },
+      "pass_condition": "미등록을 반환하고 존재하지 않는 정의나 출처 행을 제시하지 않는다."
+    }
+  ]
+}

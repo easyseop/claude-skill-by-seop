@@ -1,0 +1,43 @@
+{
+  "phase": "K0",
+  "status": "PLANNER_REENTRY_REQUIRED",
+  "upstream": "0930894a913608bbcc0c3645b45013fc65c04b57",
+  "previous_evidence_commit": "b2282647e8212db17f664091ead6d54eb6372de8",
+  "previous_upstream": "c1710fc2d96ff0c3161231377dfeef303ab5983b",
+  "checks": {
+    "boundary": 45757917628,
+    "verification": 45757917681,
+    "conclusion": "success"
+  },
+  "manifest_rows_verified": 152,
+  "regression_tests_passed": 5,
+  "input_plan_id": "fixture",
+  "gate_plan_id": "fixture",
+  "input_status": "DRAFT",
+  "gate_plan_status": "DRAFT",
+  "planner_sha256": "sha256:82ecb637b9cf846fc5c560df605ea83d68752e237c57be08742444a8939f1b93",
+  "gate_check": "FAIL",
+  "failures": {
+    "I-006": "Planner status is not derivation-eligible"
+  },
+  "execution_derivation": "REJECTED_AT_UPSTREAM_GATE",
+  "commands": [
+    "python3.11 .claude/skills/gate-generator/scripts/derive_gate_contract.py docs/agent-authoring/evidence/capability-planner/fixture-plan.json --output current-gate.json",
+    "python3.11 .claude/skills/gate-generator/scripts/check_gate_contract.py current-gate.json --planner docs/agent-authoring/evidence/capability-planner/fixture-plan.json",
+    "python3.11 .claude/skills/execution-artifact-generator/scripts/derive_execution_contract.py docs/agent-authoring/evidence/capability-planner/fixture-plan.json current-gate.json --output current-exec.json"
+  ],
+  "next_input": "Current derivation-eligible Planner plan for K0",
+  "operational_permission": false,
+  "candidate_review": {
+    "plan_id": "K0-LOCAL-GLOSSARY-Q17",
+    "status": "DRAFT",
+    "subject_digest": "sha256:c8bef633ddb01af8b99d0980bf32d67d14eeb46283585219849db041f55ca1a6",
+    "machine": "PASS",
+    "stop": "PASS_LOCAL_PROCEDURE",
+    "reason": "INDEPENDENT_AUDIT_UNVERIFIED",
+    "files": "evidence/knowledge-rag-builder/k0-planner-review/",
+    "eligible_chain_run": false,
+    "previous_fixture_evidence_commit": "7341fd39afd192c105206c2a764c70a9d4cf236e",
+    "needed": "현재 가상 계획의 digest에 결박된 독립 검토와 그 결과로 정식 발행된 Gate 적격 Planner 계획이 필요합니다."
+  }
+}

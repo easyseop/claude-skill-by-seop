@@ -1,0 +1,116 @@
+schema_version: "1.0"
+project: agent-system-author
+repository: easyseop/claude-skill-by-seop
+branch: codex/knowledge-rag-builder-k0-k6
+workstream: knowledge-rag-builder
+milestone: K0-K6-local-mvp
+status: REENTRY_REQUIRED
+phase: K0
+updated_at: "2026-11-26"
+
+source_of_truth:
+  work_order: docs/agent-authoring/CODEX_KNOWLEDGE_RAG_BUILDER_K0_K6_WORK_ORDER.md
+  collaboration_protocol: docs/agent-authoring/CODEX_COLLABORATION_PROTOCOL.md
+  state_file: docs/agent-authoring/CURRENT_WORK_STATE.yaml
+  handoff_log: docs/agent-authoring/HANDOFF_LOG.md
+
+upstream_binding:
+  delivery_mode: stacked_pr_base
+  base_branch: recovery/upstream-builders
+  verified_head: 0930894a913608bbcc0c3645b45013fc65c04b57
+  boundary_run: 45757917628
+  boundary_status: PASS
+  read_only_verification_run: 45757917681
+  read_only_verification_status: PASS
+  components:
+    - component: capability-artifact-planner
+      status: VERIFIED_LOCAL_CANDIDATE
+      operational_permission: false
+    - component: gate-generator
+      status: VERIFIED_LOCAL_CANDIDATE
+      scope: M0-M3_LOCAL_CANDIDATE
+      operational_permission: false
+    - component: execution-artifact-generator
+      status: VERIFIED_LOCAL_CANDIDATE
+      scope: E0-E4_LOCAL_CANDIDATE
+      operational_permission: false
+  limits:
+    independent_identity: UNVERIFIED
+    host_enforcement: UNVERIFIED
+    production_permission: false
+
+completed_upstream:
+  - component: claude-skill-author
+    status: completed
+  - component: capability-artifact-planner
+    status: verified_local
+  - component: gate-generator
+    status: verified_m0_m3_local
+  - component: execution-artifact-generator
+    status: verified_e0_e4_local
+  - component: knowledge-rag-builder-research
+    status: conditionally_approved
+
+current_task:
+  objective: >-
+    Implement Knowledge & RAG Builder K0-K6 as a contract-bound local candidate,
+    preserving the verified Planner, Gate, and Execution boundaries.
+  scope:
+    - K0 research closure and input binding
+    - K1 minimality compiler
+    - K2 source governance
+    - K3 limited local ingestion
+    - K4 local lexical and structured retrieval
+    - K5 security and freshness contracts
+    - K6 citation, eval, mutation, and procedural audit candidate
+  prohibited:
+    - modifying upstream Planner, Gate, or Execution source/evidence
+    - production RAG or index deployment
+    - production IAM, tenant ACL, RLS, or DLS changes
+    - production secrets or credentials
+    - external vector DB, embedding API, or reranker installation
+    - production database or API writes
+    - modifying .claude/settings.json
+    - claiming an independent audit identity that did not run
+    - direct changes to main
+    - force push or history rewrite
+    - automatic merge
+
+required_results:
+  prompt_coverage_unresolved: 0
+  know_rules: "84/84"
+  knowledge_invariants: "100/100"
+  knowledge_evals: "64/64"
+  knowledge_mutations: "26/26 killed"
+  planner_knowledge_golden: "22/22"
+  critical_mutants_survived: 0
+  unsupported_runtime_false_claims: 0
+  traceability: closed
+  operational_permission: false
+
+expected_paths:
+  skill: .claude/skills/knowledge-rag-builder/
+  auditor: .claude/agents/knowledge-rag-auditor.md
+  evidence: docs/agent-authoring/evidence/knowledge-rag-builder/
+  report: docs/agent-authoring/KNOWLEDGE_RAG_BUILDER_MVP_구현결과.md
+
+codex_next_action: Obtain independent review for K0-LOCAL-GLOSSARY-Q17 and a formally issued eligible plan, then recheck K0.
+
+review_policy:
+  review_owner: current_chatgpt_orchestrator_session
+  merge_requires_user_approval: true
+  local_verified_is_not_production_approval: true
+
+blocker:
+  id: PLANNER_REENTRY_REQUIRED
+  reason: Candidate K0-LOCAL-GLOSSARY-Q17 passed local Planner checks. Independent audit is unverified; candidate remains DRAFT.
+  evidence: docs/agent-authoring/evidence/knowledge-rag-builder/k0-upstream-binding.json
+last_review:
+  decision: >-
+    Connection checks passed on the corrected upstream. K0 fixture is DRAFT and Gate I-006 rejects it.
+next_stage_after_verified_local:
+  - review Agent & Workflow Assembler research
+  - author Assembler MVP work order
+  - implement Assembler
+  - implement independent evaluation
+  - integrate top-level agent-system-author
