@@ -1,0 +1,765 @@
+{
+  "counts": {
+    "evals": 26,
+    "invariants": 45,
+    "mutations": 10,
+    "rules": 30
+  },
+  "invariants": [
+    {
+      "id": "EXI-001",
+      "statement": "contract/schema/id가 존재한다"
+    },
+    {
+      "id": "EXI-002",
+      "statement": "Planner digest가 현재와 일치한다"
+    },
+    {
+      "id": "EXI-003",
+      "statement": "component/control mode가 Planner와 정확히 일치한다"
+    },
+    {
+      "id": "EXI-004",
+      "statement": "`execution_required:false`에 executable이 없다"
+    },
+    {
+      "id": "EXI-005",
+      "statement": "Planner reentry가 required면 ready/pass가 아니다"
+    },
+    {
+      "id": "EXI-006",
+      "statement": "모든 new artifact에 reuse search evidence가 있다"
+    },
+    {
+      "id": "EXI-007",
+      "statement": "selected artifact는 necessity test/owner/AC를 가진다"
+    },
+    {
+      "id": "EXI-008",
+      "statement": "`not_required` artifact는 entrypoint/effect가 없다"
+    },
+    {
+      "id": "EXI-009",
+      "statement": "language/runtime가 repository fact와 compatible하다"
+    },
+    {
+      "id": "EXI-010",
+      "statement": "input/output schema digest가 있다"
+    },
+    {
+      "id": "EXI-011",
+      "statement": "unknown field reject"
+    },
+    {
+      "id": "EXI-012",
+      "statement": "stdout JSON one-document policy"
+    },
+    {
+      "id": "EXI-013",
+      "statement": "exit registry가 stable category와 일치"
+    },
+    {
+      "id": "EXI-014",
+      "statement": "error text만으로 control flow를 결정하지 않는다"
+    },
+    {
+      "id": "EXI-015",
+      "statement": "effect class가 Planner/Gate와 일치"
+    },
+    {
+      "id": "EXI-016",
+      "statement": "write는 pre-effect Gate/permission을 가진다"
+    },
+    {
+      "id": "EXI-017",
+      "statement": "dry-run은 writer call을 하지 않는다"
+    },
+    {
+      "id": "EXI-018",
+      "statement": "apply target fingerprint recheck가 있다"
+    },
+    {
+      "id": "EXI-019",
+      "statement": "idempotency key/payload digest scope가 있다"
+    },
+    {
+      "id": "EXI-020",
+      "statement": "same key/different payload reject"
+    },
+    {
+      "id": "EXI-021",
+      "statement": "unknown outcome auto retry 금지"
+    },
+    {
+      "id": "EXI-022",
+      "statement": "reconciliation source/expected/actual fields가 있다"
+    },
+    {
+      "id": "EXI-023",
+      "statement": "compensation/manual repair 중 하나가 있다"
+    },
+    {
+      "id": "EXI-024",
+      "statement": "required Gate IDs가 contract catalog에 있다"
+    },
+    {
+      "id": "EXI-025",
+      "statement": "Gate checker digest가 binding된다"
+    },
+    {
+      "id": "EXI-026",
+      "statement": "Plan/Gate/source/lock/toolchain/schema/inventory/input/test change가 STALE로 전파된다"
+    },
+    {
+      "id": "EXI-027",
+      "statement": "free-text PASS/exit 0은 attestation이 아니다"
+    },
+    {
+      "id": "EXI-028",
+      "statement": "Gate ERROR/STALE/UNKNOWN/WAIVED가 PASS로 승격되지 않는다"
+    },
+    {
+      "id": "EXI-029",
+      "statement": "path/URL canonicalization policy가 있다"
+    },
+    {
+      "id": "EXI-030",
+      "statement": "raw shell/SQL string injection route가 없다"
+    },
+    {
+      "id": "EXI-031",
+      "statement": "read/write/reconcile permission이 분리된다"
+    },
+    {
+      "id": "EXI-032",
+      "statement": "secret value field/CLI/build arg/log evidence가 없다"
+    },
+    {
+      "id": "EXI-033",
+      "statement": "high-risk sandbox claims have verified inventory"
+    },
+    {
+      "id": "EXI-034",
+      "statement": "egress allowlist has enforcer evidence"
+    },
+    {
+      "id": "EXI-035",
+      "statement": "unverified sandbox/runtime means unavailable, not pass"
+    },
+    {
+      "id": "EXI-036",
+      "statement": "source/lock/toolchain/image digest가 있다"
+    },
+    {
+      "id": "EXI-037",
+      "statement": "floating dependency or image tag-only is rejected"
+    },
+    {
+      "id": "EXI-038",
+      "statement": "SBOM/provenance is bound to artifact when policy requires it"
+    },
+    {
+      "id": "EXI-039",
+      "statement": "test evidence binds artifact/test/runner/result digests"
+    },
+    {
+      "id": "EXI-040",
+      "statement": "historical evidence cannot approve changed subject"
+    },
+    {
+      "id": "EXI-041",
+      "statement": "every known entrypoint reverse maps to artifact/Gate"
+    },
+    {
+      "id": "EXI-042",
+      "statement": "no orphan test/evidence/artifact/Gate"
+    },
+    {
+      "id": "EXI-043",
+      "statement": "post-action-only control cannot satisfy irreversible pre-effect Gate"
+    },
+    {
+      "id": "EXI-044",
+      "statement": "critical mutation is killed"
+    },
+    {
+      "id": "EXI-045",
+      "statement": "independent audit input order/identity/evidence is present; absent high-assurance independence blocks final approval"
+    }
+  ],
+  "mutations": [
+    {
+      "category": "mutation",
+      "expected": "killed by EXI-003",
+      "id": "EXMUT-001",
+      "mutation": "delete Planner component/control binding"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXI-004",
+      "id": "EXMUT-002",
+      "mutation": "change `execution_required:false` to add script"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXI-016/043",
+      "id": "EXMUT-003",
+      "mutation": "delete pre-effect Gate ID"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXI-011/EXEVAL-013",
+      "id": "EXMUT-004",
+      "mutation": "accept extra schema field"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXEVAL-020",
+      "id": "EXMUT-005",
+      "mutation": "`deny` → `allow`, path resolver skipped"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXEVAL-021",
+      "id": "EXMUT-006",
+      "mutation": "`shell=False` → string shell"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXEVAL-016",
+      "id": "EXMUT-007",
+      "mutation": "retry unknown write with new key"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXEVAL-010",
+      "id": "EXMUT-008",
+      "mutation": "remove target fingerprint recheck"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXI-036/037",
+      "id": "EXMUT-009",
+      "mutation": "drop lock/image digest or use `latest`"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXI-039/040",
+      "id": "EXMUT-010",
+      "mutation": "swap test evidence/skip execution/exit code"
+    }
+  ],
+  "rules": [
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-001"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-01",
+      "mutation_ids": [
+        "EXMUT-001"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-002"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-02",
+      "mutation_ids": [
+        "EXMUT-002"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-003"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-03",
+      "mutation_ids": [
+        "EXMUT-003"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-004"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-04",
+      "mutation_ids": [
+        "EXMUT-004"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-005"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-05",
+      "mutation_ids": [
+        "EXMUT-005"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-006"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-06",
+      "mutation_ids": [
+        "EXMUT-006"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-007"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-07",
+      "mutation_ids": [
+        "EXMUT-007"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-008"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-08",
+      "mutation_ids": [
+        "EXMUT-008"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-009"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-09",
+      "mutation_ids": [
+        "EXMUT-009"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-010"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-10",
+      "mutation_ids": [
+        "EXMUT-010"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-011"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-11",
+      "mutation_ids": [
+        "EXMUT-001"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-012"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-12",
+      "mutation_ids": [
+        "EXMUT-002"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-013"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-13",
+      "mutation_ids": [
+        "EXMUT-003"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-014"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-14",
+      "mutation_ids": [
+        "EXMUT-004"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-015"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-15",
+      "mutation_ids": [
+        "EXMUT-005"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-016"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-16",
+      "mutation_ids": [
+        "EXMUT-006"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-017"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-17",
+      "mutation_ids": [
+        "EXMUT-007"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-018"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-18",
+      "mutation_ids": [
+        "EXMUT-008"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-019"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-19",
+      "mutation_ids": [
+        "EXMUT-009"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-020"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-20",
+      "mutation_ids": [
+        "EXMUT-010"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-021"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-21",
+      "mutation_ids": [
+        "EXMUT-001"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-022"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-22",
+      "mutation_ids": [
+        "EXMUT-002"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-023"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-23",
+      "mutation_ids": [
+        "EXMUT-003"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-024"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-24",
+      "mutation_ids": [
+        "EXMUT-004"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-025"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-25",
+      "mutation_ids": [
+        "EXMUT-005"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-026"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-26",
+      "mutation_ids": [
+        "EXMUT-006"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-001"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-27",
+      "mutation_ids": [
+        "EXMUT-007"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-002"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-28",
+      "mutation_ids": [
+        "EXMUT-008"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-003"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-29",
+      "mutation_ids": [
+        "EXMUT-009"
+      ]
+    },
+    {
+      "checker": "scripts/execution_engine.py",
+      "contract_paths": [
+        "decision",
+        "artifacts",
+        "traceability",
+        "runtime_boundary"
+      ],
+      "eval_ids": [
+        "EXEVAL-004"
+      ],
+      "evidence": "docs/agent-authoring/evidence/execution-artifact-generator/",
+      "id": "EXEC-30",
+      "mutation_ids": [
+        "EXMUT-010"
+      ]
+    }
+  ],
+  "schema_version": "1.0"
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "policy_id": "default-conservative",
+  "defaults": {
+    "external_write": "deny",
+    "network": "deny_unless_explicit",
+    "secret_in_llm_context": false,
+    "high_risk_requires_human_approval": true,
+    "runtime_without_verified_enforcement": "BLOCKED",
+    "automatic_merge": false
+  },
+  "allowed_component_types": [
+    "skill",
+    "reference",
+    "script",
+    "validator",
+    "tool",
+    "rag",
+    "workflow",
+    "agent",
+    "approval",
+    "permission",
+    "hook",
+    "sandbox",
+    "state",
+    "eval",
+    "tracing"
+  ],
+  "unresolved_policy_decisions": []
+}

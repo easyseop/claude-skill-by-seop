@@ -1,0 +1,12 @@
+{
+  "host_hook_active": false,
+  "local_adapters": [
+    "pretool",
+    "posttool",
+    "stop"
+  ],
+  "m4_m7": "HARD_ENFORCEMENT_UNAVAILABLE",
+  "operational_permission": false,
+  "schema_version": "1.0",
+  "status": "PASS_LOCAL_PROCEDURE"
+}

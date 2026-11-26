@@ -1,0 +1,240 @@
+{
+  "evals": [
+    {
+      "actual_execution_status": "NOT_REQUIRED",
+      "category": "정상",
+      "expected_execution_status": "NOT_REQUIRED",
+      "id": "EXEVAL-001",
+      "operational_permission": false,
+      "source_expected": "`execution_required:false`, executable 없음",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "STATIC_CHECKED",
+      "category": "정상",
+      "expected_execution_status": "STATIC_CHECKED",
+      "id": "EXEVAL-002",
+      "operational_permission": false,
+      "source_expected": "Script/validator 선택, one JSON result",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "REUSE_READY",
+      "category": "정상",
+      "expected_execution_status": "REUSE_READY",
+      "id": "EXEVAL-003",
+      "operational_permission": false,
+      "source_expected": "`REUSE_DIRECT` 또는 thin adapter, write permission 없음",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "REUSE_READY",
+      "category": "정상",
+      "expected_execution_status": "REUSE_READY",
+      "id": "EXEVAL-004",
+      "operational_permission": false,
+      "source_expected": "Java runtime reuse, Python sidecar 없음",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "STATIC_CHECKED",
+      "category": "정상",
+      "expected_execution_status": "STATIC_CHECKED",
+      "id": "EXEVAL-005",
+      "operational_permission": false,
+      "source_expected": "target fingerprint/expected count, no write",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "PASS_LOCAL_PROCEDURE",
+      "category": "정상",
+      "expected_execution_status": "PASS_LOCAL_PROCEDURE",
+      "id": "EXEVAL-006",
+      "operational_permission": false,
+      "source_expected": "same key/payload, poststate match",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "BLOCKED",
+      "category": "경계",
+      "expected_execution_status": "BLOCKED",
+      "id": "EXEVAL-007",
+      "operational_permission": false,
+      "source_expected": "policy대로 reject or stream; no partial effect",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "PASS",
+      "category": "경계",
+      "expected_execution_status": "PASS",
+      "id": "EXEVAL-008",
+      "operational_permission": false,
+      "source_expected": "canonical digest stable",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "PASS_LOCAL_PROCEDURE",
+      "category": "경계",
+      "expected_execution_status": "PASS_LOCAL_PROCEDURE",
+      "id": "EXEVAL-009",
+      "operational_permission": false,
+      "source_expected": "one effect/noop result",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "STALE",
+      "category": "경계",
+      "expected_execution_status": "STALE",
+      "id": "EXEVAL-010",
+      "operational_permission": false,
+      "source_expected": "apply `STALE/BLOCKED`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "BLOCKED",
+      "category": "경계",
+      "expected_execution_status": "BLOCKED",
+      "id": "EXEVAL-011",
+      "operational_permission": false,
+      "source_expected": "bounded retry then stable failure",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "category": "경계",
+      "expected_execution_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "id": "EXEVAL-012",
+      "operational_permission": false,
+      "source_expected": "`HARD_ENFORCEMENT_UNAVAILABLE`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "INVALID_INPUT",
+      "category": "오류",
+      "expected_execution_status": "INVALID_INPUT",
+      "id": "EXEVAL-013",
+      "operational_permission": false,
+      "source_expected": "exit 2 + structured invalid-input result",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "STALE",
+      "category": "오류",
+      "expected_execution_status": "STALE",
+      "id": "EXEVAL-014",
+      "operational_permission": false,
+      "source_expected": "STALE, evidence rejected",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "BLOCKED",
+      "category": "오류",
+      "expected_execution_status": "BLOCKED",
+      "id": "EXEVAL-015",
+      "operational_permission": false,
+      "source_expected": "no retry, `BLOCKED`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "OUTCOME_UNKNOWN",
+      "category": "오류",
+      "expected_execution_status": "OUTCOME_UNKNOWN",
+      "id": "EXEVAL-016",
+      "operational_permission": false,
+      "source_expected": "exit 6, `OUTCOME_UNKNOWN`, reconciliation only",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "OUTCOME_UNKNOWN",
+      "category": "오류",
+      "expected_execution_status": "OUTCOME_UNKNOWN",
+      "id": "EXEVAL-017",
+      "operational_permission": false,
+      "source_expected": "unknown persists, completion blocked",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "COMPENSATION_FAILED",
+      "category": "오류",
+      "expected_execution_status": "COMPENSATION_FAILED",
+      "id": "EXEVAL-018",
+      "operational_permission": false,
+      "source_expected": "`COMPENSATION_FAILED`, human repair path",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "ERROR",
+      "category": "오류",
+      "expected_execution_status": "ERROR",
+      "id": "EXEVAL-019",
+      "operational_permission": false,
+      "source_expected": "malformed result/ERROR",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "BLOCKED",
+      "category": "악성",
+      "expected_execution_status": "BLOCKED",
+      "id": "EXEVAL-020",
+      "operational_permission": false,
+      "source_expected": "pre-effect BLOCK",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "BLOCKED",
+      "category": "악성",
+      "expected_execution_status": "BLOCKED",
+      "id": "EXEVAL-021",
+      "operational_permission": false,
+      "source_expected": "BLOCK; argv only",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "BLOCKED",
+      "category": "악성",
+      "expected_execution_status": "BLOCKED",
+      "id": "EXEVAL-022",
+      "operational_permission": false,
+      "source_expected": "BLOCK; parameter/allowlist",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "BLOCKED",
+      "category": "악성",
+      "expected_execution_status": "BLOCKED",
+      "id": "EXEVAL-023",
+      "operational_permission": false,
+      "source_expected": "BLOCK/redaction incident",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "BLOCKED",
+      "category": "악성",
+      "expected_execution_status": "BLOCKED",
+      "id": "EXEVAL-024",
+      "operational_permission": false,
+      "source_expected": "BLOCK",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "BLOCKED",
+      "category": "악성",
+      "expected_execution_status": "BLOCKED",
+      "id": "EXEVAL-025",
+      "operational_permission": false,
+      "source_expected": "orphan BLOCK",
+      "test_status": "PASS"
+    },
+    {
+      "actual_execution_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "category": "악성",
+      "expected_execution_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "id": "EXEVAL-026",
+      "operational_permission": false,
+      "source_expected": "`HARD_ENFORCEMENT_UNAVAILABLE`",
+      "test_status": "PASS"
+    }
+  ],
+  "schema_version": "1.0",
+  "status": "PASS"
+}

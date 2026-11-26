@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "contract_id",
+    "snapshot",
+    "planner_binding",
+    "gate_binding",
+    "decision",
+    "artifacts"
+  ],
+  "title": "Execution Contract",
+  "type": "object"
+}

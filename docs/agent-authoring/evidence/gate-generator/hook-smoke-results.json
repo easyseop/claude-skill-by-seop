@@ -1,0 +1,219 @@
+{
+  "cases": [
+    {
+      "actual": "PASS",
+      "expected": "PASS",
+      "id": "HOOK-01",
+      "result": {
+        "operational_permission": false,
+        "reason": "PRETOOL_CURRENT",
+        "status": "PASS"
+      },
+      "status": "PASS",
+      "title": "allowed path"
+    },
+    {
+      "actual": "BLOCK",
+      "expected": "BLOCK",
+      "id": "HOOK-02",
+      "result": {
+        "reason": "PATH_OUTSIDE_ROOT",
+        "status": "BLOCK"
+      },
+      "status": "PASS",
+      "title": "repo outside path"
+    },
+    {
+      "actual": "BLOCK",
+      "expected": "BLOCK",
+      "id": "HOOK-03",
+      "result": {
+        "reason": "PATH_OUTSIDE_ROOT",
+        "status": "BLOCK"
+      },
+      "status": "PASS",
+      "title": "path traversal"
+    },
+    {
+      "actual": "BLOCK",
+      "expected": "BLOCK",
+      "id": "HOOK-04",
+      "result": {
+        "reason": "PATH_OUTSIDE_ROOT",
+        "status": "BLOCK"
+      },
+      "status": "PASS",
+      "title": "symlink escape"
+    },
+    {
+      "actual": "BLOCK",
+      "expected": "BLOCK",
+      "id": "HOOK-05",
+      "result": {
+        "reason": "WRITE_TOOL_FOR_READ_INTENT",
+        "status": "BLOCK"
+      },
+      "status": "PASS",
+      "title": "read intent with write tool"
+    },
+    {
+      "actual": "BLOCK",
+      "expected": "BLOCK",
+      "id": "HOOK-06",
+      "result": {
+        "reason": "UNKNOWN_OR_UNQUALIFIED_TOOL",
+        "status": "BLOCK"
+      },
+      "status": "PASS",
+      "title": "unknown tool"
+    },
+    {
+      "actual": "BLOCK",
+      "expected": "BLOCK",
+      "id": "HOOK-07",
+      "result": {
+        "reason": "UNGATED_ALLOW_FORBIDDEN",
+        "status": "BLOCK"
+      },
+      "status": "PASS",
+      "title": "ungated allow"
+    },
+    {
+      "actual": "BLOCK",
+      "expected": "BLOCK",
+      "id": "HOOK-08",
+      "result": {
+        "reason": "SECRET_INPUT",
+        "status": "BLOCK"
+      },
+      "status": "PASS",
+      "title": "secret input"
+    },
+    {
+      "actual": "STALE",
+      "expected": "STALE",
+      "id": "HOOK-09",
+      "result": {
+        "reason": "POLICY_STALE",
+        "status": "STALE"
+      },
+      "status": "PASS",
+      "title": "stale inventory"
+    },
+    {
+      "actual": "BLOCK",
+      "expected": "BLOCK",
+      "id": "HOOK-10",
+      "result": {
+        "reason": "DIRECT_BYPASS_INVENTORY_INCOMPLETE",
+        "status": "BLOCK"
+      },
+      "status": "PASS",
+      "title": "direct bypass inventory missing"
+    },
+    {
+      "actual": "BLOCK",
+      "expected": "BLOCK",
+      "id": "HOOK-11",
+      "result": {
+        "reason": "HOOK_TIMEOUT_FAIL_CLOSED",
+        "status": "BLOCK"
+      },
+      "status": "PASS",
+      "title": "handler timeout"
+    },
+    {
+      "actual": "BLOCK",
+      "expected": "BLOCK",
+      "id": "HOOK-12",
+      "result": {
+        "reason": "MALFORMED_HANDLER_FAIL_CLOSED",
+        "status": "BLOCK"
+      },
+      "status": "PASS",
+      "title": "malformed handler result"
+    },
+    {
+      "actual": "BLOCK",
+      "expected": "BLOCK",
+      "id": "HOOK-13",
+      "result": {
+        "reason": "MISSING_POLICY",
+        "status": "BLOCK"
+      },
+      "status": "PASS",
+      "title": "missing policy"
+    },
+    {
+      "actual": "OUTCOME_UNKNOWN",
+      "expected": "OUTCOME_UNKNOWN",
+      "id": "HOOK-14",
+      "result": {
+        "reason": "RECONCILIATION_REQUIRED",
+        "retry": false,
+        "status": "OUTCOME_UNKNOWN"
+      },
+      "status": "PASS",
+      "title": "posttool failure unknown"
+    },
+    {
+      "actual": "OUTCOME_UNKNOWN",
+      "expected": "OUTCOME_UNKNOWN",
+      "id": "HOOK-15",
+      "result": {
+        "reason": "RECONCILIATION_MISMATCH",
+        "retry": false,
+        "status": "OUTCOME_UNKNOWN"
+      },
+      "status": "PASS",
+      "title": "reconciliation mismatch"
+    },
+    {
+      "actual": "BLOCK",
+      "expected": "BLOCK",
+      "id": "HOOK-16",
+      "result": {
+        "reason": "FREE_TEXT_PASS_FORBIDDEN",
+        "status": "BLOCK"
+      },
+      "status": "PASS",
+      "title": "literal PASS"
+    },
+    {
+      "actual": "BLOCK",
+      "expected": "BLOCK",
+      "id": "HOOK-17",
+      "result": {
+        "reason": "FORGED_RESULT",
+        "status": "BLOCK"
+      },
+      "status": "PASS",
+      "title": "forged structured PASS"
+    },
+    {
+      "actual": "STALE",
+      "expected": "STALE",
+      "id": "HOOK-18",
+      "result": {
+        "reason": "SUBJECT_STALE",
+        "status": "STALE"
+      },
+      "status": "PASS",
+      "title": "stale result"
+    },
+    {
+      "actual": "PASS_LOCAL_PROCEDURE",
+      "expected": "PASS_LOCAL_PROCEDURE",
+      "id": "HOOK-19",
+      "result": {
+        "operational_permission": false,
+        "reason": "CURRENT_STRUCTURED_RESULT",
+        "status": "PASS_LOCAL_PROCEDURE"
+      },
+      "status": "PASS",
+      "title": "current local result"
+    }
+  ],
+  "schema_version": "1.0",
+  "status": "PASS"
+}

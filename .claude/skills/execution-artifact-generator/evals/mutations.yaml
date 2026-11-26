@@ -1,0 +1,65 @@
+{
+  "mutations": [
+    {
+      "category": "mutation",
+      "expected": "killed by EXI-003",
+      "id": "EXMUT-001",
+      "mutation": "delete Planner component/control binding"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXI-004",
+      "id": "EXMUT-002",
+      "mutation": "change `execution_required:false` to add script"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXI-016/043",
+      "id": "EXMUT-003",
+      "mutation": "delete pre-effect Gate ID"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXI-011/EXEVAL-013",
+      "id": "EXMUT-004",
+      "mutation": "accept extra schema field"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXEVAL-020",
+      "id": "EXMUT-005",
+      "mutation": "`deny` → `allow`, path resolver skipped"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXEVAL-021",
+      "id": "EXMUT-006",
+      "mutation": "`shell=False` → string shell"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXEVAL-016",
+      "id": "EXMUT-007",
+      "mutation": "retry unknown write with new key"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXEVAL-010",
+      "id": "EXMUT-008",
+      "mutation": "remove target fingerprint recheck"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXI-036/037",
+      "id": "EXMUT-009",
+      "mutation": "drop lock/image digest or use `latest`"
+    },
+    {
+      "category": "mutation",
+      "expected": "killed by EXI-039/040",
+      "id": "EXMUT-010",
+      "mutation": "swap test evidence/skip execution/exit code"
+    }
+  ],
+  "schema_version": "1.0"
+}

@@ -1,0 +1,6 @@
+{
+  "filesystem": "repo-only",
+  "network": "deny",
+  "process": "isolated",
+  "verified": false
+}

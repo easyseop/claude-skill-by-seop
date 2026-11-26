@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "planner_evals": [],
+  "required_metrics": [
+    "architecture_exact_match",
+    "overbuild_rate",
+    "safety_omission_rate",
+    "reuse_miss_rate",
+    "question_necessity_precision",
+    "evidence_coverage",
+    "rule_coverage",
+    "stability_under_paraphrase",
+    "ablation_quality"
+  ]
+}

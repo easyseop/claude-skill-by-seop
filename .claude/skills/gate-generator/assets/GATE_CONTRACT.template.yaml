@@ -1,0 +1,575 @@
+{
+  "acceptance_criteria": [
+    {
+      "eval_ids": [
+        "GEVAL-001"
+      ],
+      "gate_ids": [
+        "G-IN-001"
+      ],
+      "id": "AC-1"
+    },
+    {
+      "eval_ids": [
+        "GEVAL-014"
+      ],
+      "gate_ids": [
+        "G-PRE-001",
+        "G-POST-001"
+      ],
+      "id": "AC-2"
+    },
+    {
+      "eval_ids": [
+        "GEVAL-041"
+      ],
+      "gate_ids": [
+        "G-STOP-001"
+      ],
+      "id": "AC-3"
+    }
+  ],
+  "agent": {
+    "enabled": true,
+    "limits": {
+      "max_time_seconds": 300,
+      "max_tool_calls": 20,
+      "max_turns": 12
+    },
+    "loop_detection": true,
+    "termination": "all required gates current",
+    "trace": true
+  },
+  "approval": {
+    "batch_binding": {
+      "count": true,
+      "item_set": true,
+      "limits": true
+    },
+    "bind_fields": [
+      "action",
+      "tool",
+      "resource",
+      "tenant",
+      "principal",
+      "payload",
+      "policy"
+    ],
+    "canonicalization": "JCS",
+    "digest_algorithm": "SHA-256",
+    "distinct_principals": true,
+    "expiry_seconds": 900,
+    "jit_revoke": true,
+    "nonce_required": true,
+    "prevent_self_review": true,
+    "quorum": 2,
+    "required": true,
+    "revocation_check": true,
+    "single_use": true
+  },
+  "attestation": {
+    "current_artifact_digest": "sha256:artifact",
+    "evidence": [
+      "evidence://tests"
+    ],
+    "issuer": "trusted-ci",
+    "issuer_allowlist": [
+      "trusted-ci"
+    ],
+    "predicate_type": "test-result",
+    "required_for_high_risk": true,
+    "subject_digest": "sha256:artifact"
+  },
+  "audit": {
+    "actual_independent_executor_ran": false,
+    "append_only_redacted_evidence": true,
+    "auditor_identity": "unverified-separate-required",
+    "blind_first": true,
+    "generator_identity": "generator"
+  },
+  "compensation": {
+    "handler": "registered",
+    "idempotent": true,
+    "manual_fallback": true,
+    "order": "reverse",
+    "required": true
+  },
+  "contract_digest": "sha256:7a78bf2da68a520eb37e0465e412ef4c272c05fb56baec1934b17c0d661e4b4c",
+  "contract_id": "GATE-CONTRACT-FIXTURE",
+  "effects": {
+    "effect_level": "high",
+    "external_write": true,
+    "irreversible": true,
+    "manual_repair": "run reconciliation and escalate",
+    "post_gate_ids": [
+      "G-POST-001"
+    ],
+    "pre_gate_ids": [
+      "G-PRE-001"
+    ],
+    "recovery_gate_ids": [
+      "G-POST-001"
+    ],
+    "risk_acceptance": "human-reviewed"
+  },
+  "gates": [
+    {
+      "blocking": true,
+      "enforcement": {
+        "digest": "sha256:engine",
+        "layer": "validator",
+        "path": "scripts/gate_engine.py"
+      },
+      "evidence_refs": [
+        "evidence://baseline-check"
+      ],
+      "id": "G-IN-001",
+      "mutation_ids": [
+        "GMUT-004"
+      ],
+      "requirement_ids": [
+        "REQ-1"
+      ],
+      "risk_ids": [
+        "RISK-1"
+      ],
+      "stage": "intake",
+      "test_ids": [
+        "GEVAL-001"
+      ]
+    },
+    {
+      "blocking": true,
+      "enforcement": {
+        "digest": "sha256:pretool",
+        "layer": "hook",
+        "path": "adapters/claude-code/pretool_gate.py"
+      },
+      "evidence_refs": [
+        "evidence://hook-smoke"
+      ],
+      "id": "G-PRE-001",
+      "mutation_ids": [
+        "GMUT-007",
+        "GMUT-009"
+      ],
+      "requirement_ids": [
+        "REQ-2"
+      ],
+      "risk_ids": [
+        "RISK-2"
+      ],
+      "stage": "pre_execution",
+      "test_ids": [
+        "GEVAL-005",
+        "GEVAL-014"
+      ]
+    },
+    {
+      "blocking": true,
+      "enforcement": {
+        "digest": "sha256:posttool",
+        "layer": "reconciliation",
+        "path": "adapters/claude-code/posttool_gate.py"
+      },
+      "evidence_refs": [
+        "evidence://reconciliation"
+      ],
+      "id": "G-POST-001",
+      "mutation_ids": [
+        "GMUT-016"
+      ],
+      "requirement_ids": [
+        "REQ-2"
+      ],
+      "risk_ids": [
+        "RISK-2"
+      ],
+      "stage": "post_execution",
+      "test_ids": [
+        "GEVAL-027",
+        "GEVAL-038"
+      ]
+    },
+    {
+      "blocking": true,
+      "enforcement": {
+        "digest": "sha256:stop",
+        "layer": "stop_gate",
+        "path": "adapters/claude-code/stop_gate.py"
+      },
+      "evidence_refs": [
+        "evidence://stop-gate"
+      ],
+      "id": "G-STOP-001",
+      "mutation_ids": [
+        "GMUT-002",
+        "GMUT-017"
+      ],
+      "requirement_ids": [
+        "REQ-3"
+      ],
+      "risk_ids": [
+        "RISK-3"
+      ],
+      "stage": "completion",
+      "test_ids": [
+        "GEVAL-040",
+        "GEVAL-041"
+      ]
+    }
+  ],
+  "hooks": {
+    "posttool": {
+      "async_only": false,
+      "blocking": false,
+      "event": "PostToolUse",
+      "fail_policy": "reconcile",
+      "malformed_behavior": "unknown",
+      "timeout_behavior": "unknown",
+      "timing": "after"
+    },
+    "pretool": {
+      "async_only": false,
+      "blocking": true,
+      "event": "PreToolUse",
+      "fail_policy": "closed",
+      "malformed_behavior": "block",
+      "timeout_behavior": "block",
+      "timing": "before"
+    },
+    "stop": {
+      "async_only": false,
+      "blocking": true,
+      "event": "Stop",
+      "fail_policy": "closed",
+      "malformed_behavior": "block",
+      "timeout_behavior": "block",
+      "timing": "completion"
+    }
+  },
+  "idempotency": {
+    "non_idempotent_policy": "blocked",
+    "required": true,
+    "same_key_same_payload_digest": true
+  },
+  "implementation_inventory": [
+    {
+      "annotation": true,
+      "digest": "sha256:engine",
+      "gate_id": "G-IN-001",
+      "path": "scripts/gate_engine.py"
+    },
+    {
+      "annotation": true,
+      "digest": "sha256:pretool",
+      "gate_id": "G-PRE-001",
+      "path": "adapters/claude-code/pretool_gate.py"
+    },
+    {
+      "annotation": true,
+      "digest": "sha256:posttool",
+      "gate_id": "G-POST-001",
+      "path": "adapters/claude-code/posttool_gate.py"
+    },
+    {
+      "annotation": true,
+      "digest": "sha256:stop",
+      "gate_id": "G-STOP-001",
+      "path": "adapters/claude-code/stop_gate.py"
+    }
+  ],
+  "invariant_assertions": {
+    "I-001": true,
+    "I-002": true,
+    "I-003": true,
+    "I-004": true,
+    "I-005": true,
+    "I-006": true,
+    "I-007": true,
+    "I-008": true,
+    "I-009": true,
+    "I-010": true,
+    "I-011": true,
+    "I-012": true,
+    "I-013": true,
+    "I-014": true,
+    "I-015": true,
+    "I-016": true,
+    "I-017": true,
+    "I-018": true,
+    "I-019": true,
+    "I-020": true,
+    "I-021": true,
+    "I-022": true,
+    "I-023": true,
+    "I-024": true,
+    "I-025": true,
+    "I-026": true,
+    "I-027": true,
+    "I-028": true,
+    "I-029": true,
+    "I-030": true,
+    "I-031": true,
+    "I-032": true,
+    "I-033": true,
+    "I-034": true,
+    "I-035": true,
+    "I-036": true,
+    "I-037": true,
+    "I-038": true,
+    "I-039": true,
+    "I-040": true,
+    "I-041": true,
+    "I-042": true,
+    "I-043": true,
+    "I-044": true,
+    "I-045": true,
+    "I-046": true,
+    "I-047": true,
+    "I-048": true,
+    "I-049": true,
+    "I-050": true,
+    "I-051": true,
+    "I-052": true,
+    "I-053": true,
+    "I-054": true,
+    "I-055": true,
+    "I-056": true,
+    "I-057": true,
+    "I-058": true,
+    "I-059": true,
+    "I-060": true,
+    "I-061": true,
+    "I-062": true,
+    "I-063": true,
+    "I-064": true,
+    "I-065": true,
+    "I-066": true,
+    "I-067": true,
+    "I-068": true,
+    "I-069": true,
+    "I-070": true,
+    "I-071": true,
+    "I-072": true,
+    "I-073": true,
+    "I-074": true,
+    "I-075": true,
+    "I-076": true,
+    "I-077": true,
+    "I-078": true,
+    "I-079": true,
+    "I-080": true,
+    "I-081": true,
+    "I-082": true,
+    "I-083": true,
+    "I-084": true,
+    "I-085": true
+  },
+  "path_policy": {
+    "canonicalize": true,
+    "redirect_check": true,
+    "root": "/repo",
+    "symlink_check": true
+  },
+  "permissions": {
+    "audit": true,
+    "default": "deny",
+    "wildcard": false
+  },
+  "phase_manifest": {
+    "digest": "sha256:phase",
+    "stale_propagation": true
+  },
+  "rag": {
+    "abstention": [
+      "NO_EVIDENCE",
+      "CONFLICT"
+    ],
+    "acl": {
+      "cache_scope_includes_auth": true,
+      "source": "authenticated_context"
+    },
+    "chunk_metadata": [
+      "source_digest",
+      "version",
+      "span",
+      "acl",
+      "pipeline_version"
+    ],
+    "citation": true,
+    "deletion_propagation": true,
+    "enabled": true,
+    "generation_eval": true,
+    "index_freshness": true,
+    "inventory": true,
+    "retrieval_eval": true,
+    "retrieved_instruction_authority": false,
+    "source_freshness": true
+  },
+  "reconciliation": {
+    "actual_fields": [
+      "count",
+      "digest"
+    ],
+    "expected_fields": [
+      "count",
+      "digest"
+    ],
+    "mismatch_status": "OUTCOME_UNKNOWN",
+    "source_of_truth": "target-system"
+  },
+  "release": {
+    "manifest": {
+      "artifact_digest": "sha256:artifact",
+      "gate_result_digests": [
+        "sha256:gate-result"
+      ]
+    },
+    "prevent_self_review": true,
+    "protected_branch": true,
+    "protected_environment": true,
+    "rehash_before_release": true,
+    "trusted_issuer": true
+  },
+  "remote_gate": {
+    "activation_policy": "atomic",
+    "last_known_good": true,
+    "timeout_policy": "closed",
+    "ttl_seconds": 300
+  },
+  "result_contract": {
+    "allow_free_text_pass": false,
+    "allowed_statuses": [
+      "BLOCK",
+      "ERROR",
+      "FAIL",
+      "HARD_ENFORCEMENT_UNAVAILABLE",
+      "NOT_APPLICABLE",
+      "OUTCOME_UNKNOWN",
+      "PASS",
+      "PLANNER_REENTRY_REQUIRED",
+      "STALE",
+      "WAIVED"
+    ],
+    "error_to_pass": false,
+    "required_bindings": [
+      "subject",
+      "policy",
+      "checker",
+      "input",
+      "trace",
+      "time",
+      "evidence",
+      "issuer"
+    ],
+    "required_test_skip_success": false
+  },
+  "retry": {
+    "allowed_error_classes": [
+      "rate_limit",
+      "transient_read"
+    ],
+    "backoff": "exponential",
+    "conflict_policy": "refetch_replan",
+    "max_attempts": 3,
+    "max_elapsed_seconds": 30,
+    "outcome_unknown_auto_retry": false
+  },
+  "runtime": {
+    "background": {
+      "cancel": true,
+      "fencing": true,
+      "late_result": "reject",
+      "lease": true
+    },
+    "parallel": {
+      "base_digest": true,
+      "conflict_policy": "block",
+      "merge_policy": "deterministic"
+    },
+    "partial_completion": [
+      "completed",
+      "failed",
+      "unknown",
+      "compensated"
+    ],
+    "terminal_requires_no_pending": true,
+    "tool_pairing": true
+  },
+  "sandbox": {
+    "filesystem": "repo-only",
+    "network": "deny",
+    "process": "isolated",
+    "required": true,
+    "resources": {
+      "cpu": 1,
+      "memory_mb": 512,
+      "timeout_seconds": 30
+    },
+    "secret_injection": "none",
+    "unsandboxed_fallback": false
+  },
+  "schema_version": "1.0",
+  "secrets": {
+    "flow": "out_of_band",
+    "through_llm_context": false
+  },
+  "snapshot": {
+    "checker_digest": "sha256:checker",
+    "expires_at": "2099-01-01T00:00:00Z",
+    "input_snapshot_digest": "sha256:input",
+    "issued_at": "2026-11-23T00:00:00Z",
+    "policy_digest": "sha256:policy",
+    "upstream_digest": "sha256:planner"
+  },
+  "state": {
+    "checkpoint_revalidation": [
+      "policy",
+      "approval",
+      "resource",
+      "tool_version"
+    ],
+    "delete": true,
+    "identity": "principal+tenant",
+    "migration": true,
+    "owner": "workflow",
+    "persistent": true,
+    "ttl_seconds": 3600
+  },
+  "status": "CHECKED_LOCAL",
+  "tests": {
+    "negative_mutations": true,
+    "normal_error_bypass_coverage": true,
+    "required_job_skip_success": false
+  },
+  "tools": [
+    {
+      "effect": "read",
+      "id": "repo.read",
+      "namespace": "repo",
+      "schema_digest": "sha256:read-schema",
+      "server": "local",
+      "unknown_fields": "reject",
+      "version": "1"
+    },
+    {
+      "effect": "write",
+      "id": "repo.write",
+      "namespace": "repo",
+      "schema_digest": "sha256:write-schema",
+      "server": "local",
+      "unknown_fields": "reject",
+      "version": "1"
+    }
+  ],
+  "trace": {
+    "context_is_not_authorization": true
+  },
+  "upstream_binding": {
+    "capability_plan_digest": "sha256:planner",
+    "capability_plan_id": "PLAN-1",
+    "capability_plan_status": "APPROVED_FOR_DESIGN"
+  },
+  "waivers": []
+}

@@ -1,0 +1,23 @@
+{
+  "counts": {
+    "builder_tests": 16,
+    "builder_tests_passed": 16,
+    "evals": 26,
+    "evals_passed": 26,
+    "invariants": 45,
+    "invariants_passed": 45,
+    "mutations": 10,
+    "mutations_killed": 10,
+    "planner_golden": 22,
+    "rules": 30,
+    "trace_forward": 1,
+    "trace_reverse": 1
+  },
+  "dynamic_execution": "HARD_ENFORCEMENT_UNAVAILABLE",
+  "independent_identity": "UNVERIFIED",
+  "operational_permission": false,
+  "schema_version": "1.0",
+  "scope": "E0-E4_LOCAL_CANDIDATE",
+  "status": "PASS",
+  "verified_runner": false
+}

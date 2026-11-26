@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "required": [
+    "request_digest",
+    "approver",
+    "decision",
+    "issued_at",
+    "expires_at"
+  ],
+  "title": "Approval Decision",
+  "type": "object"
+}

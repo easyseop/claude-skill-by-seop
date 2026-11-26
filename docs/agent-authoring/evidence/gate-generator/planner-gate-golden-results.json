@@ -1,0 +1,116 @@
+{
+  "mappings": [
+    {
+      "gate_profile": "advisory-output-only",
+      "planner_eval_id": "EVAL-01",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "skill-output-schema",
+      "planner_eval_id": "EVAL-02",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "reference-version-integrity",
+      "planner_eval_id": "EVAL-03",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "script-input-output-validator",
+      "planner_eval_id": "EVAL-04",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "sql-readonly-validator",
+      "planner_eval_id": "EVAL-05",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "rag-acl-freshness-citation",
+      "planner_eval_id": "EVAL-06",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "direct-reference-integrity",
+      "planner_eval_id": "EVAL-07",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "live-read-tool-identity",
+      "planner_eval_id": "EVAL-08",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "workflow-schema-retry-reconciliation",
+      "planner_eval_id": "EVAL-09",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "classification-route-effect-separation",
+      "planner_eval_id": "EVAL-10",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "bounded-agent-budget-trace",
+      "planner_eval_id": "EVAL-11",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "multi-worker-isolation-merge",
+      "planner_eval_id": "EVAL-12",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "no-agent-overbuild",
+      "planner_eval_id": "EVAL-13",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "high-risk-approval-permission-recovery",
+      "planner_eval_id": "EVAL-14",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "batch-approval-effect-reconciliation",
+      "planner_eval_id": "EVAL-15",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "out-of-band-secret",
+      "planner_eval_id": "EVAL-16",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "persistent-state-lifecycle",
+      "planner_eval_id": "EVAL-17",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "tool-consolidation-namespace",
+      "planner_eval_id": "EVAL-18",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "versioned-live-docs-and-tests",
+      "planner_eval_id": "EVAL-19",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "sandbox-test-human-merge",
+      "planner_eval_id": "EVAL-20",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "deterministic-workflow-hybrid",
+      "planner_eval_id": "EVAL-21",
+      "status": "PASS"
+    },
+    {
+      "gate_profile": "blocked-policy-decision",
+      "planner_eval_id": "EVAL-22",
+      "status": "PASS"
+    }
+  ],
+  "schema_version": "1.0",
+  "status": "PASS"
+}

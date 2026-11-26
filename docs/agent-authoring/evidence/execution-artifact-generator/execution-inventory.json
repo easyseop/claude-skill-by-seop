@@ -1,0 +1,13 @@
+{
+  "candidate_execution": false,
+  "contract_only_builders": [
+    "java_cli"
+  ],
+  "schema_version": "1.0",
+  "status": "COMPLETE_BOUNDED",
+  "supported_builders": [
+    "no_code",
+    "existing_artifact",
+    "python_local"
+  ]
+}

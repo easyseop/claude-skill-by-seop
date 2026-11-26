@@ -1,0 +1,61 @@
+schema_version: "1.0"
+workstream_id: upstream-recovery
+session_type: implementation
+repository: easyseop/claude-skill-by-seop
+branch: recovery/upstream-builders
+status: IN_PROGRESS
+phase: FINAL_HEAD_READ_ONLY_VERIFICATION
+updated_at: "2026-11-23"
+
+progress:
+  planner_source:
+    status: TESTED_PASS_FINAL_HEAD_PENDING
+    source_digest: sha256:b6079b61c1870f3e18fd864e544eafb2b5fd9defb4836e82bcb7ee4b8f6a11ed
+    cap_rules: "36/36"
+    base_evals: "22/22"
+    paraphrase_variants: "44/44"
+    scenario_runs: "66/66"
+    mutations: "15/15 killed"
+    independent_identity: UNVERIFIED
+    operational_permission: false
+
+  gate_source:
+    status: TESTED_PASS_FINAL_HEAD_PENDING
+    source_digest: sha256:8d6e235d99801724958a7602c6d9947d01d2c73f424396ff60cb4b553cf41f80
+    gate_rules: "80/80"
+    invariants: "85/85"
+    planner_golden: "22/22"
+    evals: "48/48"
+    mutations: "20/20 killed"
+    hook_smoke: "19/19"
+    traceability: PASS
+    host_enforcement: UNVERIFIED
+    independent_identity: UNVERIFIED
+    m4_m7: HARD_ENFORCEMENT_UNAVAILABLE
+    operational_permission: false
+
+  execution_source:
+    status: TESTED_PASS_FINAL_HEAD_PENDING
+    source_digest: sha256:cc77079406b7284ee8d5ad8b315345490f3dc245d84c4c5cfc79ca1dc0654244
+    exec_rules: "30/30"
+    invariants: "45/45"
+    planner_golden: "22/22"
+    evals: "26/26"
+    mutations: "10/10 killed"
+    builder_tests: "16/16"
+    traceability: PASS
+    verified_runner: false
+    dynamic_execution: HARD_ENFORCEMENT_UNAVAILABLE
+    independent_identity: UNVERIFIED
+    operational_permission: false
+
+blocker: null
+last_review:
+  decision: >-
+    All previously in-flight writable workflow jobs are finished. The boundary
+    workflow and the consolidated verifier are now read-only and cannot push to
+    this branch. This state is the final reconciliation before exact-head checks.
+next_action: >-
+  Require a passing workstream boundary check and serialized read-only verification
+  on this exact new head. Then review evidence/hash binding and move to
+  READY_FOR_REVIEW. Do not unblock Knowledge/RAG or merge before that gate.

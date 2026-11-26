@@ -1,0 +1,438 @@
+{
+  "evals": [
+    {
+      "actual_gate_status": "PASS",
+      "category": "정상",
+      "expected_local_gate_status": "PASS",
+      "id": "GEVAL-001",
+      "operational_permission": false,
+      "source_expected": "`PASS`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "PASS",
+      "category": "경계",
+      "expected_local_gate_status": "PASS",
+      "id": "GEVAL-002",
+      "operational_permission": false,
+      "source_expected": "`PASS 또는 정책된 BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "오류",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-003",
+      "operational_permission": false,
+      "source_expected": "`BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "PLANNER_REENTRY_REQUIRED",
+      "category": "Planner 재진입",
+      "expected_local_gate_status": "PLANNER_REENTRY_REQUIRED",
+      "id": "GEVAL-004",
+      "operational_permission": false,
+      "source_expected": "`PLANNER_REENTRY_REQUIRED`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "경로 우회",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-005",
+      "operational_permission": false,
+      "source_expected": "`BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "PASS_LOCAL_PROCEDURE",
+      "category": "도구 정상",
+      "expected_local_gate_status": "PASS_LOCAL_PROCEDURE",
+      "id": "GEVAL-006",
+      "operational_permission": false,
+      "source_expected": "`PASS`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "도구 near-miss",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-007",
+      "operational_permission": false,
+      "source_expected": "`BLOCK/REVISE`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "주입",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-008",
+      "operational_permission": false,
+      "source_expected": "`BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "SQL 주입",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-009",
+      "operational_permission": false,
+      "source_expected": "`BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "MCP namespace",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-010",
+      "operational_permission": false,
+      "source_expected": "`BLOCK/CLARIFY`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "권한 우회",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-011",
+      "operational_permission": false,
+      "source_expected": "`BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "비밀",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-012",
+      "operational_permission": false,
+      "source_expected": "`BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "category": "Sandbox",
+      "expected_local_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "id": "GEVAL-013",
+      "operational_permission": false,
+      "source_expected": "`BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "Hook 장애",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-014",
+      "operational_permission": false,
+      "source_expected": "`BLOCK/ERROR`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "category": "Approval 정상",
+      "expected_local_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "id": "GEVAL-015",
+      "operational_permission": false,
+      "source_expected": "`PASS`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "STALE",
+      "category": "Approval stale",
+      "expected_local_gate_status": "STALE",
+      "id": "GEVAL-016",
+      "operational_permission": false,
+      "source_expected": "`STALE/BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "Approval replay",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-017",
+      "operational_permission": false,
+      "source_expected": "`BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "category": "2인 승인",
+      "expected_local_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "id": "GEVAL-018",
+      "operational_permission": false,
+      "source_expected": "`BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "category": "JIT 회수",
+      "expected_local_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "id": "GEVAL-019",
+      "operational_permission": false,
+      "source_expected": "`PASS only after revoke`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "category": "Agent loop",
+      "expected_local_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "id": "GEVAL-020",
+      "operational_permission": false,
+      "source_expected": "`STOP_ESCALATE`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "category": "Handoff cycle",
+      "expected_local_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "id": "GEVAL-021",
+      "operational_permission": false,
+      "source_expected": "`STOP_ESCALATE`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "Transcript",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-022",
+      "operational_permission": false,
+      "source_expected": "`BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "STALE",
+      "category": "Checkpoint stale",
+      "expected_local_gate_status": "STALE",
+      "id": "GEVAL-023",
+      "operational_permission": false,
+      "source_expected": "`STALE/BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "CONFLICT",
+      "category": "병렬 race",
+      "expected_local_gate_status": "CONFLICT",
+      "id": "GEVAL-024",
+      "operational_permission": false,
+      "source_expected": "`CONFLICT`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "Background late result",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-025",
+      "operational_permission": false,
+      "source_expected": "`BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "PASS_LOCAL_PROCEDURE",
+      "category": "재시도 정상",
+      "expected_local_gate_status": "PASS_LOCAL_PROCEDURE",
+      "id": "GEVAL-026",
+      "operational_permission": false,
+      "source_expected": "`RETRY`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "OUTCOME_UNKNOWN",
+      "category": "불명확 write",
+      "expected_local_gate_status": "OUTCOME_UNKNOWN",
+      "id": "GEVAL-027",
+      "operational_permission": false,
+      "source_expected": "`OUTCOME_UNKNOWN`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "Idempotency payload 변경",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-028",
+      "operational_permission": false,
+      "source_expected": "`BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "category": "Compensation",
+      "expected_local_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "id": "GEVAL-029",
+      "operational_permission": false,
+      "source_expected": "`COMPENSATED/PARTIAL`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "category": "Compensation 실패",
+      "expected_local_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "id": "GEVAL-030",
+      "operational_permission": false,
+      "source_expected": "`COMPENSATION_FAILED`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "category": "RAG 정상",
+      "expected_local_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "id": "GEVAL-031",
+      "operational_permission": false,
+      "source_expected": "`PASS`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "RAG permission leak",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-032",
+      "operational_permission": false,
+      "source_expected": "`BLOCK/INCIDENT`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "RAG stale index",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-033",
+      "operational_permission": false,
+      "source_expected": "`BLOCK/ABSTAIN`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "INSUFFICIENT_EVIDENCE",
+      "category": "RAG no evidence",
+      "expected_local_gate_status": "INSUFFICIENT_EVIDENCE",
+      "id": "GEVAL-034",
+      "operational_permission": false,
+      "source_expected": "`INSUFFICIENT_EVIDENCE`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "CONFLICT",
+      "category": "RAG conflict",
+      "expected_local_gate_status": "CONFLICT",
+      "id": "GEVAL-035",
+      "operational_permission": false,
+      "source_expected": "`CONFLICT_ESCALATE`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "PASS_AS_DATA_ONLY",
+      "category": "RAG injection",
+      "expected_local_gate_status": "PASS_AS_DATA_ONLY",
+      "id": "GEVAL-036",
+      "operational_permission": false,
+      "source_expected": "`PASS only as data`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "FAIL",
+      "category": "Citation 오류",
+      "expected_local_gate_status": "FAIL",
+      "id": "GEVAL-037",
+      "operational_permission": false,
+      "source_expected": "`FAIL/REVISE`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "OUTCOME_UNKNOWN",
+      "category": "Post reconciliation",
+      "expected_local_gate_status": "OUTCOME_UNKNOWN",
+      "id": "GEVAL-038",
+      "operational_permission": false,
+      "source_expected": "`PARTIAL/OUTCOME_UNKNOWN`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "category": "Release 정상",
+      "expected_local_gate_status": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "id": "GEVAL-039",
+      "operational_permission": false,
+      "source_expected": "`PASS`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "STALE",
+      "category": "Stale PASS",
+      "expected_local_gate_status": "STALE",
+      "id": "GEVAL-040",
+      "operational_permission": false,
+      "source_expected": "`STALE/BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "PASS 위조",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-041",
+      "operational_permission": false,
+      "source_expected": "`BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "CI skip",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-042",
+      "operational_permission": false,
+      "source_expected": "`BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "Self review",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-043",
+      "operational_permission": false,
+      "source_expected": "`BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "WAIVED",
+      "category": "Waiver 정상",
+      "expected_local_gate_status": "WAIVED",
+      "id": "GEVAL-044",
+      "operational_permission": false,
+      "source_expected": "`WAIVED`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "STALE",
+      "category": "Waiver 만료",
+      "expected_local_gate_status": "STALE",
+      "id": "GEVAL-045",
+      "operational_permission": false,
+      "source_expected": "`STALE/BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "Policy engine 장애",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-046",
+      "operational_permission": false,
+      "source_expected": "`ERROR/BLOCK`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "BLOCK",
+      "category": "관측성",
+      "expected_local_gate_status": "BLOCK",
+      "id": "GEVAL-047",
+      "operational_permission": false,
+      "source_expected": "`BLOCK_RELEASE`",
+      "test_status": "PASS"
+    },
+    {
+      "actual_gate_status": "PASS_LOCAL_PROCEDURE",
+      "category": "Ablation",
+      "expected_local_gate_status": "PASS_LOCAL_PROCEDURE",
+      "id": "GEVAL-048",
+      "operational_permission": false,
+      "source_expected": "`품질/안전 동일이면 단순화`",
+      "test_status": "PASS"
+    }
+  ],
+  "schema_version": "1.0",
+  "status": "PASS"
+}

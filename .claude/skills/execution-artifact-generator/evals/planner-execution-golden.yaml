@@ -1,0 +1,137 @@
+{
+  "mappings": [
+    {
+      "expected_builder": "no_code",
+      "expected_disposition": "NOT_REQUIRED",
+      "planner_eval_id": "EVAL-01",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "no_code",
+      "expected_disposition": "NOT_REQUIRED",
+      "planner_eval_id": "EVAL-02",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "no_code",
+      "expected_disposition": "NOT_REQUIRED",
+      "planner_eval_id": "EVAL-03",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "python_local",
+      "expected_disposition": "NEW_ARTIFACT_JUSTIFIED",
+      "planner_eval_id": "EVAL-04",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "existing_artifact",
+      "expected_disposition": "SUPPORTED_CONTRACT_ONLY",
+      "planner_eval_id": "EVAL-05",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "existing_artifact",
+      "expected_disposition": "SUPPORTED_CONTRACT_ONLY",
+      "planner_eval_id": "EVAL-06",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "no_code",
+      "expected_disposition": "NOT_REQUIRED",
+      "planner_eval_id": "EVAL-07",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "existing_artifact",
+      "expected_disposition": "REUSE_DIRECT",
+      "planner_eval_id": "EVAL-08",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "python_local",
+      "expected_disposition": "NEW_ARTIFACT_JUSTIFIED",
+      "planner_eval_id": "EVAL-09",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "python_local",
+      "expected_disposition": "NEW_ARTIFACT_JUSTIFIED",
+      "planner_eval_id": "EVAL-10",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "existing_artifact",
+      "expected_disposition": "REUSE_DIRECT",
+      "planner_eval_id": "EVAL-11",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "existing_artifact",
+      "expected_disposition": "SUPPORTED_CONTRACT_ONLY",
+      "planner_eval_id": "EVAL-12",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "no_code",
+      "expected_disposition": "NOT_REQUIRED",
+      "planner_eval_id": "EVAL-13",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "existing_artifact",
+      "expected_disposition": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "planner_eval_id": "EVAL-14",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "existing_artifact",
+      "expected_disposition": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "planner_eval_id": "EVAL-15",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "existing_artifact",
+      "expected_disposition": "REUSE_DIRECT",
+      "planner_eval_id": "EVAL-16",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "existing_artifact",
+      "expected_disposition": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "planner_eval_id": "EVAL-17",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "no_code",
+      "expected_disposition": "NOT_REQUIRED",
+      "planner_eval_id": "EVAL-18",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "existing_artifact",
+      "expected_disposition": "SUPPORTED_CONTRACT_ONLY",
+      "planner_eval_id": "EVAL-19",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "python_local",
+      "expected_disposition": "HARD_ENFORCEMENT_UNAVAILABLE",
+      "planner_eval_id": "EVAL-20",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "python_local",
+      "expected_disposition": "NEW_ARTIFACT_JUSTIFIED",
+      "planner_eval_id": "EVAL-21",
+      "status": "PASS"
+    },
+    {
+      "expected_builder": "no_code",
+      "expected_disposition": "PLANNER_REENTRY_REQUIRED",
+      "planner_eval_id": "EVAL-22",
+      "status": "PASS"
+    }
+  ],
+  "schema_version": "1.0"
+}
