@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 from common import load_json, write_json
@@ -14,7 +15,6 @@ def decide(machine: dict, audit: dict, contracts: list[Path]) -> dict:
     missing_contracts = [path.as_posix() for path in contracts if not path.is_file()]
     machine_pass = machine.get("status") == "PASS"
     procedural_pass = audit.get("status") == "PASS_LOCAL_PROCEDURE"
-    independent = audit.get("independence", {}).get("actual_independent_executor_ran") is True
     current_subject = machine.get("subject_digest") or audit.get("subject_digest")
     audit_subject = audit.get("subject_digest")
     subject_current = not current_subject or current_subject == audit_subject
@@ -31,12 +31,9 @@ def decide(machine: dict, audit: dict, contracts: list[Path]) -> dict:
     elif missing_contracts:
         status = "BLOCKED"
         reason = "DOWNSTREAM_CONTRACT_MISSING"
-    elif not independent:
+    else:
         status = "PASS_LOCAL_PROCEDURE"
         reason = "INDEPENDENT_AUDIT_UNVERIFIED"
-    else:
-        status = "APPROVED_FOR_DESIGN"
-        reason = "ALL_REQUIRED_GATES_CURRENT"
 
     return {
         "schema_version": "1.0",
@@ -46,7 +43,7 @@ def decide(machine: dict, audit: dict, contracts: list[Path]) -> dict:
         "operational_permission": False,
         "machine_check": machine_pass,
         "procedural_audit": procedural_pass,
-        "independent_audit": independent,
+        "independent_audit": False,
         "missing_contracts": missing_contracts,
         "permits": ["gate_design", "execution_design", "knowledge_design", "assembly_design"] if status in {"PASS_LOCAL_PROCEDURE", "APPROVED_FOR_DESIGN"} else [],
         "forbids": ["production_write", "deployment", "secret_collection", "automatic_merge"],
@@ -54,6 +51,9 @@ def decide(machine: dict, audit: dict, contracts: list[Path]) -> dict:
 
 
 def main() -> int:
+    if sys.argv[1:2] == ["issue"]:
+        from issue_reviewed_plan import main as issue_main
+        return issue_main(sys.argv[2:])
     parser = argparse.ArgumentParser()
     parser.add_argument("--machine-check", type=Path, required=True)
     parser.add_argument("--audit", type=Path, required=True)

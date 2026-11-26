@@ -120,3 +120,19 @@ Prompt-only 또는 deterministic code 기준선을 먼저 평가한다. 실패 �
 - 과거 보고서의 PASS를 current evidence로 재사용
 - 자유문자 PASS나 exit code 0만으로 완료 판정
 - Planner가 선택하지 않은 component를 downstream에서 추가
+
+## 독립 검토 후 설계 계획 발행
+
+기존 Stop Gate는 절차 감사만 처리한다. 별도 발행 CLI는 고정한 DRAFT와 세 원본 입력,
+기계 검사 JSON, 절차 감사 JSON, 네 가지 파생 계약, 독립 검토 원본과 발행자 서명을 받는다.
+
+```sh
+python3 scripts/planner_stop_gate.py issue --draft plan.json --request request.md --policy policy.json --facts facts.json --machine machine.json --procedural audit.json --contracts contracts --independent independent.json --signature independent.sig --output issued-plan.json
+```
+
+지원하는 출처 증명은 독립 검토자에게 별도로 귀속된 공개키로 확인하는 OpenSSL
+dgst -sha256 분리 서명이다. 서명 대상은 독립 JSON 전체의 canonical_json_bytes이다.
+신뢰 키는 작업 디렉터리 외부의 /etc/factory/planner-reviewers/<issuer>.pem에서만 읽는다.
+검토자 이외 주체가 제어하는 키 또는 검토 JSON과 함께 전달된 키를 신뢰 목록에 등록하면 안 된다.
+워크스페이스에서 키를 설치하지 않는다. 채팅 링크나 전사본만 있으면 발행은 차단된다.
+출력은 신규 파일이어야 하며 설계 인계에만 유효하다.

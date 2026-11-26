@@ -1,0 +1,15 @@
+{
+  "source_baseline": "0930894a913608bbcc0c3645b45013fc65c04b57",
+  "test_command": "python3 scripts/test_review_issuance.py -v",
+  "test_identity": "temporary keys, test-only directory",
+  "test_cases_passed": 8,
+  "actual_case": {
+    "subject_digest": "sha256:c8bef633ddb01af8b99d0980bf32d67d14eeb46283585219849db041f55ca1a6",
+    "issuer_claim": "6b07d924-7500-83ee-8f88-ef3098c03011",
+    "turn_reported_by_coordinator": "01a216e7-e441-72a7-8a58-3cb7df675965",
+    "result": "BLOCKED",
+    "reason": "ISSUER_KEY_UNAVAILABLE",
+    "signature_supplied": false,
+    "issued": false
+  }
+}

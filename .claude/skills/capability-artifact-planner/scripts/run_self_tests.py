@@ -274,6 +274,9 @@ def run(repo_root: Path, results_dir: Path) -> dict[str, Any]:
 
     first_digest = sha256_bytes(canonical_json_bytes(prompt_only_plan()))
     second_digest = sha256_bytes(canonical_json_bytes(prompt_only_plan()))
+    import subprocess
+    import sys
+    subprocess.run([sys.executable, str(Path(__file__).with_name("test_review_issuance.py"))], check=True)
     summary = {
         "schema_version": "1.0",
         "status": "PASS"

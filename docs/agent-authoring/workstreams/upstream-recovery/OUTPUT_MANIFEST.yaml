@@ -4,7 +4,7 @@ generated_at: "2026-11-23"
 
 planner:
   status: TESTED_PASS_FINAL_HEAD_PENDING
-  source_digest: sha256:6a03348ea7b4c84421794fabe5bde85b31a98347041361741cc9ad1fca75ad8a
+  source_digest: sha256:b6079b61c1870f3e18fd864e544eafb2b5fd9defb4836e82bcb7ee4b8f6a11ed
   cap_rules: 36
   base_evals: 22
   paraphrase_variants: 44

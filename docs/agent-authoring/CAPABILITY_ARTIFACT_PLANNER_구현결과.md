@@ -4,7 +4,7 @@
 
 현재 source는 격리된 CI runner에서 검증됐으며 **PASS_LOCAL_PROCEDURE**다.
 
-- source digest: `sha256:6a03348ea7b4c84421794fabe5bde85b31a98347041361741cc9ad1fca75ad8a`
+- source digest: `sha256:b6079b61c1870f3e18fd864e544eafb2b5fd9defb4836e82bcb7ee4b8f6a11ed`
 - CAP 규칙: 36/36
 - 기준 평가: 22/22
 - 표현 변형: 44/44
