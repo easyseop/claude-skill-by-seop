@@ -1,6 +1,6 @@
 schema_version: '1.0'
 workstream_id: assembler-research
-generated_at: '2026-11-26T12:41:15+09:00'
+generated_at: '2026-11-26T12:45:11+09:00'
 manifest_scope: research_report_and_static_document_verification
 outputs:
 - path: docs/agent-authoring/research-results/05_AGENT_WORKFLOW_ASSEMBLER_심층조사.md
@@ -8,7 +8,7 @@ outputs:
   git_blob_sha1: d56de720495f9433048bd7cb27bb74b55e7b367f
   bytes: 194107
   kind: research_report
-  status: AUTHORED_STATICALLY_CHECKED
+  status: SUBMITTED_FOR_REVIEW
   research_verification: NOT_INDEPENDENTLY_VERIFIED
 counts:
   explicit_sections_0_through_25: 26
@@ -41,7 +41,10 @@ checks:
   source_traceability_and_links: PASS_49_DEFINED_SOURCES
   markdown_fences_and_placeholders: PASS
   runtime_schema_validation: NOT_RUN
-  pr_delivery_readback: PENDING_POST_PUBLICATION_CHECK
+  pr_delivery_readback: PASS_AT_RECORDED_EXACT_HEAD
+  owned_path_diff: PASS_4_OWNED_PATHS_FROM_USER_BASELINE
+  unchanged_source_seals_after_publication: PASS_8_OF_8
+  boundary_at_delivery_head: PASS_EXACT_RECORDED_HEAD
 verification_scope:
   audited_input_head: e2e1628b7070e314f59f49cb03f435d47dd29abb
   start_record_commit: fb2f82effd8b2de2c7b9251e067b7c55317f820d
@@ -51,8 +54,13 @@ verification_scope:
   baseline_boundary_conclusion: success
   baseline_boundary_head: e2e1628b7070e314f59f49cb03f435d47dd29abb
   output_head_boundary_check: CONSULT_GITHUB_ACTIONS_FOR_EXACT_CURRENT_HEAD
-  note: The baseline CI result concerns the input head only. Static mapping, YAML parsing, runtime execution and
-    research approval remain separate verification levels.
+  note: Baseline CI and delivery CI have explicitly recorded subjects. The report read-back receipt remains applicable
+    while its digest is unchanged. Consult GitHub Actions for boundary CI on the current state/log receipt commit;
+    no future-head success is predeclared.
+  delivery_verified_head: 04de9a2f7c9a7787f044c7df885837ce5a155f12
+  delivery_boundary_run_id: 45750750394
+  delivery_boundary_run_url: https://github.com/easyseop/claude-skill-by-seop/actions/runs/45750750394
+  delivery_boundary_conclusion: success
 input_audit:
   registered_inputs: 7
   matching_registered_input_digests: 7
@@ -87,6 +95,14 @@ delivery_entrypoint:
   method: GitHub connector full-content read-back with byte digest, mapping and source checks
   github_ui_visual_rendering: NOT_VERIFIED
   scenario_business_entrypoints: NOT_RUN
+  status: PASS_DOCUMENT_DELIVERY_ONLY
+  checked_at: '2026-11-26T12:45:11+09:00'
+  checked_head: 04de9a2f7c9a7787f044c7df885837ce5a155f12
+  remote_file_bytes_and_git_blobs_matched: 4
+  report_sha256_matched: true
+  canonical_mapping_rows_rechecked: 22
+  source_pointers_rechecked: 132
+  append_only_log_prefix_preserved: true
 execution:
   scenario_runtime_executions: 0
   runtime_tests: NOT_RUN
@@ -107,4 +123,5 @@ limitations:
   verification is claimed.
 - The earlier report was not safely recovered; this report is newly authored from approved inputs and current primary
   sources.
-review_status: AWAITING_DELIVERY_VERIFICATION
+review_status: READY_FOR_REVIEW
+research_verdict: NOT_ISSUED_AWAITING_ORCHESTRATOR_REVIEW

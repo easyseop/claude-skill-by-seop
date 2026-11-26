@@ -202,3 +202,21 @@
   - 원본 PASS·paraphrase, 문서 대조 통과, 같은 세션 동료 검토를 실제 실행·독립 검증으로 승격하지 않음.
 - 변경한 경로: OWNERSHIP의 조사 보고서·CURRENT_SESSION_STATE·OUTPUT_MANIFEST·HANDOFF_LOG 네 경로만.
 - 다음 행동: 기존 PR #2의 새 exact head를 통해 파일을 다시 읽고 digest·22개 매핑·diff·봉인·boundary CI를 확인한 뒤 `READY_FOR_REVIEW`로 기록. PR은 Draft를 유지.
+
+## 2026-11-26 12:45 KST — 기존 조사 세션 / PR 전달 확인과 연구 검토 제출
+
+- 상태: `READY_FOR_REVIEW`; 실제 착수 시각은 `2026-11-26T12:14:18.000+09:00`, 연구·전달 확인 완료 시각은 `2026-11-26T12:45:11+09:00`. 현재 조사 blocker 없음.
+- 전달 검증 대상: 기존 [Draft PR #2](https://github.com/easyseop/claude-skill-by-seop/pull/2)의 head [`04de9a2f7c9a7787f044c7df885837ce5a155f12`](https://github.com/easyseop/claude-skill-by-seop/commit/04de9a2f7c9a7787f044c7df885837ce5a155f12).
+- 실제 수행·검증:
+  - PR이 open/Draft/unmerged이며 지정한 research branch를 가리키는 것을 다시 읽고, 그 exact head의 승인 출력 네 파일을 전부 다시 읽음.
+  - 네 파일의 실제 UTF-8 바이트·Git blob을 재계산하고 제출본과 일치 확인. 보고서 SHA-256 `5b4ce8884d747e0b78288dcc27edec600a30ee6c1f18ebe01007532171ab2b8c` 및 Git blob `d56de720495f9433048bd7cb27bb74b55e7b367f` 일치.
+  - PR에서 읽은 보고서로 §0~§25, canonical 22개·필수 9필드·132 source pointer·연속 ID·11 YAML 제안·49 출처를 다시 대조.
+  - 사용자 기준 head `e2e1628b7070e314f59f49cb03f435d47dd29abb` 대비 변경은 OWNERSHIP의 네 경로뿐. 승인 입력 봉인 8/8 불변. 이전 HANDOFF_LOG 전체 prefix 보존.
+  - [boundary run 45750750394](https://github.com/easyseop/claude-skill-by-seop/actions/runs/45750750394)가 위 exact head에서 completed/success. 관찰된 job은 boundary-check success이며, 업무 런타임 테스트가 실행되었다는 뜻이 아님.
+- 한계·판정 경계:
+  - 확인한 사용자 전달 경로는 PR #2 → exact-head files → §19다. connector로 내용·구조를 검증했고 GitHub UI 시각 렌더링과 실제 Claude/업무 entrypoint 실행은 확인하지 않음.
+  - 시나리오 runtime 0회; AEVAL 30·AMUT 24는 설계이며 실행·mutation·ablation·E2E·설치·외부 행동은 `NOT_RUN`. 원본 PASS를 실행 검증으로 쓰지 않음.
+  - 이 기록은 문서 전달과 변경 경계에 대한 확인이다. `VERIFIED_RESEARCH`, `VERIFIED_LOCAL`, 독립 감사, production 승인을 발급하지 않음.
+  - 이후 상태·로그 확인 기록 commit의 CI는 그 current head의 Actions로 별도 확인한다. 이 기록은 미래 commit의 성공을 미리 선언하지 않음.
+- 변경한 경로: CURRENT_SESSION_STATE·OUTPUT_MANIFEST·HANDOFF_LOG만. 조사 보고서 bytes는 전달 검증 대상과 동일하게 유지.
+- 다음 행동: 총괄의 조사 내용 검토. PR은 Draft·미병합 유지. 정확한 후속 구현 binding이 필요할 때 소관 단계로 재진입하며, 추가 구현·자동화·배포는 이번 세션의 작업이 아님.
