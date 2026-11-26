@@ -181,3 +181,24 @@
   - 향후 exact capability/acceptance/Gate/permission/digest binding에 필요한 전체 plan은 합성하지 않고 Planner 재진입으로 처리.
 - 변경한 경로: `CURRENT_SESSION_STATE.yaml`, `HANDOFF_LOG.md` append, `OUTPUT_MANIFEST.yaml`.
 - 다음 행동: 안전하게 복구 가능한 기존 초안 여부를 확인하고 §19 매핑 및 조사 보고서를 작성·검토. 구현 코드·입력·설정·evidence·다른 workstream·main·자동화·병합은 변경하지 않음.
+
+## 2026-11-26 12:41 KST — 기존 조사 세션 / 22개 매핑과 전체 보고서 작성 완료
+
+- 상태: `IN_PROGRESS`; 작성·정적 검사는 완료했으며 PR 전달 확인을 진행 중. 현재 조사 blocker 없음.
+- 기준 commit: 입력 `e2e1628b7070e314f59f49cb03f435d47dd29abb`; 실제 착수 기록 `fb2f82effd8b2de2c7b9251e067b7c55317f820d`; 승인 정책 `42e06122d738a590fc516cccd28327de42f15743`.
+- 수행 내용:
+  - §19의 `EVAL-01~EVAL-22`를 정확히 1:1로 매핑. 정본의 요청·기대 architecture·mode·component set을 그대로 보존하고 추가 5개 판단은 연구 제안으로 표시.
+  - Work Order에 명시된 §0~§25 전체 26개 섹션 작성. ASM 30, AINV 24, AEVAL 설계 30, AMUT 설계 24, 계약 제안 1개와 보조 스키마 10개, 출처 49개를 포함.
+  - 안전하게 복구할 수 있는 과거 보고서가 확인되지 않아 새 승인 입력과 현재 공식 자료로 재작성. 기존 PR·세션·인수인계 이력은 유지.
+  - 같은 세션의 동료 검토로 정적 설치 승인 참조, 취소 후 late outcome, credential 참조, 비순환 digest, fencing/직렬화·평가 분류의 모순을 보정.
+- 실제 검증 결과:
+  - 등록 입력 Git blob 7/7과 봉인 8/8 일치; 22개 필수 9필드와 canonical 값·132개 source pointer 대조 통과.
+  - §0~§25 순서·제목, 연속 ID와 ASM의 8필드, 11개 YAML 파싱·중복 키 부재, 출처 참조·Markdown fence를 확인.
+  - 보고서 SHA-256: `5b4ce8884d747e0b78288dcc27edec600a30ee6c1f18ebe01007532171ab2b8c`; Git blob: `d56de720495f9433048bd7cb27bb74b55e7b367f`.
+  - 이는 문서·입력 검사다. 실제 22개 업무 실행 0회, AEVAL/AMUT/ablation/E2E·설치·Hook 강제·외부 행동은 `NOT_RUN` 또는 `NOT_VERIFIED`.
+- blocker 또는 결정:
+  - 현재 조사 source blocker 없음. §19 full plan 전체 출력은 선행 조건이 아니며 이후 exact binding이 필요할 때만 `PLANNER_REENTRY_REQUIRED`.
+  - `EVAL-22`의 `BLOCKED_FOR_DECISION`은 구매 행동의 판단이며 조사 세션 상태가 아님.
+  - 원본 PASS·paraphrase, 문서 대조 통과, 같은 세션 동료 검토를 실제 실행·독립 검증으로 승격하지 않음.
+- 변경한 경로: OWNERSHIP의 조사 보고서·CURRENT_SESSION_STATE·OUTPUT_MANIFEST·HANDOFF_LOG 네 경로만.
+- 다음 행동: 기존 PR #2의 새 exact head를 통해 파일을 다시 읽고 digest·22개 매핑·diff·봉인·boundary CI를 확인한 뒤 `READY_FOR_REVIEW`로 기록. PR은 Draft를 유지.

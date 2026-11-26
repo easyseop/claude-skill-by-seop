@@ -1,65 +1,110 @@
-schema_version: "1.0"
+schema_version: '1.0'
 workstream_id: assembler-research
-generated_at: "2026-11-26T12:14:18.000+09:00"
-manifest_scope: research_report_in_progress
-
+generated_at: '2026-11-26T12:41:15+09:00'
+manifest_scope: research_report_and_static_document_verification
 outputs:
-  - path: docs/agent-authoring/research-results/05_AGENT_WORKFLOW_ASSEMBLER_심층조사.md
-    sha256: null
-    kind: research_report
-    status: pending
-    reason: AUTHORING_APPROVED_SECTION_19_MAPPING
-
+- path: docs/agent-authoring/research-results/05_AGENT_WORKFLOW_ASSEMBLER_심층조사.md
+  sha256: 5b4ce8884d747e0b78288dcc27edec600a30ee6c1f18ebe01007532171ab2b8c
+  git_blob_sha1: d56de720495f9433048bd7cb27bb74b55e7b367f
+  bytes: 194107
+  kind: research_report
+  status: AUTHORED_STATICALLY_CHECKED
+  research_verification: NOT_INDEPENDENTLY_VERIFIED
+counts:
+  explicit_sections_0_through_25: 26
+  asm_rules: 30
+  assembly_invariants: 24
+  assembly_eval_designs: 30
+  assembly_mutation_designs: 24
+  assembly_contract_proposal: 1
+  auxiliary_schema_proposals: 10
+  planner_mappings: 22
+  source_pointers: 132
+  sources: 49
+  internal_sources: 12
+  external_primary_sources: 37
 checks:
-  branch_matches_ownership: PASS
-  boundary_check: PASS_FOR_INPUT_BASELINE
-  registered_input_blob_digests: PASS
-  prepared_input_seals: PASS
-  required_sections_present: NOT_RUN
-  asm_id_continuity: NOT_RUN
-  ainv_id_continuity: NOT_RUN
-  aeval_id_continuity: NOT_RUN
-  amut_id_continuity: NOT_RUN
-  planner_golden_22: IN_PROGRESS
-  source_traceability: INPUT_AUDIT_ONLY
-  implementation_files_unchanged: PASS_OWNED_OUTPUTS_ONLY
-
+  scope: STATIC_DOCUMENT_AND_APPROVED_INPUT_CHECKS_ONLY
+  registered_input_blob_digests: PASS_7_OF_7
+  prepared_input_seals: PASS_8_OF_8
+  required_sections_present: PASS_26_EXPLICIT_HEADINGS
+  asm_id_continuity: PASS_30
+  asm_eight_required_fields: PASS_30_RULES
+  ainv_id_continuity: PASS_24
+  aeval_id_continuity: PASS_30_DESIGNS_NOT_RUN
+  amut_id_continuity: PASS_24_DESIGNS_NOT_RUN
+  planner_golden_22: PASS_STATIC_ONE_TO_ONE_MAPPING
+  canonical_values_and_required_fields: PASS_22_OF_22
+  source_pointer_resolution: PASS_132_OF_132
+  source_status_fields_used_as_evidence: false
+  yaml_proposal_parse_and_duplicate_keys: PASS_11_TEMPLATES
+  source_traceability_and_links: PASS_49_DEFINED_SOURCES
+  markdown_fences_and_placeholders: PASS
+  runtime_schema_validation: NOT_RUN
+  pr_delivery_readback: PENDING_POST_PUBLICATION_CHECK
 verification_scope:
   audited_input_head: e2e1628b7070e314f59f49cb03f435d47dd29abb
-  resume_from_head: e2e1628b7070e314f59f49cb03f435d47dd29abb
+  start_record_commit: fb2f82effd8b2de2c7b9251e067b7c55317f820d
   policy_ref: 42e06122d738a590fc516cccd28327de42f15743
-  boundary_run_id: 45529919670
-  boundary_run_url: https://github.com/easyseop/claude-skill-by-seop/actions/runs/45529919670
-  boundary_run_conclusion: success
-  boundary_run_head: e2e1628b7070e314f59f49cb03f435d47dd29abb
-  output_head_boundary_check: CONSULT_GITHUB_ACTIONS_FOR_FINAL_HEAD
-  note: >-
-    The recorded boundary run proves the audited input baseline only.
-    It is not Planner content validation or runtime execution evidence.
-
+  baseline_boundary_run_id: 45529919670
+  baseline_boundary_run_url: https://github.com/easyseop/claude-skill-by-seop/actions/runs/45529919670
+  baseline_boundary_conclusion: success
+  baseline_boundary_head: e2e1628b7070e314f59f49cb03f435d47dd29abb
+  output_head_boundary_check: CONSULT_GITHUB_ACTIONS_FOR_EXACT_CURRENT_HEAD
+  note: The baseline CI result concerns the input head only. Static mapping, YAML parsing, runtime execution and
+    research approval remain separate verification levels.
 input_audit:
   registered_inputs: 7
   matching_registered_input_digests: 7
   effective_prepared_inputs: 8
   matching_prepared_input_seals: 8
   input_manifest_blob: 3243aab3f2266a722c46e78ecd9d0d45477a8393
+  planner_evals_blob: 8f057b4d8acbe2c250de2d821db2bf582bc3d87d
+  planner_expectations_blob: 9e30cf4552f0a75c1ceab5c7073c33cdafa0b364
   canonical_fixture_registered: true
   canonical_ids_checked: 22
   canonical_scenarios_required: 22
-  golden_mapping_completed: 0
+  golden_mapping_completed: 22
   result: SUFFICIENT_FOR_SECTION_19_RESEARCH
   source_status_fields_used_as_evidence: false
-
+  mode_counts:
+    direct_response: 6
+    deterministic_workflow: 12
+    bounded_agent: 3
+    multi_agent: 1
+peer_review:
+  scope: same_existing_research_session_document_review
+  independently_authenticated_auditor: false
+  resolved_findings:
+  - Actual activation approval records separated from static install policy.
+  - Late external outcomes tracked separately from cancelled, blocked or failed task states.
+  - Authority-bearing credential handles distinguished from nonsecret connection references.
+  - Same-stage policy references use logical IDs without cyclic peer document digests.
+  - Fencing or equivalent exclusive serialization and evaluation categories made consistent.
+delivery_entrypoint:
+  pr_url: https://github.com/easyseop/claude-skill-by-seop/pull/2
+  route: existing Draft PR 2 -> files at exact head -> report section 19
+  method: GitHub connector full-content read-back with byte digest, mapping and source checks
+  github_ui_visual_rendering: NOT_VERIFIED
+  scenario_business_entrypoints: NOT_RUN
 execution:
+  scenario_runtime_executions: 0
   runtime_tests: NOT_RUN
+  assembly_eval_executions: 0
   mutation_tests: NOT_RUN
+  mutation_executions: 0
+  ablation_tests: NOT_RUN
   end_to_end_tests: NOT_RUN
+  host_hook_activation: NOT_VERIFIED
   evidence_files_generated: 0
   production_authorized: false
-
 limitations:
-  - Research is in progress; report and mapping output have not yet been submitted.
-  - Canonical inputs are approved for section 19 mapping, not actual execution verification.
-  - Complete individual plans are not required for section 19; later exact bindings require Planner reentry.
-  - Existing runtime, mutation, and end-to-end executions remain NOT_RUN.
-review_status: NOT_READY
+- Source PASS and paraphrase values are static expectations, not runtime or independent approval evidence.
+- Exact capability, acceptance, Gate, permission and artifact bindings require later Planner or responsible-stage
+  reentry; they do not block this section 19 research.
+- EVAL-22 blocks the scenario purchase action, not the research session.
+- Schemas, evaluation and mutation sets are research proposals; no implementation, runtime, deployment or system
+  verification is claimed.
+- The earlier report was not safely recovered; this report is newly authored from approved inputs and current primary
+  sources.
+review_status: AWAITING_DELIVERY_VERIFICATION

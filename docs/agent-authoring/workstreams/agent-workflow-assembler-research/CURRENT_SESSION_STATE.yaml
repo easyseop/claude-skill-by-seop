@@ -1,12 +1,11 @@
-schema_version: "1.0"
+schema_version: '1.0'
 workstream_id: assembler-research
 session_type: research
 repository: easyseop/claude-skill-by-seop
 branch: research/agent-workflow-assembler
 status: IN_PROGRESS
 execution_mode: remote_connector
-updated_at: "2026-11-26T12:14:18.000+09:00"
-
+updated_at: '2026-11-26T12:41:15+09:00'
 source_of_truth:
   start_prompt: docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md
   remote_research_mode: docs/agent-authoring/workstreams/agent-workflow-assembler-research/REMOTE_RESEARCH_MODE.md
@@ -15,7 +14,6 @@ source_of_truth:
   input_manifest: docs/agent-authoring/workstreams/agent-workflow-assembler-research/INPUT_MANIFEST.yaml
   output_manifest: docs/agent-authoring/workstreams/agent-workflow-assembler-research/OUTPUT_MANIFEST.yaml
   handoff_log: docs/agent-authoring/workstreams/agent-workflow-assembler-research/HANDOFF_LOG.md
-
 input_binding:
   status: RESEALED_AND_BOUNDARY_VERIFIED
   start_prompt_blob: fe147efe55f0da39c649b7afcdddde4078621fa3
@@ -32,37 +30,34 @@ input_binding:
   boundary_verified_head: e2e1628b7070e314f59f49cb03f435d47dd29abb
   boundary_run_id: 45529919670
   boundary_recheck: PASS
-
 current_task:
-  objective: >-
-    Research the Agent & Workflow Assembler that binds approved Planner,
-    Gate, Execution, Knowledge, Skill, Agent, and Workflow components without
-    inventing new capabilities.
+  objective: Research the Agent & Workflow Assembler that binds approved Planner, Gate, Execution, Knowledge, Skill,
+    Agent, and Workflow components without inventing new capabilities.
   scope:
-    - assembler responsibility boundaries
-    - control-mode-specific assembly
-    - typed component binding
-    - context engineering
-    - handoff, permission, approval, state, and recovery
-    - packaging, install, upgrade, rollback
-    - eval, mutation, ablation, and release boundaries
+  - assembler responsibility boundaries
+  - control-mode-specific assembly
+  - typed component binding
+  - context engineering
+  - handoff, permission, approval, state, and recovery
+  - packaging, install, upgrade, rollback
+  - eval, mutation, ablation, and release boundaries
   prohibited:
-    - modifying the current local checkout or user files
-    - implementation changes
-    - editing .claude or .github
-    - modifying other workstreams
-    - claiming unavailable runtime as implemented
-    - production release
-
+  - modifying the current local checkout or user files
+  - implementation changes
+  - editing .claude or .github
+  - modifying other workstreams
+  - claiming unavailable runtime as implemented
+  - production release
 required_results:
-  required_sections: 25
-  asm_rules: "ASM-01~ASM-N, continuous"
-  assembly_invariants: "AINV-001~AINV-N, continuous"
-  assembly_evals: "AEVAL-001~AEVAL-N, continuous"
-  assembly_mutations: "AMUT-001~AMUT-N, continuous"
-  planner_assembly_golden: "22/22"
+  required_sections: 26
+  asm_rules: ASM-01~ASM-N, continuous
+  assembly_invariants: AINV-001~AINV-N, continuous
+  assembly_evals: AEVAL-001~AEVAL-N, continuous
+  assembly_mutations: AMUT-001~AMUT-N, continuous
+  planner_assembly_golden: 22/22
   source_traceability: required
-
+  section_count_note: All explicit Work Order headings 0 through 25 are required; its prose count of 25 is a counting
+    discrepancy.
 section_19_source_audit:
   decision: SUFFICIENT_FOR_RESEARCH_GOLDEN_MAPPING
   canonical_scenario_ids: EVAL-01~EVAL-22
@@ -70,17 +65,17 @@ section_19_source_audit:
   request_and_architecture_source: INPUT-PLANNER-EVALS-22
   normalized_control_and_components_source: INPUT-PLANNER-SCENARIO-EXPECTATIONS-22
   usage_limits:
-    - scenario PASS strings are not execution or independent verification evidence
-    - complete per-scenario CAPABILITY_PLAN outputs are not required for §19 research mapping
-    - Assembler-specific decisions must be marked as research output
-    - later implementation requiring exact capability, acceptance, Gate, permission, or digest bindings must return PLANNER_REENTRY_REQUIRED
-  golden_mapping_status: IN_PROGRESS
-
+  - scenario PASS strings are not execution or independent verification evidence
+  - complete per-scenario CAPABILITY_PLAN outputs are not required for §19 research mapping
+  - Assembler-specific decisions must be marked as research output
+  - later implementation requiring exact capability, acceptance, Gate, permission, or digest bindings must return
+    PLANNER_REENTRY_REQUIRED
+  golden_mapping_status: MAPPED_22_OF_22_STATICALLY_CHECKED
 execution_activity:
   session: existing_assembler_research_session
-  started_at: "2026-11-26T12:14:18.000+09:00"
+  started_at: '2026-11-26T12:14:18.000+09:00'
   actual_work_started: true
-  phase: section_19_mapping_and_research_report
+  phase: report_authored_verifying_pr_delivery
   duplicate_preflight:
     policy_ref: 42e06122d738a590fc516cccd28327de42f15743
     board_assignment_status: READY_FOR_SESSION
@@ -90,22 +85,39 @@ execution_activity:
     canonical_input_rows_checked: 22
     approved_input_blobs_checked: 7
     prepared_input_seals_checked: 8
-    assembly_mappings_authored: 0
+    assembly_mappings_authored: 22
     scenario_runtime_executions: 0
+    canonical_source_pointers_checked: 132
+    report_sections_authored: 26
+    asm_rules_authored: 30
+    assembly_invariants_authored: 24
+    assembly_evals_designed: 30
+    assembly_mutations_designed: 24
+  report_authored_at: '2026-11-26T12:41:15+09:00'
+  start_record_commit: fb2f82effd8b2de2c7b9251e067b7c55317f820d
 blocker: null
 resolved_blockers:
-  - code: PLANNER_CANONICAL_22_NOT_REGISTERED
-    resolved_for: WORK_ORDER_SECTION_19_RESEARCH_MAPPING
-    resolution: Approved input manifest registers both canonical 22-scenario catalogs.
+- code: PLANNER_CANONICAL_22_NOT_REGISTERED
+  resolved_for: WORK_ORDER_SECTION_19_RESEARCH_MAPPING
+  resolution: Approved input manifest registers both canonical 22-scenario catalogs.
 last_review:
-  decision: >-
-    Rechecked the current state, ownership, approval list, exact-head boundary
-    result, all seven input blob contents, all eight prepared seals, and exact
-    EVAL-01 through EVAL-22 identity. The existing session has actually started.
-    Source PASS strings are static expectations only; runtime executions remain zero.
-next_action: >-
-  Author all 22 research mappings with unchanged canonical request, architecture,
-  control mode and component fields. Reuse prior draft only if safely recoverable.
-  Complete and validate the report within owned paths, then submit for review.
-  Any later exact implementation binding remains PLANNER_REENTRY_REQUIRED;
-  this is not a blocker for the approved research mapping.
+  decision: All 22 research mappings and all 26 explicit report sections are authored and statically checked. Same-session
+    peer review fixes are incorporated. PR delivery read-back is the remaining completion step, not a research source
+    blocker.
+  static_input_pass_is_runtime_evidence: false
+  research_blocker: null
+  scenario_EVAL_22_action_status: BLOCKED_FOR_DECISION
+  later_exact_binding: PLANNER_REENTRY_REQUIRED_WHEN_IMPLEMENTATION_NEEDS_IT
+next_action: 'Read the report back through existing Draft PR #2 at the new exact head; verify unchanged source seals,
+  owned-path diff and boundary CI, then record READY_FOR_REVIEW. Do not execute scenario actions, implement, merge,
+  or deploy.'
+report:
+  path: docs/agent-authoring/research-results/05_AGENT_WORKFLOW_ASSEMBLER_심층조사.md
+  sha256: 5b4ce8884d747e0b78288dcc27edec600a30ee6c1f18ebe01007532171ab2b8c
+  git_blob_sha1: d56de720495f9433048bd7cb27bb74b55e7b367f
+  document_validation: PASS_STATIC_DOCUMENT_AND_INPUT_CHECKS
+  runtime_execution: NOT_RUN
+  independent_research_verdict: NOT_ISSUED
+  prior_draft_reused: false
+  prior_draft_recovery: Identical prior report was not safely recovered; recreated from approved inputs and current
+    primary sources.
