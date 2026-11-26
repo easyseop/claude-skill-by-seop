@@ -1,53 +1,31 @@
 {
   "phase": "K0",
-  "status": "EXECUTION_REENTRY_REQUIRED",
-  "upstream": "c1710fc2d96ff0c3161231377dfeef303ab5983b",
-  "knowledge_head_at_start": "330ce3f9fc99e26aba7ca673960638b029c75735",
-  "actions_success": [
-    45139722797,
-    45139722726
-  ],
-  "verification": "Recomputed SHA-256 over file bytes at pinned upstream commit against each implementation-manifest.json.",
-  "verified_files": {
-    "planner": {
-      "source": 25,
-      "evidence": 12
-    },
-    "gate": {
-      "source": 45,
-      "evidence": 11
-    },
-    "execution": {
-      "source": 46,
-      "evidence": 12
-    }
+  "status": "PLANNER_REENTRY_REQUIRED",
+  "upstream": "0930894a913608bbcc0c3645b45013fc65c04b57",
+  "previous_evidence_commit": "b2282647e8212db17f664091ead6d54eb6372de8",
+  "previous_upstream": "c1710fc2d96ff0c3161231377dfeef303ab5983b",
+  "checks": {
+    "boundary": 45757917628,
+    "verification": 45757917681,
+    "conclusion": "success"
   },
+  "manifest_rows_verified": 152,
+  "regression_tests_passed": 5,
+  "input_plan_id": "fixture",
+  "gate_plan_id": "fixture",
+  "input_status": "DRAFT",
+  "gate_plan_status": "DRAFT",
+  "planner_sha256": "sha256:82ecb637b9cf846fc5c560df605ea83d68752e237c57be08742444a8939f1b93",
+  "gate_check": "FAIL",
+  "failures": {
+    "I-006": "Planner status is not derivation-eligible"
+  },
+  "execution_derivation": "REJECTED_AT_UPSTREAM_GATE",
   "commands": [
     "python3.11 .claude/skills/gate-generator/scripts/derive_gate_contract.py docs/agent-authoring/evidence/capability-planner/fixture-plan.json --output current-gate.json",
-    "python3.11 .claude/skills/gate-generator/scripts/check_gate_contract.py current-gate.json",
-    "python3.11 .claude/skills/execution-artifact-generator/scripts/derive_execution_contract.py docs/agent-authoring/evidence/capability-planner/fixture-plan.json current-gate.json --output current-exec.json",
-    "python3.11 .claude/skills/execution-artifact-generator/scripts/check_execution_contract.py current-exec.json"
+    "python3.11 .claude/skills/gate-generator/scripts/check_gate_contract.py current-gate.json --planner docs/agent-authoring/evidence/capability-planner/fixture-plan.json",
+    "python3.11 .claude/skills/execution-artifact-generator/scripts/derive_execution_contract.py docs/agent-authoring/evidence/capability-planner/fixture-plan.json current-gate.json --output current-exec.json"
   ],
-  "gate_check": "PASS",
-  "gate_plan_id": "PLAN-1",
-  "input_plan_id": "fixture",
-  "execution_check": "FAIL",
-  "failures": {
-    "EXI-002": "Planner digest stale"
-  },
-  "execution_snapshot": {
-    "checker_digest": "sha256:checker",
-    "gate_digest": "sha256:8f39b7e402ff2895066891f41f56e6299adc4f8d636c9fa196045cb63b857d08",
-    "input_digest": "sha256:input",
-    "inventory_digest": "sha256:inventory",
-    "lock_digest": "sha256:lock",
-    "planner_digest": "sha256:82ecb637b9cf846fc5c560df605ea83d68752e237c57be08742444a8939f1b93",
-    "runtime_digest": "sha256:runtime",
-    "schema_digest": "sha256:contract-schema",
-    "source_digest": "sha256:source",
-    "test_digest": "sha256:test",
-    "toolchain_digest": "sha256:toolchain"
-  },
-  "independent_identity": "UNVERIFIED",
+  "next_input": "Current derivation-eligible Planner plan for K0",
   "operational_permission": false
 }

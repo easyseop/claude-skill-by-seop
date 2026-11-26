@@ -124,3 +124,9 @@
 - 현재 Planner 입력으로 계약을 재생성함. Gate checker PASS이나 plan ID 불일치. Execution checker FAIL (`EXI-002: Planner digest stale`).
 - 상태 `REENTRY_REQUIRED / K0`. K1~K6 미실행. 다음 행동은 선행 compiler의 실제 입력 결박 수정 후 K0 재검사.
 - 재현 명령과 snapshot은 `docs/agent-authoring/evidence/knowledge-rag-builder/k0-upstream-binding.json`에 기록.
+
+## 2026-11-26 — K0 재검증
+
+- PR #4 `0930894a913608bbcc0c3645b45013fc65c04b57` 연결 검사 및 범위 검사 성공 후 같은 커밋으로 재검사. manifest 152개 일치.
+- Gate에 실제 ID fixture, 입력 digest와 DRAFT 상태 반영. I-006에서 거절되어 Execution 생성 중단. 새 적격 테스트 입력의 연결은 통과.
+- 현재 상태 REENTRY_REQUIRED / K0 / PLANNER_REENTRY_REQUIRED. 다음 입력은 Gate 파생 자격이 검증된 실제 Planner 계획. K1~K6 미착수.

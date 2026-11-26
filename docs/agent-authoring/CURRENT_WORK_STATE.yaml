@@ -6,7 +6,7 @@ workstream: knowledge-rag-builder
 milestone: K0-K6-local-mvp
 status: REENTRY_REQUIRED
 phase: K0
-updated_at: "2026-11-24"
+updated_at: "2026-11-26"
 
 source_of_truth:
   work_order: docs/agent-authoring/CODEX_KNOWLEDGE_RAG_BUILDER_K0_K6_WORK_ORDER.md
@@ -17,10 +17,10 @@ source_of_truth:
 upstream_binding:
   delivery_mode: stacked_pr_base
   base_branch: recovery/upstream-builders
-  verified_head: c1710fc2d96ff0c3161231377dfeef303ab5983b
-  boundary_run: 45139722797
+  verified_head: 0930894a913608bbcc0c3645b45013fc65c04b57
+  boundary_run: 45757917628
   boundary_status: PASS
-  read_only_verification_run: 45139722726
+  read_only_verification_run: 45757917681
   read_only_verification_status: PASS
   components:
     - component: capability-artifact-planner
@@ -94,7 +94,7 @@ expected_paths:
   evidence: docs/agent-authoring/evidence/knowledge-rag-builder/
   report: docs/agent-authoring/KNOWLEDGE_RAG_BUILDER_MVP_구현결과.md
 
-codex_next_action: Rerun K0 against corrected upstream compiler bindings and checker results.
+codex_next_action: Recheck K0 with a derivation-eligible Planner input.
 
 review_policy:
   review_owner: current_chatgpt_orchestrator_session
@@ -102,13 +102,12 @@ review_policy:
   local_verified_is_not_production_approval: true
 
 blocker:
-  id: EXECUTION_REENTRY_REQUIRED
-  reason: Freshly derived execution contract fails EXI-002 (Planner digest stale).
+  id: PLANNER_REENTRY_REQUIRED
+  reason: Actual Planner fixture status DRAFT fails Gate I-006.
   evidence: docs/agent-authoring/evidence/knowledge-rag-builder/k0-upstream-binding.json
 last_review:
   decision: >-
-    UPSTREAM_MISSING is resolved by the verified stacked base. Knowledge/RAG K0-K6
-    may resume while preserving all upstream artifacts as read-only inputs.
+    Connection checks passed on the corrected upstream. K0 fixture is DRAFT and Gate I-006 rejects it.
 next_stage_after_verified_local:
   - review Agent & Workflow Assembler research
   - author Assembler MVP work order

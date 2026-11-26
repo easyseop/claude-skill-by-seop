@@ -18,8 +18,8 @@ outputs:
 
 checks:
   ownership_boundary: PENDING
-  upstream_inputs_current: EXECUTION_REENTRY_REQUIRED
-  upstream_file_digests: MATCH_151_OF_151
+  upstream_inputs_current: PLANNER_REENTRY_REQUIRED
+  upstream_file_digests: MATCH_152_OF_152
   k0_binding_evidence: docs/agent-authoring/evidence/knowledge-rag-builder/k0-upstream-binding.json
   prompt_coverage: PENDING
   know_84: PENDING
@@ -31,5 +31,5 @@ checks:
   independent_identity: UNVERIFIED
 
 limitations:
-  - Fresh execution compiler output failed EXI-002 at the pinned upstream commit.
+  - The pinned Planner fixture is DRAFT. Gate I-006 rejects it before Execution derivation.
 review_status: NOT_READY
