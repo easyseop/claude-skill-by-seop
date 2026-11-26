@@ -1,14 +1,14 @@
 schema_version: "1.0"
 workstream_id: assembler-research
-generated_at: "2026-11-24T16:36:57.000+09:00"
-manifest_scope: approved_input_availability_audit
+generated_at: "2026-11-26T12:14:18.000+09:00"
+manifest_scope: research_report_in_progress
 
 outputs:
   - path: docs/agent-authoring/research-results/05_AGENT_WORKFLOW_ASSEMBLER_심층조사.md
     sha256: null
     kind: research_report
     status: pending
-    reason: PLANNER_CANONICAL_22_NOT_REGISTERED
+    reason: AUTHORING_APPROVED_SECTION_19_MAPPING
 
 checks:
   branch_matches_ownership: PASS
@@ -20,42 +20,35 @@ checks:
   ainv_id_continuity: NOT_RUN
   aeval_id_continuity: NOT_RUN
   amut_id_continuity: NOT_RUN
-  planner_golden_22: BLOCKED_FOR_SOURCE
+  planner_golden_22: IN_PROGRESS
   source_traceability: INPUT_AUDIT_ONLY
   implementation_files_unchanged: PASS_OWNED_OUTPUTS_ONLY
 
 verification_scope:
-  audited_input_head: 308b8652afa1362759e1874f8fda9a4a40d2535a
-  resume_commit: 04fb5151de549eb06442c8eae93b573eac09c39a
-  policy_ref: ce5c90e29261e4026b03a05c9c3925d80b785710
-  boundary_run_id: 45138836654
-  boundary_run_url: https://github.com/easyseop/claude-skill-by-seop/actions/runs/45138836654
+  audited_input_head: e2e1628b7070e314f59f49cb03f435d47dd29abb
+  resume_from_head: e2e1628b7070e314f59f49cb03f435d47dd29abb
+  policy_ref: 42e06122d738a590fc516cccd28327de42f15743
+  boundary_run_id: 45529919670
+  boundary_run_url: https://github.com/easyseop/claude-skill-by-seop/actions/runs/45529919670
   boundary_run_conclusion: success
-  boundary_run_head: 308b8652afa1362759e1874f8fda9a4a40d2535a
-  boundary_execution_test_job: skipped
+  boundary_run_head: e2e1628b7070e314f59f49cb03f435d47dd29abb
   output_head_boundary_check: CONSULT_GITHUB_ACTIONS_FOR_FINAL_HEAD
   note: >-
     The recorded boundary run proves the audited input baseline only.
     It is not Planner content validation or runtime execution evidence.
 
 input_audit:
-  registered_inputs: 5
-  matching_registered_input_digests: 5
-  effective_prepared_inputs: 6
-  matching_prepared_input_seals: 6
-  input_manifest_blob: c5a22e453d3fa3ef37ea6d3a702f27fecb7a9311
-  workstream_input_files:
-    - docs/agent-authoring/workstreams/agent-workflow-assembler-research/inputs/UPSTREAM_CONTRACT_SUMMARY.md
-  canonical_fixture_registered: false
+  registered_inputs: 7
+  matching_registered_input_digests: 7
+  effective_prepared_inputs: 8
+  matching_prepared_input_seals: 8
+  input_manifest_blob: 3243aab3f2266a722c46e78ecd9d0d45477a8393
+  canonical_fixture_registered: true
+  canonical_ids_checked: 22
   canonical_scenarios_required: 22
-  canonical_scenarios_verified: 0
   golden_mapping_completed: 0
-  result: PLANNER_REENTRY_REQUIRED
-  sources:
-    - https://github.com/easyseop/claude-skill-by-seop/blob/308b8652afa1362759e1874f8fda9a4a40d2535a/docs/agent-authoring/workstreams/agent-workflow-assembler-research/INPUT_MANIFEST.yaml
-    - https://github.com/easyseop/claude-skill-by-seop/blob/308b8652afa1362759e1874f8fda9a4a40d2535a/docs/agent-authoring/workstreams/agent-workflow-assembler-research/inputs/UPSTREAM_CONTRACT_SUMMARY.md
-    - https://github.com/easyseop/claude-skill-by-seop/blob/308b8652afa1362759e1874f8fda9a4a40d2535a/docs/agent-authoring/workstreams/agent-workflow-assembler-research/WORK_ORDER.md
-    - https://github.com/easyseop/claude-skill-by-seop/blob/ce5c90e29261e4026b03a05c9c3925d80b785710/docs/agent-authoring/session-collaboration/PREPARED_INPUT_OVERRIDES.json
+  result: SUFFICIENT_FOR_SECTION_19_RESEARCH
+  source_status_fields_used_as_evidence: false
 
 execution:
   runtime_tests: NOT_RUN
@@ -65,11 +58,8 @@ execution:
   production_authorized: false
 
 limitations:
-  - Canonical 22-scenario mapping is unverified because approved source data is absent.
-  - Zero verified scenarios means missing input, not 22 executed test failures.
-  - The registered-input READY declaration covers the five listed inputs only.
-  - No report exists at the audited head; its digest and completion counts remain unset.
-  - Prior local research output was not recovered or treated as a current submitted report.
-  - The audit does not assert source absence outside the approved inputs of this branch.
-  - New source registration and digest resealing belong to the orchestrator.
+  - Research is in progress; report and mapping output have not yet been submitted.
+  - Canonical inputs are approved for section 19 mapping, not actual execution verification.
+  - Complete individual plans are not required for section 19; later exact bindings require Planner reentry.
+  - Existing runtime, mutation, and end-to-end executions remain NOT_RUN.
 review_status: NOT_READY

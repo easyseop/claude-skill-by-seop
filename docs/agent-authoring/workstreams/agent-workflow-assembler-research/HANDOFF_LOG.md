@@ -162,3 +162,22 @@
   - 최신 PR #2 head와 최신 collaboration-framework base로 boundary 검사를 재실행.
   - PASS이면 조사 세션은 동일 PR에서 §19의 22개 mapping과 나머지 25개 섹션 조사를 재개.
   - 새 세션·main 수정·병합·배포는 하지 않음.
+
+## 2026-11-26 12:14 KST — 기존 조사 세션 / 승인된 22개 입력으로 실제 착수
+
+- 상태: `IN_PROGRESS`; 실제 착수 시각 `2026-11-26T12:14:18.000+09:00`.
+- 기준 commit: `e2e1628b7070e314f59f49cb03f435d47dd29abb`; 기존 Draft PR #2와 기존 조사 세션을 재사용.
+- 중복 착수 점검: 총괄 board `42e06122d738a590fc516cccd28327de42f15743` 및 현재 상태는 `READY_FOR_SESSION`. 실행 중인 다른 담당 기록은 관찰되지 않았고, 동일 workstream 안의 보조 읽기 검토만 사용.
+- 수행 내용:
+  - 입력 변경 후 최신 상태·Ownership·Input Manifest·prepared-input 승인 목록을 다시 읽음.
+  - 등록 입력 7/7과 봉인 입력 8/8을 head tree 및 실제 내용의 Git blob SHA로 대조.
+  - 두 Planner 입력을 처음부터 끝까지 읽고 `EVAL-01~EVAL-22`의 정확한 1:1 ID 집합·title 결합을 확인.
+  - exact head의 [boundary run 45529919670](https://github.com/easyseop/claude-skill-by-seop/actions/runs/45529919670) success 확인.
+- blocker 또는 결정:
+  - 이전 `PLANNER_CANONICAL_22_NOT_REGISTERED`는 §19 연구 범위에서 해소. 현재 조사 blocker 없음.
+  - 이전 OUTPUT_MANIFEST의 누락 표시는 과거 감사 결과였으므로 현재 입력 7개·작성 중 상태로 갱신.
+  - 정본 expected architecture와 정규화 mode/component set은 그대로 보존. Assembly 추가 결정은 연구 제안으로 표시.
+  - 입력 `status: PASS`와 paraphrase PASS는 실제 실행·독립 검증·완성 plan 승인 증거로 사용하지 않음.
+  - 향후 exact capability/acceptance/Gate/permission/digest binding에 필요한 전체 plan은 합성하지 않고 Planner 재진입으로 처리.
+- 변경한 경로: `CURRENT_SESSION_STATE.yaml`, `HANDOFF_LOG.md` append, `OUTPUT_MANIFEST.yaml`.
+- 다음 행동: 안전하게 복구 가능한 기존 초안 여부를 확인하고 §19 매핑 및 조사 보고서를 작성·검토. 구현 코드·입력·설정·evidence·다른 workstream·main·자동화·병합은 변경하지 않음.

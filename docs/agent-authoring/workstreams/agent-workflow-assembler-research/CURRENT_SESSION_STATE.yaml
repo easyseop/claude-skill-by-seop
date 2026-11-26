@@ -3,9 +3,9 @@ workstream_id: assembler-research
 session_type: research
 repository: easyseop/claude-skill-by-seop
 branch: research/agent-workflow-assembler
-status: READY_FOR_SESSION
+status: IN_PROGRESS
 execution_mode: remote_connector
-updated_at: "2026-11-25"
+updated_at: "2026-11-26T12:14:18.000+09:00"
 
 source_of_truth:
   start_prompt: docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md
@@ -28,9 +28,9 @@ input_binding:
   planner_scenario_expectations_blob: 9e30cf4552f0a75c1ceab5c7073c33cdafa0b364
   registered_inputs_verified: 7
   prepared_inputs_verified: 8
-  boundary_policy_commit: 67dd45c0459541282a68877a838bc4a9eb18b0cb
-  boundary_verified_head: 4f65d5ecb0124097d2f165565ba15b9bd51cf99a
-  boundary_run_id: 45529821793
+  boundary_policy_commit: 42e06122d738a590fc516cccd28327de42f15743
+  boundary_verified_head: e2e1628b7070e314f59f49cb03f435d47dd29abb
+  boundary_run_id: 45529919670
   boundary_recheck: PASS
 
 current_task:
@@ -74,19 +74,38 @@ section_19_source_audit:
     - complete per-scenario CAPABILITY_PLAN outputs are not required for §19 research mapping
     - Assembler-specific decisions must be marked as research output
     - later implementation requiring exact capability, acceptance, Gate, permission, or digest bindings must return PLANNER_REENTRY_REQUIRED
-  golden_mapping_status: READY_TO_AUTHOR
+  golden_mapping_status: IN_PROGRESS
 
+execution_activity:
+  session: existing_assembler_research_session
+  started_at: "2026-11-26T12:14:18.000+09:00"
+  actual_work_started: true
+  phase: section_19_mapping_and_research_report
+  duplicate_preflight:
+    policy_ref: 42e06122d738a590fc516cccd28327de42f15743
+    board_assignment_status: READY_FOR_SESSION
+    state_status_before_claim: READY_FOR_SESSION
+    other_running_owner_observed: false
+  progress:
+    canonical_input_rows_checked: 22
+    approved_input_blobs_checked: 7
+    prepared_input_seals_checked: 8
+    assembly_mappings_authored: 0
+    scenario_runtime_executions: 0
 blocker: null
+resolved_blockers:
+  - code: PLANNER_CANONICAL_22_NOT_REGISTERED
+    resolved_for: WORK_ORDER_SECTION_19_RESEARCH_MAPPING
+    resolution: Approved input manifest registers both canonical 22-scenario catalogs.
 last_review:
   decision: >-
-    The prior PLANNER_CANONICAL_22_NOT_REGISTERED source blocker is resolved for
-    WORK_ORDER §19 research mapping. The two approved inputs provide the exact
-    22 requests, expected architectures, normalized control modes, and selected
-    component expectations. Workstream Boundary Check run 45529821793 passed on
-    the exact approved-input head. The inputs do not prove runtime execution or
-    full individual plan approval.
+    Rechecked the current state, ownership, approval list, exact-head boundary
+    result, all seven input blob contents, all eight prepared seals, and exact
+    EVAL-01 through EVAL-22 identity. The existing session has actually started.
+    Source PASS strings are static expectations only; runtime executions remain zero.
 next_action: >-
-  Resume the existing research session in this same PR. Re-read INPUT_MANIFEST,
-  verify the seven registered input blobs, set status to IN_PROGRESS, author the
-  exact EVAL-01 through EVAL-22 Assembly golden mappings, and complete the remaining
-  report sections. Do not create a new session, modify main, merge, or deploy.
+  Author all 22 research mappings with unchanged canonical request, architecture,
+  control mode and component fields. Reuse prior draft only if safely recoverable.
+  Complete and validate the report within owned paths, then submit for review.
+  Any later exact implementation binding remains PLANNER_REENTRY_REQUIRED;
+  this is not a blocker for the approved research mapping.
