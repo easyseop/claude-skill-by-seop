@@ -1,0 +1,41 @@
+schema_version: "1.0"
+workstream_id: assembler-research
+branch: research/agent-workflow-assembler
+owner_role: research_session
+
+writable_paths:
+  - docs/agent-authoring/workstreams/agent-workflow-assembler-research/CURRENT_SESSION_STATE.yaml
+  - docs/agent-authoring/workstreams/agent-workflow-assembler-research/HANDOFF_LOG.md
+  - docs/agent-authoring/workstreams/agent-workflow-assembler-research/OUTPUT_MANIFEST.yaml
+  - docs/agent-authoring/research-results/05_AGENT_WORKFLOW_ASSEMBLER_심층조사.md
+
+read_only_paths:
+  - docs/agent-authoring/workstreams/agent-workflow-assembler-research/SESSION_START_PROMPT.md
+  - docs/agent-authoring/workstreams/agent-workflow-assembler-research/REMOTE_RESEARCH_MODE.md
+  - docs/agent-authoring/workstreams/agent-workflow-assembler-research/WORK_ORDER.md
+  - docs/agent-authoring/workstreams/agent-workflow-assembler-research/OWNERSHIP.yaml
+  - docs/agent-authoring/workstreams/agent-workflow-assembler-research/INPUT_MANIFEST.yaml
+  - docs/agent-authoring/workstreams/agent-workflow-assembler-research/inputs/**
+  - docs/agent-authoring/session-collaboration/**
+  - .claude/**
+
+forbidden_paths:
+  - .claude/settings.json
+  - .github/**
+  - docs/agent-authoring/evidence/**
+  - docs/agent-authoring/workstreams/upstream-recovery/**
+  - docs/agent-authoring/workstreams/knowledge-rag-builder/**
+
+shared_files:
+  orchestrator_only:
+    - docs/agent-authoring/session-collaboration/MASTER_WORKSTREAM_BOARD.yaml
+    - docs/agent-authoring/session-collaboration/WORKSTREAM_BOUNDARIES.json
+
+policy:
+  default: deny
+  implementation_changes: forbidden
+  branch_switch: forbidden
+  main_direct_write: false
+  force_push: false
+  auto_merge: false
+  unexpected_change: BLOCKED_FOR_DECISION
