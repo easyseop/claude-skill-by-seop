@@ -136,3 +136,9 @@
 - 상위 커밋 0930894a913608bbcc0c3645b45013fc65c04b57, 직전 K0 7341fd39afd192c105206c2a764c70a9d4cf236e. 등록된 Planner 증거의 fixture는 DRAFT이며 연결 단위 시험의 상태 리터럴은 승인 이력이 없다.
 - 가상 용어표 조회 계획을 Planner CLI로 초기화하고 설계 필드를 작성했다. 세 입력 digest를 지정한 기계검사 PASS, 절차 감사 PASS_LOCAL_PROCEDURE, 계약 4종 파생. Stop gate INDEPENDENT_AUDIT_UNVERIFIED. 독립 검토용 원본·결과: evidence/knowledge-rag-builder/k0-planner-review/
 - 적격 계획을 전제로 하는 연결 및 K0 합격 검증은 미실행. 현재 가상 계획의 digest에 결박된 독립 검토와 그 결과로 정식 발행된 Gate 적격 Planner 계획이 필요합니다.
+
+## 2026-11-26 — K0 평가 명세 보완
+
+- 기준 a653a504614c902c9efb62522a6f35b6052f3ac5. AC-1의 기존 평가 ID 두 개에 기대값·출처·미등록 판정 조건을 별도 명세로 추가. 평가 실행 결과는 미검증.
+- 고정 plan.json 정규화 SHA-256 재계산 일치: sha256:c8bef633ddb01af8b99d0980bf32d67d14eeb46283585219849db041f55ca1a6.
+- 별도 검토 완료 통지를 받았으나 검토자 원본을 열람하지 못함. 공식 검토 승격·적격 계획 발행·K0 연결 재실행 보류. 다음 입력은 해당 digest에 대한 검토자 원문과 출처를 확인할 수 있는 기록.
