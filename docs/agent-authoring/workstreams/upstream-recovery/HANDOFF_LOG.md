@@ -159,3 +159,8 @@
 - blocker 또는 결정: 현재 HEAD의 신선한 boundary/verification run이 필요하며, 총괄이 이 append-only 기록을 통해 PR synchronize를 유도함.
 - 변경한 경로: `docs/agent-authoring/workstreams/upstream-recovery/HANDOFF_LOG.md`만 추가 기록.
 - 다음 행동: 새 CI의 결과와 evidence digest를 확인한 후에만 READY_FOR_REVIEW 가능성을 판단. Knowledge/RAG 및 다른 workstream 착수 금지.
+
+## 2026-11-26 — PR #1 K0 연결 오류 수정
+
+- 기준 c1710fc. Gate와 Execution의 실제 입력 ID·상태·digest·architecture를 검증. 로컬 연결 시험 5개, Gate 및 Execution 자체 시험 통과.
+- 동일 HEAD에서 CI 성공 확인 후에만 PR #1 K0 재검사.

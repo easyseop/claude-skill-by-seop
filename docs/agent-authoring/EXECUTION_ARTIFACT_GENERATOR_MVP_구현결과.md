@@ -4,7 +4,7 @@
 
 Execution Artifact Generator는 격리 CI runner에서 검증됐으며 **PASS_LOCAL_PROCEDURE**다.
 
-- source digest: `sha256:b0b0a919e2aa93679ac571e77ac65b3a1fe584b6d477839c8418d732ba97dcdf`
+- source digest: `sha256:cc77079406b7284ee8d5ad8b315345490f3dc245d84c4c5cfc79ca1dc0654244`
 - EXEC 규칙: 30/30
 - 기계 불변식: 45/45
 - Planner execution golden: 22/22
@@ -36,3 +36,5 @@ Execution Artifact Generator는 격리 CI runner에서 검증됐으며 **PASS_LO
 ## 다음 단계
 
 Ownership boundary가 PASS하면 Execution을 `VERIFIED_LOCAL_CANDIDATE`로 닫고 Knowledge/RAG Builder K0~K6 작업판을 재개한다.
+
+2026-11-26 실제 입력 연결을 CLI로 검증했다. 일치, Planner 교체, Gate 바이트 변경, ID 변조 후 digest 재계산, DRAFT 거절 총 5개 테스트가 통과했다.

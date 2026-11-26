@@ -6,6 +6,8 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import subprocess
+import sys
 import py_compile
 import tempfile
 from pathlib import Path
@@ -209,6 +211,7 @@ def main() -> int:
     write_json(results / "execution-audit-result.json", {"schema_version": "1.0", "status": "PASS_LOCAL_PROCEDURE", "blind_first_procedure": True, "actual_independent_executor_ran": False, "independence_status": "UNVERIFIED", "operational_permission": False})
     write_json(results / "execution-stop-gate.json", {"schema_version": "1.0", "status": "PASS_LOCAL_PROCEDURE" if baseline["status"] == "PASS" and trace["status"] == "PASS" else "BLOCK", "operational_permission": False, "verified_runner": False, "dynamic_execution": "HARD_ENFORCEMENT_UNAVAILABLE"})
 
+    subprocess.run([sys.executable, str(Path(__file__).with_name("test_upstream_binding.py"))], check=True)
     summary = {
         "schema_version": "1.0",
         "status": "PASS" if all([

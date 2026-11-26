@@ -8,9 +8,10 @@ from typing import Any
 from gate_engine import check_contract
 
 
-def comprehensive_check(contract: dict[str, Any], invariant_ids: list[str]) -> dict[str, Any]:
+def comprehensive_check(contract: dict[str, Any], invariant_ids: list[str], binding_failures=None) -> dict[str, Any]:
     result = check_contract(contract, invariant_ids)
     failures = dict(result.get("failures", {}))
+    failures.update(binding_failures or {})
     pretool = contract.get("hooks", {}).get("pretool", {})
     stop = contract.get("hooks", {}).get("stop", {})
     if pretool.get("timeout_behavior") != "block":

@@ -183,22 +183,9 @@ def materialize(repo_root: Path) -> dict[str, Any]:
     })
 
     scripts = package / "scripts"
-    write_text(scripts / "check_gate_contract.py", wrapper("gate_engine", "check_contract(value, [f'I-{n:03d}' for n in range(1, 86)])"))
+    write_text(scripts / "check_gate_contract.py", Path(__file__).with_name("check_gate_contract.py").read_text(encoding="utf-8"))
     write_text(scripts / "canonicalize_and_hash.py", wrapper("gate_engine", "{'status': 'PASS', 'digest': sha256_value(value)}").replace("from gate_engine import {'status': 'PASS', 'digest': sha256_value", "from gate_engine import sha256_value"))
-    write_text(scripts / "derive_gate_contract.py", '''#!/usr/bin/env python3
-from __future__ import annotations
-import argparse, json
-from pathlib import Path
-from gate_engine import sha256_file, valid_contract, write_json
-
-def main() -> int:
-    p=argparse.ArgumentParser(); p.add_argument('capability_plan', type=Path); p.add_argument('--output', type=Path, required=True); a=p.parse_args()
-    contract=valid_contract([f'I-{n:03d}' for n in range(1,86)])
-    contract['upstream_binding']['capability_plan_digest']=sha256_file(a.capability_plan)
-    contract['snapshot']['upstream_digest']=contract['upstream_binding']['capability_plan_digest']
-    write_json(a.output, contract); return 0
-if __name__=='__main__': raise SystemExit(main())
-''')
+    write_text(scripts / "derive_gate_contract.py", Path(__file__).with_name("derive_gate_contract.py").read_text(encoding="utf-8"))
     write_text(scripts / "discover_enforcement_inventory.py", '''#!/usr/bin/env python3
 from __future__ import annotations
 import argparse, json

@@ -4,7 +4,7 @@
 
 Gate Generator는 격리된 CI runner에서 검증됐으며 **PASS_LOCAL_PROCEDURE**다.
 
-- source digest: `sha256:bc648b66babfa004def04acee2504f1cc14f7cdbd077cbb9b0e9c14378a264f6`
+- source digest: `sha256:8d6e235d99801724958a7602c6d9947d01d2c73f424396ff60cb4b553cf41f80`
 - GATE 규칙: 80/80
 - 기계 불변식: 85/85
 - Planner golden: 22/22
@@ -32,3 +32,5 @@ M0 규칙·schema·digest, M1 Planner→Gate contract, M2 결정적 checker·STA
 ## 다음 단계
 
 Ownership boundary가 PASS하면 Gate를 `VERIFIED_LOCAL_CANDIDATE`로 닫고 Execution Artifact Generator E0~E4 복구를 시작한다.
+
+2026-11-26 실제 입력 연결을 CLI로 검증했다. 일치, Planner 교체, Gate 바이트 변경, ID 변조 후 digest 재계산, DRAFT 거절 총 5개 테스트가 통과했다.

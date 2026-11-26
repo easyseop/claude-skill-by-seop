@@ -146,13 +146,13 @@ def fail(failures: dict[str, str], invariant_id: str, message: str) -> None:
     failures.setdefault(invariant_id, message)
 
 
-def check_contract(contract: dict[str, Any], invariant_ids: list[str]) -> dict[str, Any]:
+def check_contract(contract: dict[str, Any], invariant_ids: list[str], *, planner_digest=None, binding_failures=None) -> dict[str, Any]:
     failures: dict[str, str] = {}
     for key in ("schema_version", "contract_id", "status", "snapshot", "planner_binding", "gate_binding", "decision", "artifacts"):
         if not contract.get(key):
             fail(failures, "EXI-001", f"missing {key}")
     snapshot = contract.get("snapshot", {})
-    if snapshot.get("planner_digest") != "sha256:planner":
+    if snapshot.get("planner_digest") != (planner_digest or "sha256:planner"):
         fail(failures, "EXI-002", "Planner digest stale")
     planner = contract.get("planner_binding", {})
     if planner.get("control_mode") != planner.get("current_control_mode") or planner.get("selected_components") != planner.get("current_selected_components"):
@@ -260,6 +260,7 @@ def check_contract(contract: dict[str, Any], invariant_ids: list[str]) -> dict[s
             fail(failures, "EXI-043", "post-only control for write")
         if artifact.get("audit", {}).get("blind_first") is not True or not artifact.get("audit", {}).get("auditor_identity") or not artifact.get("audit", {}).get("evidence"):
             fail(failures, "EXI-045", "audit order/identity/evidence incomplete")
+    failures.update(binding_failures or {})
     assertions = contract.get("invariant_assertions", {})
     for identifier in invariant_ids:
         if assertions.get(identifier) is not True:
